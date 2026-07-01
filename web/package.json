@@ -1,0 +1,20 @@
+{
+  "name": "talkfreeaac-web",
+  "version": "2.0.0",
+  "description": "TalkFreeAAC web app prototype: child AAC board, parent insights, local-first profile storage.",
+  "type": "module",
+  "scripts": {
+    "start": "vite --host 0.0.0.0",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "lucide-react": "latest"
+  },
+  "devDependencies": {}
+}
