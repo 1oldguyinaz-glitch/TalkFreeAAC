@@ -5,6 +5,7 @@ import TeamWorkspacePanel from "./TeamWorkspacePanel.jsx";
 import AIInsightsPanel from "./AIInsightsPanel.jsx";
 import BackupRestorePanel from "./BackupRestorePanel.jsx";
 import AccessibilityPanel from "./AccessibilityPanel.jsx";
+import ReleaseReadinessPanel from "./ReleaseReadinessPanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
   const s = buildInsightSummary(profile);
@@ -14,7 +15,7 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
   return (
     <div>
       <div className="top">
-        <div><div className="brand">🔒 Parent Menu</div><div>Profile • Insights • AI • Backup • Accessibility • Team</div></div>
+        <div><div className="brand">🔒 Parent Menu</div><div>Profile • Insights • AI • Backup • Accessibility • Release</div></div>
         <button className="lock" onClick={onBack}>AAC</button>
       </div>
 
@@ -28,6 +29,7 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
         </div>
       </div>
 
+      <ReleaseReadinessPanel profile={profile} />
       <AIInsightsPanel profile={profile} setProfile={setProfile} />
       <BackupRestorePanel profile={profile} setProfile={setProfile} />
       <AccessibilityPanel profile={profile} setProfile={setProfile} />
