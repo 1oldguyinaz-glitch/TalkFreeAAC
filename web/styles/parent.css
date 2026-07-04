@@ -1,0 +1,228 @@
+.parentShellV4 {
+  min-height: 100vh;
+  width: 100%;
+  padding: clamp(12px, 2vw, 28px);
+  background: #f3f6fb;
+  color: #0b1f3a;
+  overflow-x: hidden;
+}
+
+.parentHeaderV4 {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  background: #0b1f3a;
+  color: white;
+  border-radius: 28px;
+  padding: clamp(16px, 2vw, 28px);
+  margin-bottom: 16px;
+}
+
+.parentHeaderV4 h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 54px);
+}
+
+.parentHeaderV4 p {
+  margin: 6px 0 0;
+  color: rgba(255,255,255,.82);
+  font-weight: 800;
+}
+
+.parentBackButton,
+.parentForm button,
+.stackItem button,
+.paywallPanel button {
+  border: 0;
+  border-radius: 18px;
+  background: #1688ff;
+  color: white;
+  padding: 12px 18px;
+  font-weight: 950;
+  min-height: 48px;
+}
+
+.parentGrid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+  width: 100%;
+  min-width: 0;
+}
+
+.metricsGridV4 {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.twoColumnV4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.parentMetricCard,
+.parentPanelV4,
+.paywallPanel {
+  background: white;
+  border-radius: 24px;
+  padding: clamp(14px, 1.8vw, 24px);
+  box-shadow: 0 8px 22px rgba(11,31,58,.10);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.parentMetricCard span {
+  display: block;
+  font-size: clamp(30px, 4vw, 54px);
+  font-weight: 950;
+  color: #1688ff;
+  line-height: 1;
+}
+
+.parentMetricCard strong {
+  display: block;
+  margin-top: 8px;
+  font-size: clamp(14px, 1.3vw, 18px);
+}
+
+.parentMetricCard small,
+.muted {
+  color: #5b6b83;
+  font-weight: 750;
+}
+
+.parentPanelV4 h2,
+.paywallPanel h3 {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 2.4vw, 34px);
+}
+
+.insightList {
+  display: grid;
+  gap: 8px;
+}
+
+.insightList div {
+  background: #eaf4ff;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 850;
+}
+
+.paywallPanel {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  border: 3px dashed #1688ff;
+  background: #eef7ff;
+}
+
+.paywallPanel strong {
+  display: inline-block;
+  background: #ffd400;
+  color: #0b1f3a;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 950;
+  margin-bottom: 8px;
+}
+
+.chipList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chipList span {
+  background: #eef3fb;
+  border-radius: 999px;
+  padding: 9px 12px;
+  font-weight: 900;
+}
+
+.chipList b {
+  background: #1688ff;
+  color: white;
+  border-radius: 999px;
+  padding: 2px 7px;
+  margin-left: 4px;
+}
+
+.parentForm {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.parentForm input,
+.parentForm select,
+.parentForm textarea {
+  width: 100%;
+  border: 2px solid #d7e2f2;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 750;
+  color: #0b1f3a;
+  min-width: 0;
+}
+
+.parentForm textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.noteGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.noteGrid textarea,
+.noteGrid button {
+  grid-column: 1 / -1;
+}
+
+.stackList {
+  display: grid;
+  gap: 10px;
+}
+
+.stackItem {
+  background: #f6f8fc;
+  border-radius: 18px;
+  padding: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.stackItem strong {
+  font-size: 18px;
+}
+
+.stackItem small {
+  color: #5b6b83;
+  font-weight: 750;
+}
+
+.stackItem button {
+  justify-self: start;
+  min-height: 38px;
+  padding: 8px 12px;
+  background: #0b1f3a;
+}
+
+@media (max-width: 900px) {
+  .parentHeaderV4 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .twoColumnV4,
+  .noteGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .paywallPanel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

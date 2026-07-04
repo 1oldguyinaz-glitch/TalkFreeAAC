@@ -1,37 +1,41 @@
-export function createGoal(profile, goal) {
-  const cleanGoal = {
-    id: "goal_" + Math.random().toString(36).slice(2) + Date.now().toString(36),
-    title: goal.title || "",
-    category: goal.category || "Communication",
-    assignedTo: goal.assignedTo || "team",
-    targetWords: goal.targetWords || [],
-    status: goal.status || "active",
-    notes: goal.notes || "",
+export function createGoal({ title, targetWords = "", level = "Emerging", notes = "" }) {
+  return {
+    id: `goal_${Date.now()}`,
+    title: title || "New communication goal",
+    targetWords: String(targetWords)
+      .split(",")
+      .map(word => word.trim())
+      .filter(Boolean),
+    level,
+    notes,
+    progress: 0,
+    completed: false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
-
-  return { ...profile, goals: [...(profile.goals || []), cleanGoal] };
 }
 
-export function updateGoalStatus(profile, goalId, status) {
+export function addGoal(profile, goalInput) {
+  return {
+    ...profile,
+    goals: [
+      createGoal(goalInput),
+      ...(profile.goals || [])
+    ]
+  };
+}
+
+export function updateGoal(profile, goalId, patch) {
   return {
     ...profile,
     goals: (profile.goals || []).map(goal =>
-      goal.id === goalId ? { ...goal, status, updatedAt: new Date().toISOString() } : goal
+      goal.id === goalId
+        ? { ...goal, ...patch, updatedAt: new Date().toISOString() }
+        : goal
     )
   };
 }
 
-export function getActiveGoals(profile) {
-  return (profile.goals || []).filter(goal => goal.status === "active");
-}
-
-export function goalSummary(profile) {
-  const goals = profile.goals || [];
-  return {
-    total: goals.length,
-    active: goals.filter(g => g.status === "active").length,
-    completed: goals.filter(g => g.status === "completed").length
-  };
+export function completeGoal(profile, goalId) {
+  return updateGoal(profile, goalId, { completed: true, progress: 100 });
 }
