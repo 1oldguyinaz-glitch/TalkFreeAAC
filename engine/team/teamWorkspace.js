@@ -1,6 +1,12 @@
+import { can, PERMISSIONS } from "../permissions/rolePermissions.js";
+
 export function addTeamNote(profile, note) {
+  const role = note.role || "teacher";
+  if (!can(role, PERMISSIONS.ADD_TEAM_NOTE)) return profile;
+
   const cleanNote = {
-    role: note.role || "teacher",
+    id: "note_" + Math.random().toString(36).slice(2) + Date.now().toString(36),
+    role,
     author: note.author || "",
     studentName: note.studentName || "",
     ate: note.ate || "",
@@ -9,11 +15,11 @@ export function addTeamNote(profile, note) {
     workedOn: note.workedOn || "",
     comments: note.comments || "",
     ageAppropriate: note.ageAppropriate !== false,
+    localOnlyUntilSyncEnabled: true,
     time: new Date().toISOString()
   };
 
-  const teamNotes = [...(profile.teamNotes || []), cleanNote].slice(-5000);
-  return { ...profile, teamNotes };
+  return { ...profile, teamNotes: [...(profile.teamNotes || []), cleanNote].slice(-5000) };
 }
 
 export function getTeamNotes(profile, limit = 100) {
@@ -25,6 +31,20 @@ export function teamSummary(profile) {
   return {
     totalNotes: notes.length,
     latest: notes[notes.length - 1] || null,
-    roles: [...new Set(notes.map(n => n.role || "unknown"))]
+    roles: [...new Set(notes.map(n => n.role || "unknown"))],
+    members: (profile.teamMembers || []).length
   };
+}
+
+export function createTeamMember(profile, member) {
+  const clean = {
+    id: "member_" + Math.random().toString(36).slice(2) + Date.now().toString(36),
+    name: member.name || "",
+    role: member.role || "teacher",
+    email: member.email || "",
+    status: "invited",
+    createdAt: new Date().toISOString()
+  };
+
+  return { ...profile, teamMembers: [...(profile.teamMembers || []), clean] };
 }

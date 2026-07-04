@@ -1,4 +1,4 @@
-const KEY = "talkfreeaac.profile.rebuild4";
+const KEY = "talkfreeaac.profile.rebuild5";
 
 export function defaultProfile() {
   return {
@@ -12,6 +12,10 @@ export function defaultProfile() {
     timeline: [],
     frictionLog: [],
     teamNotes: [],
+    teamMembers: [],
+    goals: [],
+    vocabularyRecommendations: [],
+    customVocabulary: {},
     favorites: [],
     recentWords: [],
     recentContexts: [],

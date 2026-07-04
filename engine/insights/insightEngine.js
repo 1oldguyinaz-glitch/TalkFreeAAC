@@ -2,6 +2,8 @@ import { KNOWLEDGE_OBJECTS } from "../genome/genome.js";
 import { teamSummary } from "../team/teamWorkspace.js";
 import { timelineStats } from "../timeline/timelineEngine.js";
 import { calculateProgress } from "./progressEngine.js";
+import { goalSummary } from "../goals/goalEngine.js";
+import { pendingRecommendations } from "../recommendations/recommendationEngine.js";
 
 export function buildInsightSummary(profile) {
   const wordCounts = profile.wordCounts || {};
@@ -24,6 +26,8 @@ export function buildInsightSummary(profile) {
     team: teamSummary(profile),
     timeline: timelineStats(profile),
     progress: calculateProgress(profile),
+    goals: goalSummary(profile),
+    pendingVocabularyRecommendations: pendingRecommendations(profile).length,
     nextBest: ["help", "more", "all done", "I love you", "please"]
   };
 }

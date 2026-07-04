@@ -1,19 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { buildInsightSummary } from "../../engine/insights/insightEngine.js";
-import { addTeamNote, getTeamNotes } from "../../engine/team/teamWorkspace.js";
 import { getTimeline } from "../../engine/timeline/timelineEngine.js";
+import TeamWorkspacePanel from "./TeamWorkspacePanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
-  const [note, setNote] = useState({ role: "teacher", ate: "", didWell: "", struggledWith: "", workedOn: "", comments: "" });
   const s = buildInsightSummary(profile);
   const u = profile.userProfile || {};
-  const notes = getTeamNotes(profile, 5);
   const timeline = getTimeline(profile, 10);
-
-  function saveNote() {
-    setProfile(addTeamNote(profile, note));
-    setNote({ role: "teacher", ate: "", didWell: "", struggledWith: "", workedOn: "", comments: "" });
-  }
 
   return (
     <div>
@@ -45,20 +38,7 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
         <input className="search" placeholder="Medical notes" value={u.medicalNotes || ""} onChange={e => setProfile({ ...profile, userProfile: { ...u, medicalNotes: e.target.value } })} />
       </div>
 
-      <div className="panel">
-        <h2>Team Workspace Notes</h2>
-        <select className="search" value={note.role} onChange={e => setNote({ ...note, role: e.target.value })}>
-          <option>teacher</option><option>therapist</option><option>parent</option><option>caregiver</option>
-        </select>
-        <input className="search" placeholder="Today I ate..." value={note.ate} onChange={e => setNote({ ...note, ate: e.target.value })} />
-        <input className="search" placeholder="Today I did well at..." value={note.didWell} onChange={e => setNote({ ...note, didWell: e.target.value })} />
-        <input className="search" placeholder="Today I struggled with..." value={note.struggledWith} onChange={e => setNote({ ...note, struggledWith: e.target.value })} />
-        <input className="search" placeholder="Today we worked on..." value={note.workedOn} onChange={e => setNote({ ...note, workedOn: e.target.value })} />
-        <textarea className="search" placeholder="Comments" value={note.comments} onChange={e => setNote({ ...note, comments: e.target.value })} />
-        <button className="control" onClick={saveNote}>Save Team Note</button>
-        <h3>Latest Notes</h3>
-        <ul>{notes.map((n, i) => <li key={i}>{n.role}: ate {n.ate || "—"}; did well {n.didWell || "—"}; struggled {n.struggledWith || "—"}; worked on {n.workedOn || "—"}</li>)}</ul>
-      </div>
+      <TeamWorkspacePanel profile={profile} setProfile={setProfile} />
     </div>
   );
 }
