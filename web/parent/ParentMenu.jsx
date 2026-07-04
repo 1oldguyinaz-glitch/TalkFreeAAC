@@ -4,7 +4,7 @@ import { addGoal, completeGoal } from "../../engine/goals/goalEngine.js";
 import { addTeamMember, removeTeamMember, TEAM_ROLES } from "../../engine/team/teamEngine.js";
 import { addDailyNote } from "../../engine/notes/noteEngine.js";
 import MetricCard from "./components/MetricCard.jsx";
-import PaywallPanel from "./components/PaywallPanel.jsx";
+import ProfessionalInsightsPanel from "./components/ProfessionalInsightsPanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
   const [goalForm, setGoalForm] = useState({ title: "", targetWords: "", level: "Emerging", notes: "" });
@@ -59,6 +59,10 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
         <MetricCard label="Active Goals" value={metrics.activeGoals} />
       </section>
 
+      <section className="parentGrid">
+        <ProfessionalInsightsPanel profile={profile} />
+      </section>
+
       <section className="parentGrid twoColumnV4">
         <article className="parentPanelV4">
           <h2>AI Vocabulary Growth</h2>
@@ -68,12 +72,6 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
           </div>
         </article>
 
-        <PaywallPanel title="Teacher / Therapist Insights">
-          Upgrade later for team dashboards, exportable reports, goal summaries, and classroom collaboration.
-        </PaywallPanel>
-      </section>
-
-      <section className="parentGrid twoColumnV4">
         <article className="parentPanelV4">
           <h2>Top Phrases</h2>
           <div className="chipList">
@@ -82,13 +80,37 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
             )) : <p className="muted">No phrases yet.</p>}
           </div>
         </article>
+      </section>
 
+      <section className="parentGrid twoColumnV4">
         <article className="parentPanelV4">
           <h2>Top Words</h2>
           <div className="chipList">
             {topWords.length ? topWords.map(item => (
               <span key={item.word}>{item.word} <b>{item.count}</b></span>
             )) : <p className="muted">No words yet.</p>}
+          </div>
+        </article>
+
+        <article className="parentPanelV4">
+          <h2>Team Workspace</h2>
+          <form className="parentForm" onSubmit={submitTeam}>
+            <input placeholder="Name" value={teamForm.name} onChange={e => setTeamForm({ ...teamForm, name: e.target.value })} />
+            <input placeholder="Email" value={teamForm.email} onChange={e => setTeamForm({ ...teamForm, email: e.target.value })} />
+            <select value={teamForm.role} onChange={e => setTeamForm({ ...teamForm, role: e.target.value })}>
+              {TEAM_ROLES.map(role => <option key={role}>{role}</option>)}
+            </select>
+            <button>Add Team Member</button>
+          </form>
+
+          <div className="stackList">
+            {(profile.teamMembers || []).map(member => (
+              <div className="stackItem" key={member.id}>
+                <strong>{member.name || member.email}</strong>
+                <small>{member.role} • {member.email}</small>
+                <button onClick={() => setProfile(removeTeamMember(profile, member.id))}>Remove</button>
+              </div>
+            ))}
           </div>
         </article>
       </section>
@@ -120,47 +142,14 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
         </article>
 
         <article className="parentPanelV4">
-          <h2>Team Workspace</h2>
-          <form className="parentForm" onSubmit={submitTeam}>
-            <input placeholder="Name" value={teamForm.name} onChange={e => setTeamForm({ ...teamForm, name: e.target.value })} />
-            <input placeholder="Email" value={teamForm.email} onChange={e => setTeamForm({ ...teamForm, email: e.target.value })} />
-            <select value={teamForm.role} onChange={e => setTeamForm({ ...teamForm, role: e.target.value })}>
-              {TEAM_ROLES.map(role => <option key={role}>{role}</option>)}
-            </select>
-            <button>Add Team Member</button>
-          </form>
-
-          <div className="stackList">
-            {(profile.teamMembers || []).map(member => (
-              <div className="stackItem" key={member.id}>
-                <strong>{member.name || member.email}</strong>
-                <small>{member.role} • {member.email}</small>
-                <button onClick={() => setProfile(removeTeamMember(profile, member.id))}>Remove</button>
-              </div>
-            ))}
-          </div>
-        </article>
-      </section>
-
-      <section className="parentGrid">
-        <article className="parentPanelV4">
           <h2>Daily Notes</h2>
-          <form className="parentForm noteGrid" onSubmit={submitNote}>
+          <form className="parentForm" onSubmit={submitNote}>
             <input placeholder="Today I did well at..." value={noteForm.didWell} onChange={e => setNoteForm({ ...noteForm, didWell: e.target.value })} />
             <input placeholder="Today I struggled with..." value={noteForm.struggledWith} onChange={e => setNoteForm({ ...noteForm, struggledWith: e.target.value })} />
             <input placeholder="Today we worked on..." value={noteForm.workedOn} onChange={e => setNoteForm({ ...noteForm, workedOn: e.target.value })} />
             <textarea placeholder="Comments" value={noteForm.comments} onChange={e => setNoteForm({ ...noteForm, comments: e.target.value })} />
             <button>Save Daily Note</button>
           </form>
-
-          <div className="stackList">
-            {(profile.dailyNotes || []).slice(0, 6).map(note => (
-              <div className="stackItem" key={note.id}>
-                <strong>{new Date(note.date).toLocaleDateString()}</strong>
-                <small>{note.didWell || note.struggledWith || note.workedOn || note.comments}</small>
-              </div>
-            ))}
-          </div>
         </article>
       </section>
     </div>
