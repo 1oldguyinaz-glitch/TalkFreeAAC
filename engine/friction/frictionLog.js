@@ -1,0 +1,1 @@
+export function addFriction(p,issue){return{...p,frictionLog:[...(p.frictionLog||[]),{issue,time:new Date().toISOString()}].slice(-500)}}export function frictionSummary(p){const c={};for(const r of p.frictionLog||[])c[r.issue]=(c[r.issue]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]);}

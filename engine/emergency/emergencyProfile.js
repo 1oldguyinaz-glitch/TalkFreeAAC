@@ -1,0 +1,1 @@
+export function updateEmergencyProfile(p,profile){return{...p,userProfile:{...(p.userProfile||{}),...profile}};}export function emergencyCard(p){const u=p.userProfile||{};return{name:u.name||"",photo:u.photo||"",description:u.emergencyDescription||"I use AAC to communicate.",contacts:u.contacts||[],allergies:u.allergies||"",medicalNotes:u.medicalNotes||""};}

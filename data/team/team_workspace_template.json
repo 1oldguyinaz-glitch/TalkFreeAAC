@@ -1,0 +1,17 @@
+{
+  "enabled": false,
+  "students": [],
+  "notes": [],
+  "roles": [
+    "parent",
+    "teacher",
+    "therapist"
+  ],
+  "note_template": {
+    "ate": "",
+    "did_well": "",
+    "struggled_with": "",
+    "activities": "",
+    "comments": ""
+  }
+}

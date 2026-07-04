@@ -1,0 +1,1 @@
+export const DISPLAY_SCHEMES={talkfree_pop:{name:"TalkFree Pop",core:"#0B1F3A",emotion:"#E53935",food:"#FF8C00",learning:"#FFD400",places:"#2ECC71",people:"#1976D2",questions:"#8E44AD",actions:"#7ED957"}};export function updateDisplaySettings(p,settings){return{...p,displaySettings:{...(p.displaySettings||{}),...settings}};}
