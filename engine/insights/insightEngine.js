@@ -4,6 +4,9 @@ import { timelineStats } from "../timeline/timelineEngine.js";
 import { calculateProgress } from "./progressEngine.js";
 import { goalSummary } from "../goals/goalEngine.js";
 import { pendingRecommendations } from "../recommendations/recommendationEngine.js";
+import { communicationTrends, detectGrowthSignals } from "../trends/trendEngine.js";
+import { suggestVocabularyGrowth, dynamicFavorites } from "../adaptive/adaptiveVocabularyEngine.js";
+import { pendingApprovalItems } from "../recommendations/approvalQueue.js";
 
 export function buildInsightSummary(profile) {
   const wordCounts = profile.wordCounts || {};
@@ -22,12 +25,16 @@ export function buildInsightSummary(profile) {
     completedSentences: (profile.sentenceHistory || []).length,
     frictionCount: (profile.frictionLog || []).length,
     favoritesCount: (profile.favorites || []).length,
-    recentsCount: (profile.recentWords || []).length,
+    dynamicFavorites: dynamicFavorites(profile),
     team: teamSummary(profile),
     timeline: timelineStats(profile),
     progress: calculateProgress(profile),
     goals: goalSummary(profile),
+    trends: communicationTrends(profile),
+    growthSignals: detectGrowthSignals(profile),
+    vocabularyGrowthSuggestions: suggestVocabularyGrowth(profile),
     pendingVocabularyRecommendations: pendingRecommendations(profile).length,
+    pendingApprovals: pendingApprovalItems(profile).length,
     nextBest: ["help", "more", "all done", "I love you", "please"]
   };
 }

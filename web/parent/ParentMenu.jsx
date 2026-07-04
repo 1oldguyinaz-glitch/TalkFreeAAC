@@ -2,6 +2,7 @@ import React from "react";
 import { buildInsightSummary } from "../../engine/insights/insightEngine.js";
 import { getTimeline } from "../../engine/timeline/timelineEngine.js";
 import TeamWorkspacePanel from "./TeamWorkspacePanel.jsx";
+import AIInsightsPanel from "./AIInsightsPanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
   const s = buildInsightSummary(profile);
@@ -11,7 +12,7 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
   return (
     <div>
       <div className="top">
-        <div><div className="brand">🔒 Parent Menu</div><div>Profile • Insights • Timeline • Team Workspace</div></div>
+        <div><div className="brand">🔒 Parent Menu</div><div>Profile • Insights • AI • Timeline • Team Workspace</div></div>
         <button className="lock" onClick={onBack}>AAC</button>
       </div>
 
@@ -24,6 +25,8 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
           <div className="metric"><strong>Confidence</strong><span>{s.progress.communicationConfidenceScore}</span></div>
         </div>
       </div>
+
+      <AIInsightsPanel profile={profile} setProfile={setProfile} />
 
       <div className="panel">
         <h2>Communication Timeline</h2>
