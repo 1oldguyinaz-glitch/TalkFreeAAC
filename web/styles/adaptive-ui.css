@@ -1,0 +1,137 @@
+/* Patch 06 — Adaptive UI + Symbol Framework */
+
+.adaptiveShell {
+  --minTap: 52px;
+}
+
+.responsiveAACGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--boardColumns, 6), minmax(0, 1fr));
+  gap: var(--gap, 10px);
+  align-content: start;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.symbolImage {
+  width: var(--tileIcon, clamp(24px, 4vw, 56px));
+  height: var(--tileIcon, clamp(24px, 4vw, 56px));
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 3px 0 rgba(0,0,0,.18));
+  user-select: none;
+  pointer-events: none;
+}
+
+.fallbackSymbol {
+  display: grid;
+  place-items: center;
+  font-size: var(--tileIcon, clamp(24px, 4vw, 56px));
+  line-height: 1;
+}
+
+.aacBubble {
+  min-height: var(--minTap);
+  height: var(--tileSize, clamp(58px, 10vh, 128px));
+  border-radius: clamp(20px, 2.4vw, 34px);
+  transition: transform .12s ease, filter .12s ease;
+}
+
+.aacBubble:active {
+  transform: scale(.965);
+  filter: brightness(1.08);
+}
+
+.aacBubble:focus-visible,
+.topicBubbleV4:focus-visible,
+.starterBubble:focus-visible,
+.humanPhraseBubble:focus-visible,
+.controlBubble:focus-visible {
+  outline: 5px solid #ffd400;
+  outline-offset: 3px;
+}
+
+.bubbleLabel {
+  font-size: var(--tileFont, clamp(10px, 1.5vw, 22px));
+  letter-spacing: .01em;
+}
+
+.topicRailV4 {
+  container-type: inline-size;
+}
+
+.topicBubbleV4 {
+  min-height: clamp(40px, 5.7vh, 68px);
+}
+
+@media (orientation: portrait) {
+  .communicationBoardV4 {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto auto;
+  }
+
+  .topicRailV4 {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .topicRailSpacer {
+    display: none;
+  }
+
+  .profileCorner {
+    grid-column: 1;
+  }
+}
+
+@media (max-height: 720px) {
+  .brandBlock {
+    display: none;
+  }
+
+  .aacTopV4 {
+    grid-template-columns: 1fr;
+    min-height: clamp(74px, 13vh, 112px);
+  }
+
+  .sentenceStarterDock,
+  .humanPhraseDock {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+  .starterBubble,
+  .humanPhraseBubble {
+    min-height: clamp(34px, 5vh, 54px);
+  }
+
+  .profileCorner {
+    min-height: 46px;
+  }
+}
+
+@media (max-width: 900px) {
+  .responsiveAACGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .sentenceStarterDock,
+  .humanPhraseDock {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .responsiveAACGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sentenceStarterDock,
+  .humanPhraseDock {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topicRailV4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

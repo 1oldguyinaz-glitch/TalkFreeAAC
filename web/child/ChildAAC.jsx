@@ -7,6 +7,8 @@ import SentenceBuilder from "./components/SentenceBuilder.jsx";
 import HumanPhraseBar from "./components/HumanPhraseBar.jsx";
 import ProfileCorner from "./components/ProfileCorner.jsx";
 import AACButton from "./components/AACButton.jsx";
+import ResponsiveGrid from "./components/ResponsiveGrid.jsx";
+import TopicRail from "./components/TopicRail.jsx";
 
 function labelFor(word) {
   if (word === "Food & Drinks") return "Food";
@@ -58,7 +60,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     : board.contextWords;
 
   return (
-    <div className="aacShellV4">
+    <div className="aacShellV4 adaptiveShell">
       <header className="aacTopV4">
         <div className="brandBlock">
           <div className="brandName">TalkFree<span>AAC</span></div>
@@ -95,28 +97,20 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             <input className="searchV4" placeholder="Search words, phrases, topics..." value={query} onChange={e => setQuery(e.target.value)} />
           ) : null}
 
-          <section className="predictionGridV4">
+          <ResponsiveGrid className="predictionGridV4">
             {displayPredictions.map(word => (
               <AACButton key={`prediction-${word}`} word={word} onSelect={selectWord} variant="prediction" />
             ))}
-          </section>
+          </ResponsiveGrid>
 
-          <section className="contextGridV4">
+          <ResponsiveGrid className="contextGridV4">
             {displayContext.map(word => (
               <AACButton key={`context-${word}`} word={word} onSelect={selectWord} />
             ))}
-          </section>
+          </ResponsiveGrid>
         </section>
 
-        <aside className="topicRailV4">
-          <div className="topicRailSpacer" />
-          {board.topics.map(topic => (
-            <button key={topic} className="topicBubbleV4" onClick={() => onContext(topic)}>
-              {labelFor(topic)}
-            </button>
-          ))}
-        </aside>
-
+        <TopicRail topics={board.topics} onContext={onContext} />
         <ProfileCorner profile={profile} onParent={onParent} />
       </main>
     </div>
