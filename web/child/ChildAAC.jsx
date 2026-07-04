@@ -2,8 +2,11 @@ import React, { useMemo, useState } from "react";
 import { currentPhrase, getFullBoard } from "../../engine/prediction/predictionEngine.js";
 import { searchObjects } from "../../engine/search/searchEngine.js";
 import { getRecents, getFavorites } from "../../engine/memory/memoryEngine.js";
-import { getWordObject } from "../../engine/language/languageEngine.js";
 import { isNavigationButton } from "../../engine/navigation/navigationEngine.js";
+import SentenceBuilder from "./components/SentenceBuilder.jsx";
+import HumanPhraseBar from "./components/HumanPhraseBar.jsx";
+import ProfileCorner from "./components/ProfileCorner.jsx";
+import AACButton from "./components/AACButton.jsx";
 
 function labelFor(word) {
   if (word === "Food & Drinks") return "Food";
@@ -11,16 +14,6 @@ function labelFor(word) {
   if (word === "Daily Living") return "Daily";
   if (word === "Health & Body") return "Health";
   return word;
-}
-
-function WordCard({ word, onClick, className = "" }) {
-  const obj = getWordObject(word);
-  return (
-    <button className={`aacCard ${className}`} style={{ background: obj.color }} onClick={() => onClick(word)} aria-label={`Say ${word}`}>
-      <div className="aacIcon">{obj.icon || "🔤"}</div>
-      <div className="aacLabel">{labelFor(word)}</div>
-    </button>
-  );
 }
 
 export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onContext, onParent }) {
@@ -42,6 +35,12 @@ export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onC
     onTap(word);
   }
 
+  function selectPhrase(phraseText) {
+    phraseText.split(" ").forEach(part => {
+      if (part.trim()) onTap(part.trim());
+    });
+  }
+
   const displayPredictions =
     section === "Search" ? searchWords :
     section === "Recents" ? getRecents(profile, 30) :
@@ -50,46 +49,80 @@ export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onC
     section === "Emergency" ? ["I need help", "I am hurt", "I am scared", "call mom", "call dad", "I use AAC"] :
     board.predictions;
 
-  const displayContext = ["Search", "Recents", "Favorites", "Topics", "Emergency"].includes(section) ? [] : board.contextWords;
+  const displayContext = ["Search", "Recents", "Favorites", "Topics", "Emergency"].includes(section)
+    ? []
+    : board.contextWords;
 
   return (
-    <div className="aacShell">
-      <header className="aacHeader">
-        <div className="aacLogo">Talk<span>Free</span><b>AAC</b></div>
-        <button className="topPill" onClick={() => onContext("Core Needs")}>🏠 Home</button>
-        <button className="topPill orange" onClick={() => onContext("Sentence Starters")}>⚡ Starters</button>
-        <button className="topPill pink" onClick={() => onContext("Favorites")}>❤️ Favorites</button>
-        <button className="settingsButton" onClick={onParent}>⚙️ Parent</button>
+    <div className="aacShellV4">
+      <header className="aacTopV4">
+        <div className="brandBlock">
+          <div className="brandName">TalkFree<span>AAC</span></div>
+          <div className="brandTag">Communication without barriers</div>
+        </div>
+
+        <div className="speechPanelV4">
+          <button className="speechDisplayV4" onClick={onSpeak}>
+            <span>{phrase || "Tap words to talk"}</span>
+          </button>
+          <button className="controlBubble speak" onClick={onSpeak}>🔊 Speak</button>
+          <button className="controlBubble back" onClick={onBack}>⬅ Back</button>
+          <button className="controlBubble clear" onClick={onClear}>Clear</button>
+        </div>
       </header>
 
-      <section className="speechArea">
-        <button className="speechBox" onClick={onSpeak}>
-          <div className="speechText">{phrase || "Tap words to talk"}</div>
-          <div className="speechHint">🔊 Speak</div>
-        </button>
-        <button className="actionButton speak" onClick={onSpeak}>🔊<br/>Speak</button>
-        <button className="actionButton back" onClick={onBack}>⬅️<br/>Back</button>
-        <button className="actionButton clear" onClick={onClear}>🗑️<br/>Clear</button>
-      </section>
+      <SentenceBuilder onSelect={selectPhrase} />
+      <HumanPhraseBar onSelect={selectPhrase} />
 
-      <nav className="sectionRail">
-        {["Core Needs", "Topics", "Search", "Recents", "Favorites", "Emergency"].map(r => (
-          <button key={r} className={section === r ? "active" : ""} onClick={() => { setQuery(""); onContext(r); }}>{r}</button>
-        ))}
-      </nav>
+      <main className="communicationBoardV4">
+        <section className="mainTalkArea">
+          <div className="boardHeaderRow">
+            <h2>{section === "Core Needs" ? "Keep Talking" : labelFor(section)}</h2>
+            <nav className="modePills">
+              {["Core Needs", "Topics", "Search", "Recents", "Favorites", "Emergency"].map(r => (
+                <button
+                  key={r}
+                  className={section === r ? "modePill active" : "modePill"}
+                  onClick={() => { setQuery(""); onContext(r); }}
+                >
+                  {r}
+                </button>
+              ))}
+            </nav>
+          </div>
 
-      {section === "Search" ? <input className="search" placeholder="Search all words..." value={query} onChange={e => setQuery(e.target.value)} /> : null}
+          {section === "Search" ? (
+            <input
+              className="searchV4"
+              placeholder="Search words, phrases, topics..."
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+            />
+          ) : null}
 
-      <main className="boardLayout">
-        <section className="predictionZone">
-          {displayPredictions.map(word => <WordCard key={`p-${word}`} word={word} onClick={selectWord} className="predictionCard" />)}
+          <section className="predictionGridV4">
+            {displayPredictions.map(word => (
+              <AACButton key={`prediction-${word}`} word={word} onSelect={selectWord} variant="prediction" />
+            ))}
+          </section>
+
+          <section className="contextGridV4">
+            {displayContext.map(word => (
+              <AACButton key={`context-${word}`} word={word} onSelect={selectWord} />
+            ))}
+          </section>
         </section>
-        <section className="contextZone">
-          {displayContext.map(word => <WordCard key={`c-${word}`} word={word} onClick={selectWord} />)}
-        </section>
-        <aside className="topicRail">
-          {board.topics.map(topic => <button key={topic} onClick={() => onContext(topic)}>{labelFor(topic)}</button>)}
+
+        <aside className="topicRailV4">
+          <div className="topicRailSpacer" />
+          {board.topics.map(topic => (
+            <button key={topic} className="topicBubbleV4" onClick={() => onContext(topic)}>
+              {labelFor(topic)}
+            </button>
+          ))}
         </aside>
+
+        <ProfileCorner profile={profile} onParent={onParent} />
       </main>
     </div>
   );
