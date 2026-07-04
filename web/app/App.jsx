@@ -10,6 +10,7 @@ import { recordUsage } from "../../engine/memory/memoryEngine.js";
 import { buildSentenceRecord } from "../../engine/composer/sentenceComposer.js";
 import { addTimelineEvent } from "../../engine/timeline/timelineEngine.js";
 import { isNavigationButton } from "../../engine/navigation/navigationEngine.js";
+import { recordPhraseUse } from "../../engine/language/favoritePhraseEngine.js";
 
 export default function App() {
   const [profile, setProfileState] = useState(loadProfile());
@@ -24,10 +25,35 @@ export default function App() {
       changeContext(word);
       return;
     }
+
     const before = currentPhrase(profile.sentence);
     const updated = recordUsage(profile, word, before);
-    setProfile({ ...updated, sentence: [...(profile.sentence || []), word], justCompletedSentence: false });
+
+    setProfile({
+      ...updated,
+      sentence: [...(profile.sentence || []), word],
+      justCompletedSentence: false
+    });
+
     speak(word);
+  }
+
+  function tapPhrase(phrase) {
+    if (!phrase) return;
+
+    const parts = String(phrase).split(" ").filter(Boolean);
+    const nextSentence = [...(profile.sentence || []), ...parts];
+
+    const updated = recordPhraseUse(profile, phrase);
+
+    setProfile({
+      ...updated,
+      sentence: nextSentence,
+      recentWords: [...parts, ...(profile.recentWords || [])].slice(0, 40),
+      justCompletedSentence: false
+    });
+
+    speak(phrase);
   }
 
   function speakSentence() {
@@ -35,8 +61,14 @@ export default function App() {
     if (!phrase) return;
     const record = buildSentenceRecord(profile);
     speak(phrase);
-    const completed = completeSentence(profile);
-    setProfile(addTimelineEvent(completed, { type: "communication", text: record.phrase, tags: record.tags, context: record.context, metadata: { intent: record.intent, wordCount: record.wordCount } }));
+    const completed = completeSentence(recordPhraseUse(profile, phrase));
+    setProfile(addTimelineEvent(completed, {
+      type: "communication",
+      text: record.phrase,
+      tags: record.tags,
+      context: record.context,
+      metadata: { intent: record.intent, wordCount: record.wordCount }
+    }));
   }
 
   function changeContext(ctx) {
@@ -50,6 +82,7 @@ export default function App() {
         <ChildAAC
           profile={profile}
           onTap={tapWord}
+          onPhrase={tapPhrase}
           onSpeak={speakSentence}
           onComplete={speakSentence}
           onBack={() => setProfile({ ...profile, sentence: (profile.sentence || []).slice(0, -1) })}
