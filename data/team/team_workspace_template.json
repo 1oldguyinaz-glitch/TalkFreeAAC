@@ -1,0 +1,10 @@
+{
+  "enabled": false,
+  "students": [],
+  "notes": [],
+  "roles": [
+    "parent",
+    "teacher",
+    "therapist"
+  ]
+}
