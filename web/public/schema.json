@@ -1,0 +1,44 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TalkFreeAAC",
+  "applicationCategory": "AccessibilityApplication",
+  "operatingSystem": "Web, Chromebook, Tablet, Desktop",
+  "description": "TalkFreeAAC is a free, local-first AAC communication board and speech-generating app designed to help users express needs, emotions, relationships, curiosity, and personality.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Core AAC communication is free. Professional insights and collaboration tools may be optional premium features."
+  },
+  "accessibilityFeature": [
+    "speechSynthesis",
+    "alternativeText",
+    "largePrint",
+    "highContrastDisplay",
+    "keyboardNavigation",
+    "switchControl"
+  ],
+  "audience": [
+    {
+      "@type": "Audience",
+      "audienceType": "AAC users"
+    },
+    {
+      "@type": "Audience",
+      "audienceType": "Families"
+    },
+    {
+      "@type": "Audience",
+      "audienceType": "Teachers"
+    },
+    {
+      "@type": "Audience",
+      "audienceType": "Speech-language pathologists"
+    },
+    {
+      "@type": "Audience",
+      "audienceType": "Therapists"
+    }
+  ]
+}

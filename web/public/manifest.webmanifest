@@ -1,0 +1,29 @@
+{
+  "name": "TalkFreeAAC - Free AAC Communication Board",
+  "short_name": "TalkFreeAAC",
+  "description": "A free, local-first AAC communication board and speech-generating app for assistive communication, autism communication, classrooms, families, and therapists.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06285f",
+  "theme_color": "#06285f",
+  "orientation": "landscape-primary",
+  "categories": [
+    "education",
+    "accessibility",
+    "medical",
+    "productivity"
+  ],
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
