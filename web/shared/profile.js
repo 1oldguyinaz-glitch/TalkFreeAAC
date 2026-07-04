@@ -1,4 +1,4 @@
-const KEY = "talkfreeaac.profile.rebuild6";
+const KEY = "talkfreeaac.profile.rebuild8";
 
 export function defaultProfile() {
   return {
@@ -22,7 +22,7 @@ export function defaultProfile() {
     recentContexts: [],
     justCompletedSentence: false,
     lastCompletedSentence: "",
-    displaySettings: { scheme: "talkfree_pop" },
+    displaySettings: { scheme: "talkfree_pop", buttonScale: 100, textScale: 100 },
     inputSettings: { activeInput: "touch", eyeTrackingEnabled: false, eyeTrackingDwellMs: 900 },
     aiSettings: { localPredictionEnabled: true, parentApprovalRequired: true },
     userProfile: {

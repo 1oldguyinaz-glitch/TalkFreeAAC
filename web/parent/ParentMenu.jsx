@@ -4,6 +4,7 @@ import { getTimeline } from "../../engine/timeline/timelineEngine.js";
 import TeamWorkspacePanel from "./TeamWorkspacePanel.jsx";
 import AIInsightsPanel from "./AIInsightsPanel.jsx";
 import BackupRestorePanel from "./BackupRestorePanel.jsx";
+import AccessibilityPanel from "./AccessibilityPanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
   const s = buildInsightSummary(profile);
@@ -13,7 +14,7 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
   return (
     <div>
       <div className="top">
-        <div><div className="brand">🔒 Parent Menu</div><div>Profile • Insights • AI • Backup • Timeline • Team</div></div>
+        <div><div className="brand">🔒 Parent Menu</div><div>Profile • Insights • AI • Backup • Accessibility • Team</div></div>
         <button className="lock" onClick={onBack}>AAC</button>
       </div>
 
@@ -29,6 +30,7 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
 
       <AIInsightsPanel profile={profile} setProfile={setProfile} />
       <BackupRestorePanel profile={profile} setProfile={setProfile} />
+      <AccessibilityPanel profile={profile} setProfile={setProfile} />
 
       <div className="panel">
         <h2>Communication Timeline</h2>
