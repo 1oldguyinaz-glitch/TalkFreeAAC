@@ -17,6 +17,7 @@ import { ensureCommunicationProfile } from "../../engine/profile/userCommunicati
 import "../styles/parent.css";
 import "../styles/adaptive-ui.css";
 import "../styles/professional-insights.css";
+import "../styles/prediction-ui.css";
 
 export default function App() {
   const [profile, setProfileState] = useState(ensureCommunicationProfile(loadProfile()));

@@ -25,7 +25,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
   const searchWords = useMemo(() => {
     if (!(section === "Search" && query)) return [];
-    return searchObjects(query).map(o => o.name);
+    return searchObjects(query).map(o => o.name || o.display || o.word);
   }, [section, query]);
 
   function selectWord(word) {
@@ -52,7 +52,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     section === "Recents" ? getRecents(profile, 30) :
     section === "Favorites" ? getFavorites(profile, 30) :
     section === "Topics" ? board.topics :
-    section === "Emergency" ? ["I need help", "I am hurt", "I am scared", "call mom", "call dad", "I use AAC"] :
+    section === "Emergency" ? ["I need help", "I am hurt", "I am scared", "Call mom", "Call dad", "I use AAC"] :
     board.predictions;
 
   const displayContext = ["Search", "Recents", "Favorites", "Topics", "Emergency"].includes(section)
@@ -64,12 +64,12 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       <header className="aacTopV4">
         <div className="brandBlock">
           <div className="brandName">TalkFree<span>AAC</span></div>
-          <div className="brandTag">Communication without barriers</div>
+          <div className="brandTag">Free AAC communication board</div>
         </div>
 
         <div className="speechPanelV4">
           <button className="speechDisplayV4" onClick={onSpeak}>
-            <span>{phrase || "Tap words to talk"}</span>
+            <span>{phrase || "I'm ready to start talking to anybody"}</span>
           </button>
           <button className="controlBubble speak" onClick={onSpeak}>🔊 Speak</button>
           <button className="controlBubble back" onClick={onBack}>⬅ Back</button>
@@ -83,7 +83,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       <main className="communicationBoardV4">
         <section className="mainTalkArea">
           <div className="boardHeaderRow">
-            <h2>{section === "Core Needs" ? "Keep Talking" : labelFor(section)}</h2>
+            <h2>{section === "Core Needs" ? "Smart Suggestions" : labelFor(section)}</h2>
             <nav className="modePills">
               {["Core Needs", "Topics", "Search", "Recents", "Favorites", "Emergency"].map(r => (
                 <button key={r} className={section === r ? "modePill active" : "modePill"} onClick={() => { setQuery(""); onContext(r); }}>
@@ -99,7 +99,13 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
           <ResponsiveGrid className="predictionGridV4">
             {displayPredictions.map(word => (
-              <AACButton key={`prediction-${word}`} word={word} onSelect={selectWord} variant="prediction" />
+              <AACButton
+                key={`prediction-${word}`}
+                word={word}
+                onSelect={selectWord}
+                variant="prediction"
+                showPredictionBadge={section !== "Search" && section !== "Topics"}
+              />
             ))}
           </ResponsiveGrid>
 

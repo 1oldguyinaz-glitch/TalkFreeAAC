@@ -1,6 +1,7 @@
 import React from "react";
 import { getWordObject } from "../../../engine/language/languageEngine.js";
 import SymbolImage from "./SymbolImage.jsx";
+import PredictionBadge from "./PredictionBadge.jsx";
 
 function labelFor(word) {
   if (word === "Food & Drinks") return "Food";
@@ -10,7 +11,7 @@ function labelFor(word) {
   return word;
 }
 
-export default function AACButton({ word, onSelect, variant = "word" }) {
+export default function AACButton({ word, onSelect, variant = "word", showPredictionBadge = false }) {
   const obj = getWordObject(word);
   const tileColor = obj.color || "#1688ff";
 
@@ -22,6 +23,7 @@ export default function AACButton({ word, onSelect, variant = "word" }) {
       aria-label={`Select ${word}`}
       title={word}
     >
+      {showPredictionBadge ? <PredictionBadge type="AI" /> : null}
       <SymbolImage wordObject={obj} />
       <span className="bubbleLabel">{labelFor(word)}</span>
     </button>
