@@ -11,12 +11,11 @@ import AACButton from "./components/AACButton.jsx";
 function labelFor(word) {
   if (word === "Food & Drinks") return "Food";
   if (word === "School Curriculum") return "School";
-  if (word === "Daily Living") return "Daily";
   if (word === "Health & Body") return "Health";
   return word;
 }
 
-export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onContext, onParent }) {
+export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
   const [query, setQuery] = useState("");
   const section = profile.activeContext || "Core Needs";
   const phrase = currentPhrase(profile.sentence || []);
@@ -32,13 +31,18 @@ export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onC
       onContext(word);
       return;
     }
+
+    if (String(word).includes(" ") && onPhrase) {
+      onPhrase(word);
+      return;
+    }
+
     onTap(word);
   }
 
   function selectPhrase(phraseText) {
-    phraseText.split(" ").forEach(part => {
-      if (part.trim()) onTap(part.trim());
-    });
+    if (onPhrase) onPhrase(phraseText);
+    else phraseText.split(" ").forEach(part => part.trim() && onTap(part.trim()));
   }
 
   const displayPredictions =
@@ -80,11 +84,7 @@ export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onC
             <h2>{section === "Core Needs" ? "Keep Talking" : labelFor(section)}</h2>
             <nav className="modePills">
               {["Core Needs", "Topics", "Search", "Recents", "Favorites", "Emergency"].map(r => (
-                <button
-                  key={r}
-                  className={section === r ? "modePill active" : "modePill"}
-                  onClick={() => { setQuery(""); onContext(r); }}
-                >
+                <button key={r} className={section === r ? "modePill active" : "modePill"} onClick={() => { setQuery(""); onContext(r); }}>
                   {r}
                 </button>
               ))}
@@ -92,12 +92,7 @@ export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onC
           </div>
 
           {section === "Search" ? (
-            <input
-              className="searchV4"
-              placeholder="Search words, phrases, topics..."
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-            />
+            <input className="searchV4" placeholder="Search words, phrases, topics..." value={query} onChange={e => setQuery(e.target.value)} />
           ) : null}
 
           <section className="predictionGridV4">

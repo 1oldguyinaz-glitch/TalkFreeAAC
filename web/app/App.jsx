@@ -11,9 +11,6 @@ import { buildSentenceRecord } from "../../engine/composer/sentenceComposer.js";
 import { addTimelineEvent } from "../../engine/timeline/timelineEngine.js";
 import { isNavigationButton } from "../../engine/navigation/navigationEngine.js";
 import { recordPhraseUse } from "../../engine/language/favoritePhraseEngine.js";
-import "../styles/parent.css";
-import "../styles/adaptive-ui.css";
-import "../styles/professional-insights.css";
 
 export default function App() {
   const [profile, setProfileState] = useState(loadProfile());
@@ -43,12 +40,15 @@ export default function App() {
 
   function tapPhrase(phrase) {
     if (!phrase) return;
+
     const parts = String(phrase).split(" ").filter(Boolean);
+    const nextSentence = [...(profile.sentence || []), ...parts];
+
     const updated = recordPhraseUse(profile, phrase);
 
     setProfile({
       ...updated,
-      sentence: [...(profile.sentence || []), ...parts],
+      sentence: nextSentence,
       recentWords: [...parts, ...(profile.recentWords || [])].slice(0, 40),
       justCompletedSentence: false
     });
@@ -59,10 +59,8 @@ export default function App() {
   function speakSentence() {
     const phrase = currentPhrase(profile.sentence);
     if (!phrase) return;
-
     const record = buildSentenceRecord(profile);
     speak(phrase);
-
     const completed = completeSentence(recordPhraseUse(profile, phrase));
     setProfile(addTimelineEvent(completed, {
       type: "communication",
