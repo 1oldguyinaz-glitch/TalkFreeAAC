@@ -50,6 +50,9 @@ export function buildPredictionBoard(profile = {}) {
 export function recordSelection(profile = {}, word = "") {
   return {
     ...profile,
+    activeContext: "",
+    context: "",
+    topic: "",
     sentence: [...(profile.sentence || []), word]
   };
 }
@@ -57,6 +60,9 @@ export function recordSelection(profile = {}, word = "") {
 export function clearSentence(profile = {}) {
   return {
     ...profile,
+    activeContext: "",
+    context: "",
+    topic: "",
     sentence: []
   };
 }
@@ -65,6 +71,24 @@ export function removeLastWord(profile = {}) {
   return {
     ...profile,
     sentence: [...(profile.sentence || [])].slice(0, -1)
+  };
+}
+
+export function setActiveContext(profile = {}, context = "") {
+  return {
+    ...profile,
+    activeContext: context,
+    context,
+    topic: context
+  };
+}
+
+export function clearActiveContext(profile = {}) {
+  return {
+    ...profile,
+    activeContext: "",
+    context: "",
+    topic: ""
   };
 }
 
@@ -79,5 +103,7 @@ export default {
   buildPredictionBoard,
   recordSelection,
   clearSentence,
-  removeLastWord
+  removeLastWord,
+  setActiveContext,
+  clearActiveContext
 };

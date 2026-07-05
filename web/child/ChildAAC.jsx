@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { currentPhrase, getFullBoard } from "../../engine/prediction/predictionEngine.js";
 import AACButton from "./components/AACButton.jsx";
 import SymbolImage from "./components/SymbolImage.jsx";
@@ -64,15 +64,45 @@ function uniqueWords(items = []) {
 }
 
 export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
+  const [activeTopic, setActiveTopic] = useState("");
   const phrase = phraseFromProfile(profile) || "I want to go outside with you";
-  const board = useMemo(() => getFullBoard(profile || {}), [profile, phrase]);
+
+  const boardProfile = useMemo(() => ({
+    ...(profile || {}),
+    activeContext: activeTopic,
+    context: activeTopic,
+    topic: activeTopic
+  }), [profile, activeTopic]);
+
+  const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, phrase]);
   const activeBranch = uniqueWords(board.contextWords?.length ? board.contextWords : HOME_BRANCH).slice(0, 27);
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const photo = profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
 
   const selectWord = (word) => {
+    // If the lower grid is showing a topic list, selecting any item should add the word
+    // and immediately return the lower grid to the normal sentence/default tree.
+    if (activeTopic) setActiveTopic("");
+
     if (word.includes(" ") && onPhrase) return onPhrase(word);
     onTap?.(word);
+  };
+
+  const selectTopic = (topic) => {
+    // Topic selection is navigation only. It should not enter the sentence box.
+    // It only loads the topic words into the lower active tree grid.
+    setActiveTopic(topic);
+    onContext?.(topic);
+  };
+
+  const clearAll = () => {
+    setActiveTopic("");
+    onClear?.();
+  };
+
+  const speakAndResetTopic = () => {
+    setActiveTopic("");
+    onSpeak?.();
   };
 
   return (
@@ -90,21 +120,24 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           </section>
 
           <section className="approvedSentenceCard">
-            <button className="approvedSentenceButton" onClick={onSpeak}>
+            <button className="approvedSentenceButton" onClick={speakAndResetTopic}>
               <span>{phrase}</span>
               <small>~ {Math.max(1, phrase.split(" ").length)} words</small>
             </button>
             <div className="approvedHeaderTools">
-              <button className="approvedTool speak" onClick={onSpeak}>🔊 Speak</button>
+              <button className="approvedTool speak" onClick={speakAndResetTopic}>🔊 Speak</button>
               <button className="approvedTool back" onClick={onBack}>← Back</button>
-              <button className="approvedTool clear" onClick={onClear}>🗑 Clear</button>
+              <button className="approvedTool clear" onClick={clearAll}>🗑 Clear</button>
             </div>
           </section>
         </header>
 
         <section className="approvedQuickPhraseRow">
           {QUICK_PHRASES.map(item => (
-            <button key={item} className="approvedQuickPhrase" onClick={() => onPhrase ? onPhrase(item) : selectWord(item)}>
+            <button key={item} className="approvedQuickPhrase" onClick={() => {
+              setActiveTopic("");
+              onPhrase ? onPhrase(item) : selectWord(item);
+            }}>
               <SymbolImage word={item} />
               <span>{item}</span>
             </button>
@@ -125,7 +158,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           <section className="approvedFringeSection">
             <div className="approvedSectionTitle">
               <h2>ACTIVE TREE / CONNECTORS / ENDINGS</h2>
-              <p>These change with the sentence branch.</p>
+              <p>{activeTopic ? `${activeTopic} words — select one to return to the tree.` : "These change with the sentence branch."}</p>
             </div>
             <div className="approvedFringeGrid">
               {activeBranch.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}
@@ -138,7 +171,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
         <section className="approvedTopicBox">
           <div className="approvedTopicsHeader">TOPICS</div>
           {TOPICS.map(topic => (
-            <button key={topic} className="approvedTopicButton" onClick={() => onContext?.(topic)}>
+            <button key={topic} className="approvedTopicButton" onClick={() => selectTopic(topic)}>
               <SymbolImage word={topic} />
               <span>{topic}</span>
             </button>
@@ -147,7 +180,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
         <section className="approvedSecondaryTopics">
           {SECONDARY.map(topic => (
-            <button key={topic} className="approvedSecondaryButton" onClick={() => onContext?.(topic)}>
+            <button key={topic} className="approvedSecondaryButton" onClick={() => selectTopic(topic)}>
               <SymbolImage word={topic} />
               <span>{topic}</span>
             </button>
@@ -156,9 +189,9 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       </aside>
 
       <nav className="approvedBottomNav">
-        <button onClick={() => onContext?.("Home")}>🏠 Home</button>
-        <button onClick={() => onContext?.("Keyboard")}>⌨ Keyboard</button>
-        <button onClick={() => onContext?.("Settings")}>⚙ Settings</button>
+        <button onClick={() => selectTopic("Home")}>🏠 Home</button>
+        <button onClick={() => selectTopic("Keyboard")}>⌨ Keyboard</button>
+        <button onClick={() => selectTopic("Settings")}>⚙ Settings</button>
         <button onClick={onParent}>📈 Insights 👑</button>
       </nav>
     </div>

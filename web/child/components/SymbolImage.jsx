@@ -1,38 +1,277 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 
-function slugify(word = "") {
+const SYMBOLS = {
+  // topics
+  "relationships": "👨‍👩‍👧",
+  "feelings": "😊",
+  "food & drink": "🍎",
+  "food and drink": "🍎",
+  "places": "🏠",
+  "school": "🏫",
+  "actions": "🏃",
+  "things": "🧸",
+  "body & health": "🩺",
+  "body and health": "🩺",
+  "questions": "❓",
+  "recents": "🕘",
+  "favorites": "⭐",
+  "search": "🔎",
+  "emergency": "🚨",
+
+  // relationships
+  "mom": "👩",
+  "dad": "👨",
+  "you": "🙂",
+  "me": "🙋",
+  "family": "👨‍👩‍👧",
+  "friend": "🧑",
+  "teacher": "🧑‍🏫",
+  "grandma": "👵",
+  "grandpa": "👴",
+  "i love you": "💖",
+  "can i have a hug": "🤗",
+  "hug": "🤗",
+  "kiss": "😘",
+  "thank you": "🙏",
+  "please": "🙂",
+  "hi": "👋",
+  "bye": "👋",
+  "i'm sorry": "😔",
+  "sorry": "😔",
+  "i miss you": "💭",
+  "good job": "👏",
+  "good morning": "🌞",
+  "good night": "🌙",
+  "stay with me": "🫶",
+  "play with me": "🛝",
+  "talk to me": "🗣️",
+  "help me": "🆘",
+
+  // feelings
+  "happy": "😊",
+  "sad": "😢",
+  "mad": "😠",
+  "angry": "😡",
+  "scared": "😨",
+  "tired": "😴",
+  "sick": "🤒",
+  "hurt": "🤕",
+  "frustrated": "😣",
+  "excited": "🤩",
+  "proud": "😌",
+  "lonely": "🥺",
+  "safe": "🛡️",
+  "okay": "👌",
+  "calm": "😌",
+  "nervous": "😬",
+  "upset": "☹️",
+  "worried": "😟",
+  "hungry": "🍽️",
+  "thirsty": "🥤",
+  "hot": "🥵",
+  "cold": "🥶",
+  "not ready": "⏸️",
+  "ready": "✅",
+
+  // food & drink
+  "food": "🍽️",
+  "drink": "🥤",
+  "water": "💧",
+  "snack": "🍪",
+  "juice": "🧃",
+  "milk": "🥛",
+  "breakfast": "🍳",
+  "lunch": "🥪",
+  "dinner": "🍲",
+  "apple": "🍎",
+  "banana": "🍌",
+  "chips": "🍟",
+  "cookie": "🍪",
+  "cracker": "🫓",
+  "sandwich": "🥪",
+  "pizza": "🍕",
+  "chicken": "🍗",
+  "rice": "🍚",
+  "eat": "🍽️",
+  "finished": "✅",
+  "all done": "✅",
+
+  // places
+  "outside": "🌳",
+  "inside": "🏠",
+  "home": "🏠",
+  "bathroom": "🚽",
+  "park": "🏞️",
+  "playground": "🛝",
+  "store": "🏪",
+  "car": "🚗",
+  "room": "🚪",
+  "bedroom": "🛏️",
+  "kitchen": "🍳",
+  "table": "🪑",
+  "chair": "🪑",
+  "door": "🚪",
+  "bus": "🚌",
+  "classroom": "🏫",
+  "library": "📚",
+
+  // school
+  "class": "🏫",
+  "desk": "🪑",
+  "book": "📘",
+  "paper": "📄",
+  "pencil": "✏️",
+  "read": "📖",
+  "write": "✍️",
+  "listen": "👂",
+  "look": "👀",
+  "learn": "🧠",
+  "work": "🧩",
+  "break": "⏸️",
+  "i don't understand": "🤷",
+  "i need help": "🆘",
+
+  // actions
+  "go": "➡️",
+  "stop": "🛑",
+  "help": "🆘",
+  "get": "🫴",
+  "do": "✅",
+  "play": "🎮",
+  "watch": "📺",
+  "sit": "🪑",
+  "stand": "🧍",
+  "walk": "🚶",
+  "run": "🏃",
+  "jump": "🦘",
+  "open": "📂",
+  "close": "📕",
+  "turn": "↩️",
+  "wait": "⏳",
+  "try": "💪",
+  "choose": "☝️",
+  "make": "🛠️",
+  "use": "🖐️",
+  "talk": "🗣️",
+  "say": "💬",
+
+  // things
+  "toy": "🧸",
+  "tablet": "📱",
+  "ball": "⚽",
+  "blanket": "🛏️",
+  "clothes": "👕",
+  "shoes": "👟",
+  "music": "🎵",
+  "tv": "📺",
+  "phone": "📞",
+  "cup": "🥤",
+  "plate": "🍽️",
+  "spoon": "🥄",
+  "fork": "🍴",
+  "bag": "👜",
+  "backpack": "🎒",
+  "bed": "🛏️",
+  "light": "💡",
+  "remote": "🎛️",
+  "game": "🎮",
+
+  // body and health
+  "body": "🧍",
+  "head": "🙂",
+  "mouth": "👄",
+  "teeth": "🦷",
+  "ear": "👂",
+  "eye": "👁️",
+  "hand": "✋",
+  "arm": "💪",
+  "leg": "🦵",
+  "foot": "🦶",
+  "stomach": "🤰",
+  "back": "🔙",
+  "pain": "⚡",
+  "medicine": "💊",
+  "doctor": "🧑‍⚕️",
+  "nurse": "🧑‍⚕️",
+  "i am hurt": "🤕",
+  "i feel sick": "🤒",
+
+  // questions
+  "who": "❓",
+  "what": "❓",
+  "where": "📍",
+  "when": "🕒",
+  "why": "🤔",
+  "how": "🛠️",
+  "which": "☝️",
+  "can i": "🙋",
+  "can you": "👉",
+  "do you": "❔",
+  "is it": "❔",
+  "are we": "👥",
+  "where is": "📍",
+  "what is": "❓",
+  "why not": "🤷",
+  "how many": "🔢",
+  "how much": "🔢",
+  "show me": "👀",
+  "tell me": "🗣️",
+  "again": "🔁",
+
+  // grammar/common
+  "i": "🙋",
+  "want": "✨",
+  "need": "‼️",
+  "feel": "❤️",
+  "am": "🔗",
+  "can": "💪",
+  "don't": "🚫",
+  "like": "👍",
+  "love": "💖",
+  "have": "🖐️",
+  "see": "👀",
+  "hear": "👂",
+  "think": "🧠",
+  "more": "➕",
+  "and": "➕",
+  "because": "↪️",
+  "but": "↔️",
+  "to": "➡️",
+  "with": "🤝",
+  "then": "⏭️",
+  "when": "🕒",
+  "if": "❔",
+  "so": "➡️",
+  "yes": "✅",
+  "no": "❌",
+  "search word": "🔎",
+  "find word": "🔎",
+  "quiet": "🤫",
+  "space": "🫧",
+  "too loud": "🔊",
+  "too much": "⚠️",
+  "now": "⚡"
+};
+
+function normalize(word = "") {
   return String(word)
     .toLowerCase()
-    .replace(/[^\w\s&']/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/&/g, "and")
-    .replace(/'/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^\w\s']/g, " ")
+    .replace(/\s+/g, " ")
     .trim();
 }
 
-const FALLBACKS = {
-  "i":"🧒","want":"🤲","need":"🆘","feel":"🙂","am":"=","can":"🙋","don't":"✕","like":"☺","love":"❤️",
-  "have":"📦","see":"👀","hear":"👂","think":"💭","go":"➡️","stop":"🛑","help":"🤝","get":"🤲","do":"🙌",
-  "more":"🙌","food":"🍎","drink":"🥤","water":"💧","snack":"🍪","outside":"🌳","inside":"🏠","break":"🛝",
-  "and":"+","because":"💬","but":"≠","to":"➡️","with":"👥","then":"🕒","when":"❓","if":"↕️","so":"➡️",
-  "yes":"✅","no":"❌","finished":"🙌","please":"🙏","thank you":"💖","mom":"👩","dad":"👨","you":"👍","me":"🧒"
-};
+function emojiFor(word = "") {
+  const key = normalize(word);
+  return SYMBOLS[key] || "⭐";
+}
 
-export default function SymbolImage({ word, className = "symbolImage" }) {
-  const [failed, setFailed] = useState(false);
-  const slug = useMemo(() => slugify(word), [word]);
-  const fb = FALLBACKS[String(word).toLowerCase()] || "•";
-
-  if (failed || !slug) return <span className="fallbackSymbol" aria-hidden="true">{fb}</span>;
-
+export default function SymbolImage({ word }) {
+  const symbol = emojiFor(word);
   return (
-    <img
-      className={className}
-      src={`/symbols/aac/${slug}.svg`}
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-      onError={() => setFailed(true)}
-    />
+    <div className="approvedSymbol" aria-hidden="true">
+      <span style={{ fontSize: "2rem", lineHeight: 1 }}>{symbol}</span>
+    </div>
   );
 }
