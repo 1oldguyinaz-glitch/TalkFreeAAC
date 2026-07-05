@@ -7,17 +7,16 @@ import SentenceBuilder from "./components/SentenceBuilder.jsx";
 import HumanPhraseBar from "./components/HumanPhraseBar.jsx";
 import ProfileCorner from "./components/ProfileCorner.jsx";
 import AACButton from "./components/AACButton.jsx";
-import ResponsiveGrid from "./components/ResponsiveGrid.jsx";
-import TopicRail from "./components/TopicRail.jsx";
 
 function labelFor(word) {
   if (word === "Food & Drinks") return "Food";
   if (word === "School Curriculum") return "School";
+  if (word === "Daily Living") return "Daily";
   if (word === "Health & Body") return "Health";
   return word;
 }
 
-export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
+export default function ChildAAC({ profile, onTap, onSpeak, onBack, onClear, onContext, onParent }) {
   const [query, setQuery] = useState("");
   const section = profile.activeContext || "Core Needs";
   const phrase = currentPhrase(profile.sentence || []);
@@ -33,18 +32,13 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       onContext(word);
       return;
     }
-
-    if (String(word).includes(" ") && onPhrase) {
-      onPhrase(word);
-      return;
-    }
-
     onTap(word);
   }
 
   function selectPhrase(phraseText) {
-    if (onPhrase) onPhrase(phraseText);
-    else phraseText.split(" ").forEach(part => part.trim() && onTap(part.trim()));
+    phraseText.split(" ").forEach(part => {
+      if (part.trim()) onTap(part.trim());
+    });
   }
 
   const displayPredictions =
@@ -60,7 +54,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     : board.contextWords;
 
   return (
-    <div className="aacShellV4 adaptiveShell">
+    <div className="aacShellV4">
       <header className="aacTopV4">
         <div className="brandBlock">
           <div className="brandName">TalkFree<span>AAC</span></div>
@@ -86,7 +80,11 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             <h2>{section === "Core Needs" ? "Keep Talking" : labelFor(section)}</h2>
             <nav className="modePills">
               {["Core Needs", "Topics", "Search", "Recents", "Favorites", "Emergency"].map(r => (
-                <button key={r} className={section === r ? "modePill active" : "modePill"} onClick={() => { setQuery(""); onContext(r); }}>
+                <button
+                  key={r}
+                  className={section === r ? "modePill active" : "modePill"}
+                  onClick={() => { setQuery(""); onContext(r); }}
+                >
                   {r}
                 </button>
               ))}
@@ -94,23 +92,36 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           </div>
 
           {section === "Search" ? (
-            <input className="searchV4" placeholder="Search words, phrases, topics..." value={query} onChange={e => setQuery(e.target.value)} />
+            <input
+              className="searchV4"
+              placeholder="Search words, phrases, topics..."
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+            />
           ) : null}
 
-          <ResponsiveGrid className="predictionGridV4">
+          <section className="predictionGridV4">
             {displayPredictions.map(word => (
               <AACButton key={`prediction-${word}`} word={word} onSelect={selectWord} variant="prediction" />
             ))}
-          </ResponsiveGrid>
+          </section>
 
-          <ResponsiveGrid className="contextGridV4">
+          <section className="contextGridV4">
             {displayContext.map(word => (
               <AACButton key={`context-${word}`} word={word} onSelect={selectWord} />
             ))}
-          </ResponsiveGrid>
+          </section>
         </section>
 
-        <TopicRail topics={board.topics} onContext={onContext} />
+        <aside className="topicRailV4">
+          <div className="topicRailSpacer" />
+          {board.topics.map(topic => (
+            <button key={topic} className="topicBubbleV4" onClick={() => onContext(topic)}>
+              {labelFor(topic)}
+            </button>
+          ))}
+        </aside>
+
         <ProfileCorner profile={profile} onParent={onParent} />
       </main>
     </div>

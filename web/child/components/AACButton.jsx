@@ -1,6 +1,5 @@
 import React from "react";
 import { getWordObject } from "../../../engine/language/languageEngine.js";
-import SymbolImage from "./SymbolImage.jsx";
 
 function labelFor(word) {
   if (word === "Food & Drinks") return "Food";
@@ -12,17 +11,14 @@ function labelFor(word) {
 
 export default function AACButton({ word, onSelect, variant = "word" }) {
   const obj = getWordObject(word);
-  const tileColor = obj.color || "#1688ff";
-
   return (
     <button
       className={`aacBubble ${variant}`}
-      style={{ "--tileColor": tileColor }}
+      style={{ "--tileColor": obj.color || "#1688ff" }}
       onClick={() => onSelect(word)}
       aria-label={`Select ${word}`}
-      title={word}
     >
-      <SymbolImage wordObject={obj} />
+      <span className="bubbleIcon">{obj.icon || "💬"}</span>
       <span className="bubbleLabel">{labelFor(word)}</span>
     </button>
   );
