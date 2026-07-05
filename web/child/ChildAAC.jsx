@@ -1,124 +1,181 @@
-import React, { useMemo, useState } from "react";
-import { currentPhrase, getFullBoard } from "../../engine/prediction/predictionEngine.js";
-import { searchObjects } from "../../engine/search/searchEngine.js";
-import { getRecents, getFavorites } from "../../engine/memory/memoryEngine.js";
-import { isNavigationButton } from "../../engine/navigation/navigationEngine.js";
-import SentenceBuilder from "./components/SentenceBuilder.jsx";
-import HumanPhraseBar from "./components/HumanPhraseBar.jsx";
-import ProfileCorner from "./components/ProfileCorner.jsx";
+import React from "react";
+import { currentPhrase } from "../../engine/prediction/predictionEngine.js";
 import AACButton from "./components/AACButton.jsx";
-import ResponsiveGrid from "./components/ResponsiveGrid.jsx";
-import TopicRail from "./components/TopicRail.jsx";
+import SymbolImage from "./components/SymbolImage.jsx";
 
-function labelFor(word) {
-  if (word === "Food & Drinks") return "Food";
-  if (word === "School Curriculum") return "School";
-  if (word === "Health & Body") return "Health";
-  return word;
+const QUICK_PHRASES = [
+  "I love you",
+  "Have a hug",
+  "Thank you",
+  "Hi",
+  "Bye",
+  "I'm sorry",
+  "I miss you",
+  "Good job",
+  "Good morning",
+  "Good night"
+];
+
+const CORE_LANGUAGE = [
+  "I", "want", "need", "feel", "am", "can",
+  "don't", "like", "love", "have", "see", "hear",
+  "think", "go", "stop", "help", "get", "do"
+];
+
+const FRINGE_CONNECTORS_ENDINGS = [
+  "more", "help", "food", "drink", "water", "snack", "outside", "inside", "break",
+  "and", "because", "but", "to", "with", "then", "when", "if", "so",
+  "yes", "no", "finished", "please", "thank you", "mom", "dad", "you", "me"
+];
+
+const TOPICS = [
+  "Relationships",
+  "Feelings",
+  "Food & Drink",
+  "Places",
+  "School",
+  "Actions",
+  "Things",
+  "Body & Health",
+  "Questions"
+];
+
+const SECONDARY_TOPICS = [
+  "Recents",
+  "Favorites",
+  "Search",
+  "Emergency"
+];
+
+function phraseFromProfile(profile) {
+  const sentence = profile?.sentence || [];
+  if (Array.isArray(sentence)) return currentPhrase(sentence);
+  return String(sentence || "");
+}
+
+function profileName(profile) {
+  return profile?.userProfile?.name || profile?.name || "Austin";
+}
+
+function profilePhoto(profile) {
+  return profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
+}
+
+function contextForTopic(topic) {
+  const map = {
+    "Food & Drink": "Food & Drinks",
+    "Body & Health": "Health & Body"
+  };
+  return map[topic] || topic;
 }
 
 export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
-  const [query, setQuery] = useState("");
-  const section = profile.activeContext || "Core Needs";
-  const phrase = currentPhrase(profile.sentence || []);
-  const board = useMemo(() => getFullBoard(profile), [profile, phrase, section]);
-
-  const searchWords = useMemo(() => {
-    if (!(section === "Search" && query)) return [];
-    return searchObjects(query).map(o => o.name || o.display || o.word);
-  }, [section, query]);
+  const phrase = phraseFromProfile(profile);
+  const name = profileName(profile);
+  const photo = profilePhoto(profile);
 
   function selectWord(word) {
-    if (isNavigationButton(word)) {
-      onContext(word);
-      return;
-    }
-
     if (String(word).includes(" ") && onPhrase) {
       onPhrase(word);
       return;
     }
-
     onTap(word);
   }
 
-  function selectPhrase(phraseText) {
-    if (onPhrase) onPhrase(phraseText);
-    else phraseText.split(" ").forEach(part => part.trim() && onTap(part.trim()));
+  function selectTopic(topic) {
+    if (onContext) onContext(contextForTopic(topic));
   }
 
-  const displayPredictions =
-    section === "Search" ? searchWords :
-    section === "Recents" ? getRecents(profile, 30) :
-    section === "Favorites" ? getFavorites(profile, 30) :
-    section === "Topics" ? board.topics :
-    section === "Emergency" ? ["I need help", "I am hurt", "I am scared", "Call mom", "Call dad", "I use AAC"] :
-    board.predictions;
-
-  const displayContext = ["Search", "Recents", "Favorites", "Topics", "Emergency"].includes(section)
-    ? []
-    : board.contextWords;
-
   return (
-    <div className="aacShellV4 adaptiveShell">
-      <header className="aacTopV4">
-        <div className="brandBlock">
-          <div className="brandName">TalkFree<span>AAC</span></div>
-          <div className="brandTag">Free AAC communication board</div>
-        </div>
+    <div className="approvedAacShell">
+      <main className="approvedMain">
+        <header className="approvedHeader">
+          <section className="approvedBrandCard">
+            <button className="approvedProfileButton" onClick={onParent} aria-label="Open profile">
+              {photo ? <img src={photo} alt="" /> : <span>{name.slice(0, 1).toUpperCase()}</span>}
+            </button>
+            <div className="approvedBrandText">
+              <div className="approvedBrandName">Talk<span>Free</span>AAC</div>
+              <div className="approvedBrandTag">Free voice. <strong>Paid insight.</strong></div>
+            </div>
+          </section>
 
-        <div className="speechPanelV4">
-          <button className="speechDisplayV4" onClick={onSpeak}>
-            <span>{phrase || "I'm ready to start talking to anybody"}</span>
-          </button>
-          <button className="controlBubble speak" onClick={onSpeak}>🔊 Speak</button>
-          <button className="controlBubble back" onClick={onBack}>⬅ Back</button>
-          <button className="controlBubble clear" onClick={onClear}>Clear</button>
-        </div>
-      </header>
+          <section className="approvedSentenceCard">
+            <button className="approvedSentenceButton" onClick={onSpeak}>
+              <span>{phrase || "I want to go outside with you"}</span>
+              <small>~ {Math.max(1, (phrase || "I want to go outside with you").split(" ").length)} words</small>
+            </button>
+            <div className="approvedHeaderTools">
+              <button className="approvedTool speak" onClick={onSpeak}>🔊 Speak</button>
+              <button className="approvedTool back" onClick={onBack}>← Back</button>
+              <button className="approvedTool clear" onClick={onClear}>🗑 Clear</button>
+            </div>
+          </section>
+        </header>
 
-      <SentenceBuilder onSelect={selectPhrase} />
-      <HumanPhraseBar onSelect={selectPhrase} />
-
-      <main className="communicationBoardV4">
-        <section className="mainTalkArea">
-          <div className="boardHeaderRow">
-            <h2>{section === "Core Needs" ? "Smart Suggestions" : labelFor(section)}</h2>
-            <nav className="modePills">
-              {["Core Needs", "Topics", "Search", "Recents", "Favorites", "Emergency"].map(r => (
-                <button key={r} className={section === r ? "modePill active" : "modePill"} onClick={() => { setQuery(""); onContext(r); }}>
-                  {r}
-                </button>
-              ))}
-            </nav>
-          </div>
-
-          {section === "Search" ? (
-            <input className="searchV4" placeholder="Search words, phrases, topics..." value={query} onChange={e => setQuery(e.target.value)} />
-          ) : null}
-
-          <ResponsiveGrid className="predictionGridV4">
-            {displayPredictions.map(word => (
-              <AACButton
-                key={`prediction-${word}`}
-                word={word}
-                onSelect={selectWord}
-                variant="prediction"
-                showPredictionBadge={section !== "Search" && section !== "Topics"}
-              />
-            ))}
-          </ResponsiveGrid>
-
-          <ResponsiveGrid className="contextGridV4">
-            {displayContext.map(word => (
-              <AACButton key={`context-${word}`} word={word} onSelect={selectWord} />
-            ))}
-          </ResponsiveGrid>
+        <section className="approvedQuickPhraseRow">
+          {QUICK_PHRASES.map(phraseText => (
+            <button key={phraseText} className="approvedQuickPhrase" onClick={() => onPhrase ? onPhrase(phraseText) : selectWord(phraseText)}>
+              <SymbolImage word={phraseText} />
+              <span>{phraseText}</span>
+            </button>
+          ))}
         </section>
 
-        <TopicRail topics={board.topics} onContext={onContext} />
-        <ProfileCorner profile={profile} onParent={onParent} />
+        <section className="approvedBoard">
+          <section className="approvedCoreSection">
+            <div className="approvedSectionTitle">
+              <h2>CORE LANGUAGE <span>(Active Branch)</span></h2>
+              <p>Build your sentence — words that talk.</p>
+            </div>
+            <div className="approvedCoreGrid">
+              {CORE_LANGUAGE.map(word => (
+                <AACButton key={word} word={word} onSelect={selectWord} />
+              ))}
+            </div>
+          </section>
+
+          <section className="approvedFringeSection">
+            <div className="approvedSectionTitle">
+              <h2>FRINGE / CONNECTORS / ENDINGS</h2>
+              <p>Add details, connect ideas, and finish.</p>
+            </div>
+            <div className="approvedFringeGrid">
+              {FRINGE_CONNECTORS_ENDINGS.map(word => (
+                <AACButton key={word} word={word} onSelect={selectWord} />
+              ))}
+            </div>
+          </section>
+        </section>
       </main>
+
+      <aside className="approvedTopicRail">
+        <section className="approvedTopicBox">
+          <div className="approvedTopicsHeader">TOPICS</div>
+          {TOPICS.map(topic => (
+            <button key={topic} className="approvedTopicButton" onClick={() => selectTopic(topic)}>
+              <SymbolImage word={topic} />
+              <span>{topic}</span>
+            </button>
+          ))}
+        </section>
+
+        <section className="approvedSecondaryTopics">
+          {SECONDARY_TOPICS.map(topic => (
+            <button key={topic} className="approvedSecondaryButton" onClick={() => selectTopic(topic)}>
+              <SymbolImage word={topic} />
+              <span>{topic}</span>
+            </button>
+          ))}
+        </section>
+      </aside>
+
+      <nav className="approvedBottomNav">
+        <button onClick={() => selectTopic("Core Needs")}>🏠 Home</button>
+        <button onClick={() => selectTopic("Keyboard")}>⌨ Keyboard</button>
+        <button onClick={() => selectTopic("Settings")}>⚙ Settings</button>
+        <button onClick={onParent}>📈 Insights 👑</button>
+      </nav>
     </div>
   );
 }
