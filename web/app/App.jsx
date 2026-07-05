@@ -11,15 +11,18 @@ import { buildSentenceRecord } from "../../engine/composer/sentenceComposer.js";
 import { addTimelineEvent } from "../../engine/timeline/timelineEngine.js";
 import { isNavigationButton } from "../../engine/navigation/navigationEngine.js";
 import { recordPhraseUse } from "../../engine/language/favoritePhraseEngine.js";
+import { recordConversationPattern } from "../../engine/prediction/conversationMemory.js";
+import { ensureCommunicationProfile } from "../../engine/profile/userCommunicationProfile.js";
 import "../styles/parent.css";
 import "../styles/adaptive-ui.css";
+import "../styles/professional-insights.css";
 
 export default function App() {
-  const [profile, setProfileState] = useState(loadProfile());
+  const [profile, setProfileState] = useState(ensureCommunicationProfile(loadProfile()));
   const [screen, setScreen] = useState("child");
 
   function setProfile(next) {
-    setProfileState(saveProfile(next));
+    setProfileState(saveProfile(ensureCommunicationProfile(next)));
   }
 
   function tapWord(word) {
@@ -42,14 +45,12 @@ export default function App() {
 
   function tapPhrase(phrase) {
     if (!phrase) return;
-
     const parts = String(phrase).split(" ").filter(Boolean);
-    const nextSentence = [...(profile.sentence || []), ...parts];
     const updated = recordPhraseUse(profile, phrase);
 
     setProfile({
       ...updated,
-      sentence: nextSentence,
+      sentence: [...(profile.sentence || []), ...parts],
       recentWords: [...parts, ...(profile.recentWords || [])].slice(0, 40),
       justCompletedSentence: false
     });
@@ -64,7 +65,10 @@ export default function App() {
     const record = buildSentenceRecord(profile);
     speak(phrase);
 
-    const completed = completeSentence(recordPhraseUse(profile, phrase));
+    const withPhrase = recordPhraseUse(profile, phrase);
+    const withPattern = recordConversationPattern(withPhrase, phrase);
+    const completed = completeSentence(withPattern);
+
     setProfile(addTimelineEvent(completed, {
       type: "communication",
       text: record.phrase,
