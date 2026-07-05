@@ -1,25 +1,11 @@
 import {
   TREE_VERSION,
+  TOPICS,
   getFixedCoreLanguage,
   getDynamicBranch,
+  getTopicAttributes,
   uniqueWords
 } from "../language/languageTree.js";
-
-const TOPICS = [
-  "Relationships",
-  "Feelings",
-  "Food & Drink",
-  "Places",
-  "School",
-  "Actions",
-  "Things",
-  "Body & Health",
-  "Questions",
-  "Recents",
-  "Favorites",
-  "Search",
-  "Emergency"
-];
 
 export function currentPhrase(sentence = []) {
   if (Array.isArray(sentence)) return sentence.join(" ").trim();
@@ -36,7 +22,12 @@ export function getPredictions(profile = {}) {
 
 export function getContextWords(profile = {}) {
   const sentence = profile.sentence || [];
-  return uniqueWords(getDynamicBranch(sentence)).slice(0, 27);
+  const activeContext = profile.activeContext || profile.context || profile.topic || "";
+  return uniqueWords(getDynamicBranch(sentence, activeContext)).slice(0, 27);
+}
+
+export function getTopicWords(topic = "") {
+  return uniqueWords(getTopicAttributes(topic)).slice(0, 27);
 }
 
 export function getFullBoard(profile = {}) {
@@ -82,6 +73,7 @@ export default {
   predictNextWords,
   getPredictions,
   getContextWords,
+  getTopicWords,
   getFullBoard,
   getBoard,
   buildPredictionBoard,

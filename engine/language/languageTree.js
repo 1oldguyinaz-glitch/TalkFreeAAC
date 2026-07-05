@@ -1,4 +1,4 @@
-export const TREE_VERSION = "5.10";
+export const TREE_VERSION = "5.13";
 
 export const FIXED_CORE_LANGUAGE = [
   "I", "want", "need", "feel", "am", "can",
@@ -6,11 +6,107 @@ export const FIXED_CORE_LANGUAGE = [
   "think", "go", "stop", "help", "get", "do"
 ];
 
+export const TOPICS = [
+  "Relationships",
+  "Feelings",
+  "Food & Drink",
+  "Places",
+  "School",
+  "Actions",
+  "Things",
+  "Body & Health",
+  "Questions",
+  "Recents",
+  "Favorites",
+  "Search",
+  "Emergency"
+];
+
 export const HOME_BRANCH = [
   "more", "help", "food", "drink", "water", "snack", "outside", "inside", "break",
   "and", "because", "but", "to", "with", "then", "when", "if", "so",
   "yes", "no", "finished", "please", "thank you", "mom", "dad", "you", "me"
 ];
+
+export const TOPIC_ATTRIBUTES = {
+  "relationships": [
+    "mom", "dad", "you", "me", "family", "friend", "teacher", "grandma", "grandpa",
+    "I love you", "Can I have a hug", "hug", "kiss", "thank you", "please", "hi", "bye", "I'm sorry",
+    "I miss you", "good job", "good morning", "good night", "stay with me", "play with me", "talk to me", "help me", "I love"
+  ],
+
+  "feelings": [
+    "happy", "sad", "mad", "angry", "scared", "tired", "sick", "hurt", "frustrated",
+    "excited", "proud", "lonely", "safe", "okay", "calm", "nervous", "upset", "worried",
+    "hungry", "thirsty", "hot", "cold", "not ready", "ready", "because", "but", "with"
+  ],
+
+  "food and drink": [
+    "food", "drink", "water", "snack", "juice", "milk", "breakfast", "lunch", "dinner",
+    "apple", "banana", "chips", "cookie", "cracker", "sandwich", "pizza", "chicken", "rice",
+    "more", "all done", "hungry", "thirsty", "please", "thank you", "eat", "drink", "finished"
+  ],
+
+  "places": [
+    "outside", "inside", "home", "school", "bathroom", "park", "playground", "store", "car",
+    "room", "bedroom", "kitchen", "table", "chair", "door", "bus", "classroom", "library",
+    "to", "from", "in", "on", "under", "over", "go", "stay", "finished"
+  ],
+
+  "school": [
+    "teacher", "friend", "class", "school", "desk", "chair", "book", "paper", "pencil",
+    "read", "write", "listen", "look", "learn", "work", "play", "break", "bathroom",
+    "help", "I don't understand", "I need help", "finished", "more", "yes", "no", "please"
+  ],
+
+  "actions": [
+    "go", "stop", "help", "get", "do", "play", "eat", "drink", "read", "watch",
+    "sit", "stand", "walk", "run", "jump", "open", "close", "turn", "look", "listen",
+    "wait", "try", "choose", "make", "use", "talk", "say", "finished"
+  ],
+
+  "things": [
+    "toy", "tablet", "book", "ball", "blanket", "clothes", "shoes", "music", "tv",
+    "phone", "cup", "plate", "spoon", "fork", "bag", "backpack", "paper", "pencil",
+    "chair", "bed", "door", "light", "remote", "game", "more", "help", "finished"
+  ],
+
+  "body and health": [
+    "body", "head", "mouth", "teeth", "ear", "eye", "hand", "arm", "leg",
+    "foot", "stomach", "back", "hurt", "pain", "sick", "medicine", "doctor", "nurse",
+    "bathroom", "tired", "hot", "cold", "help", "stop", "safe", "I am hurt", "I feel sick"
+  ],
+
+  "questions": [
+    "who", "what", "where", "when", "why", "how", "which", "can I", "can you",
+    "do you", "is it", "are we", "where is", "what is", "why not", "how many", "how much",
+    "yes", "no", "maybe", "please", "help", "show me", "tell me", "again", "finished"
+  ],
+
+  "recents": [
+    "I", "want", "need", "help", "more", "food", "drink", "water", "outside",
+    "bathroom", "mom", "dad", "yes", "no", "finished", "please", "thank you", "break",
+    "happy", "sad", "hurt", "scared", "go", "stop", "with", "because", "and"
+  ],
+
+  "favorites": [
+    "I love you", "Can I have a hug", "Help me", "I want", "I need", "I feel", "mom", "dad", "water",
+    "food", "snack", "outside", "bathroom", "play", "break", "yes", "no", "finished",
+    "please", "thank you", "happy", "sad", "hurt", "safe", "more", "with", "because"
+  ],
+
+  "search": [
+    "search", "find word", "show me", "people", "places", "food", "feelings", "actions", "things",
+    "body", "school", "questions", "recents", "favorites", "help", "more", "yes", "no",
+    "I want", "I need", "I feel", "where", "what", "who", "when", "why", "how"
+  ],
+
+  "emergency": [
+    "Help me", "Stop", "I am hurt", "I am scared", "I need help", "I need mom", "I need dad", "call mom", "call dad",
+    "doctor", "medicine", "bathroom", "safe", "hurt", "pain", "sick", "scared", "stop",
+    "too loud", "too much", "break", "quiet", "space", "yes", "no", "please", "now"
+  ]
+};
 
 export const BRANCHES = {
   "i": [
@@ -119,6 +215,7 @@ export const BRANCHES = {
 export function normalizeTreeKey(value = "") {
   return String(value)
     .toLowerCase()
+    .replace(/&/g, " and ")
     .replace(/[^\w\s']/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -129,6 +226,21 @@ export function sentenceToText(sentence = []) {
   return String(sentence || "").trim();
 }
 
+function normalizeTopicName(topic = "") {
+  const key = normalizeTreeKey(topic);
+
+  const aliases = {
+    "food drink": "food and drink",
+    "food drinks": "food and drink",
+    "food and drinks": "food and drink",
+    "health body": "body and health",
+    "health and body": "body and health",
+    "body health": "body and health"
+  };
+
+  return aliases[key] || key;
+}
+
 function bestKeyForPhrase(phrase = "") {
   const clean = normalizeTreeKey(phrase);
   if (!clean) return "";
@@ -137,7 +249,15 @@ function bestKeyForPhrase(phrase = "") {
   return keys.find(key => clean === key || clean.endsWith(` ${key}`) || clean.includes(` ${key} `)) || "";
 }
 
-export function getActiveTreeBranch(sentence = []) {
+export function getTopicAttributes(topic = "") {
+  const key = normalizeTopicName(topic);
+  return TOPIC_ATTRIBUTES[key] ? [...TOPIC_ATTRIBUTES[key]] : [];
+}
+
+export function getActiveTreeBranch(sentence = [], activeContext = "") {
+  const topicWords = getTopicAttributes(activeContext);
+  if (topicWords.length) return topicWords;
+
   const phrase = sentenceToText(sentence);
   const key = bestKeyForPhrase(phrase);
   return key ? BRANCHES[key] : HOME_BRANCH;
@@ -147,8 +267,8 @@ export function getFixedCoreLanguage() {
   return [...FIXED_CORE_LANGUAGE];
 }
 
-export function getDynamicBranch(sentence = []) {
-  return [...getActiveTreeBranch(sentence)];
+export function getDynamicBranch(sentence = [], activeContext = "") {
+  return [...getActiveTreeBranch(sentence, activeContext)];
 }
 
 export function uniqueWords(items = []) {
