@@ -1,0 +1,50 @@
+/* TalkFreeAAC V5.12 — Meaning-based color map only.
+   Layout is locked. This file changes color categories only. */
+
+.tile-blue {
+  background: linear-gradient(180deg, #1d82ee, #0757b8) !important;
+  color: #ffffff !important;
+}
+
+.tile-green {
+  background: linear-gradient(180deg, #20b85f, #07833e) !important;
+  color: #ffffff !important;
+}
+
+.tile-orange {
+  background: linear-gradient(180deg, #ff9825, #ed6b00) !important;
+  color: #ffffff !important;
+}
+
+.tile-purple {
+  background: linear-gradient(180deg, #9064d9, #6736b1) !important;
+  color: #ffffff !important;
+}
+
+.tile-yellow {
+  background: linear-gradient(180deg, #ffe66e, #ffd43b) !important;
+  color: #07111f !important;
+  text-shadow: none !important;
+}
+
+.tile-red {
+  background: linear-gradient(180deg, #ff5a5f, #d81f32) !important;
+  color: #ffffff !important;
+}
+
+.tile-pink {
+  background: linear-gradient(180deg, #ffb7c9, #ff7fa3) !important;
+  color: #07111f !important;
+  text-shadow: none !important;
+}
+
+.tile-white {
+  background: linear-gradient(180deg, #ffffff, #e5e7eb) !important;
+  color: #07111f !important;
+  text-shadow: none !important;
+}
+
+.tile-brown {
+  background: linear-gradient(180deg, #b87945, #7a4a24) !important;
+  color: #ffffff !important;
+}
