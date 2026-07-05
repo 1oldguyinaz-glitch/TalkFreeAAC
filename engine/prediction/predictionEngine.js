@@ -7,6 +7,7 @@ import { getConversationMemoryPredictions } from "./conversationMemory.js";
 import { getRelationshipPredictions } from "./relationshipPredictionEngine.js";
 import { getEmotionPredictions } from "./emotionPredictionEngine.js";
 import { getSafetyPredictions } from "./safetyPredictionEngine.js";
+import { getAdaptiveLearningCandidates } from "./adaptiveLearningEngine.js";
 import { rankPredictions } from "./predictionScoring.js";
 import { ensureCommunicationProfile } from "../profile/userCommunicationProfile.js";
 
@@ -22,13 +23,13 @@ export function getFullBoard(rawProfile = {}) {
   const profile = ensureCommunicationProfile(rawProfile);
   const sentence = profile.sentence || [];
   const activeContext = profile.activeContext || "Core Needs";
-
   const board = buildLanguageBoard(profile);
 
   const candidates = [
     ...getSafetyPredictions(profile, sentence),
     ...getEmotionPredictions(profile, sentence),
     ...getRelationshipPredictions(profile, sentence),
+    ...getAdaptiveLearningCandidates(profile),
     ...getConversationPredictions(profile, 16).map(word => ({
       word,
       reasons: {
@@ -42,17 +43,11 @@ export function getFullBoard(rawProfile = {}) {
     ...getRoutinePredictions(profile),
     ...getPersonalizedPredictions(profile),
     ...getConversationMemoryPredictions(profile, sentence),
-    ...(board.predictions || []).map(word => ({
-      word,
-      reasons: { grammar: true },
-      score: 120
-    }))
+    ...(board.predictions || []).map(word => ({ word, reasons: { grammar: true }, score: 120 }))
   ];
-
-  const predictions = rankPredictions(candidates, profile, sentence, activeContext, 12);
 
   return {
     ...board,
-    predictions
+    predictions: rankPredictions(candidates, profile, sentence, activeContext, 12)
   };
 }

@@ -3,7 +3,7 @@ import ChildAAC from "../child/ChildAAC.jsx";
 import ParentMenu from "../parent/ParentMenu.jsx";
 import { loadProfile, saveProfile } from "../shared/profile.js";
 import { speak } from "../shared/speech.js";
-import { currentPhrase } from "../../engine/prediction/predictionEngine.js";
+import { currentPhrase, getPredictions } from "../../engine/prediction/predictionEngine.js";
 import { completeSentence } from "../../engine/sentences/sentenceEngine.js";
 import { addFriction } from "../../engine/friction/frictionLog.js";
 import { recordUsage } from "../../engine/memory/memoryEngine.js";
@@ -12,6 +12,7 @@ import { addTimelineEvent } from "../../engine/timeline/timelineEngine.js";
 import { isNavigationButton } from "../../engine/navigation/navigationEngine.js";
 import { recordPhraseUse } from "../../engine/language/favoritePhraseEngine.js";
 import { recordConversationPattern } from "../../engine/prediction/conversationMemory.js";
+import { recordPredictionOutcome } from "../../engine/prediction/adaptiveLearningEngine.js";
 import { ensureCommunicationProfile } from "../../engine/profile/userCommunicationProfile.js";
 import "../styles/parent.css";
 import "../styles/adaptive-ui.css";
@@ -31,12 +32,14 @@ export default function App() {
       return;
     }
 
-    const before = currentPhrase(profile.sentence);
-    const updated = recordUsage(profile, word, before);
+    const visiblePredictions = getPredictions(profile);
+    const learned = recordPredictionOutcome(profile, word, visiblePredictions);
+    const before = currentPhrase(learned.sentence);
+    const updated = recordUsage(learned, word, before);
 
     setProfile({
       ...updated,
-      sentence: [...(profile.sentence || []), word],
+      sentence: [...(learned.sentence || []), word],
       justCompletedSentence: false
     });
 
@@ -45,13 +48,16 @@ export default function App() {
 
   function tapPhrase(phrase) {
     if (!phrase) return;
+
+    const visiblePredictions = getPredictions(profile);
+    const learned = recordPredictionOutcome(profile, phrase, visiblePredictions);
     const parts = String(phrase).split(" ").filter(Boolean);
-    const updated = recordPhraseUse(profile, phrase);
+    const updated = recordPhraseUse(learned, phrase);
 
     setProfile({
       ...updated,
-      sentence: [...(profile.sentence || []), ...parts],
-      recentWords: [...parts, ...(profile.recentWords || [])].slice(0, 40),
+      sentence: [...(learned.sentence || []), ...parts],
+      recentWords: [...parts, ...(learned.recentWords || [])].slice(0, 40),
       justCompletedSentence: false
     });
 
