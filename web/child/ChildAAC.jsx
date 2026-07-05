@@ -1,13 +1,51 @@
-import React from "react";
-import { currentPhrase } from "../../engine/prediction/predictionEngine.js";
+import React, { useMemo } from "react";
+import { currentPhrase, getFullBoard } from "../../engine/prediction/predictionEngine.js";
 import AACButton from "./components/AACButton.jsx";
 import SymbolImage from "./components/SymbolImage.jsx";
 
-const QUICK_PHRASES = ["I love you","Have a hug","Thank you","Hi","Bye","I'm sorry","I miss you","Good job","Good morning","Good night"];
-const CORE_LANGUAGE = ["I","want","need","feel","am","can","don't","like","love","have","see","hear","think","go","stop","help","get","do"];
-const FRINGE = ["more","help","food","drink","water","snack","outside","inside","break","and","because","but","to","with","then","when","if","so","yes","no","finished","please","thank you","mom","dad","you","me"];
-const TOPICS = ["Relationships","Feelings","Food & Drink","Places","School","Actions","Things","Body & Health","Questions"];
-const SECONDARY = ["Recents","Favorites","Search","Emergency"];
+const QUICK_PHRASES = [
+  "I love you",
+  "Have a hug",
+  "Thank you",
+  "Hi",
+  "Bye",
+  "I'm sorry",
+  "I miss you",
+  "Good job",
+  "Good morning",
+  "Good night"
+];
+
+const FIXED_CORE_LANGUAGE = [
+  "I", "want", "need", "feel", "am", "can",
+  "don't", "like", "love", "have", "see", "hear",
+  "think", "go", "stop", "help", "get", "do"
+];
+
+const HOME_BRANCH = [
+  "more", "help", "food", "drink", "water", "snack", "outside", "inside", "break",
+  "and", "because", "but", "to", "with", "then", "when", "if", "so",
+  "yes", "no", "finished", "please", "thank you", "mom", "dad", "you", "me"
+];
+
+const TOPICS = [
+  "Relationships",
+  "Feelings",
+  "Food & Drink",
+  "Places",
+  "School",
+  "Actions",
+  "Things",
+  "Body & Health",
+  "Questions"
+];
+
+const SECONDARY = [
+  "Recents",
+  "Favorites",
+  "Search",
+  "Emergency"
+];
 
 function phraseFromProfile(profile) {
   const sentence = profile?.sentence || [];
@@ -15,8 +53,20 @@ function phraseFromProfile(profile) {
   return String(sentence || "");
 }
 
+function uniqueWords(items = []) {
+  const seen = new Set();
+  return items.filter(item => {
+    const key = String(item || "").toLowerCase().trim();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
   const phrase = phraseFromProfile(profile) || "I want to go outside with you";
+  const board = useMemo(() => getFullBoard(profile || {}), [profile, phrase]);
+  const activeBranch = uniqueWords(board.contextWords?.length ? board.contextWords : HOME_BRANCH).slice(0, 27);
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const photo = profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
 
@@ -64,21 +114,21 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
         <section className="approvedBoard">
           <section className="approvedCoreSection">
             <div className="approvedSectionTitle">
-              <h2>CORE LANGUAGE <span>(Active Branch)</span></h2>
-              <p>Build your sentence — words that talk.</p>
+              <h2>CORE LANGUAGE <span>(Always Available)</span></h2>
+              <p>These stay fixed. They never disappear.</p>
             </div>
             <div className="approvedCoreGrid">
-              {CORE_LANGUAGE.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}
+              {FIXED_CORE_LANGUAGE.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}
             </div>
           </section>
 
           <section className="approvedFringeSection">
             <div className="approvedSectionTitle">
-              <h2>FRINGE / CONNECTORS / ENDINGS</h2>
-              <p>Add details, connect ideas, and finish.</p>
+              <h2>ACTIVE TREE / CONNECTORS / ENDINGS</h2>
+              <p>These change with the sentence branch.</p>
             </div>
             <div className="approvedFringeGrid">
-              {FRINGE.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}
+              {activeBranch.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}
             </div>
           </section>
         </section>
