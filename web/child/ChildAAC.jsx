@@ -1,5 +1,10 @@
 import React, { useMemo, useState } from "react";
-import { currentPhrase, getFullBoard } from "../../engine/prediction/predictionEngine.js";
+import {
+  currentPhrase,
+  getFullBoard,
+  getNextTopicNode,
+  topicWordHasChildren
+} from "../../engine/prediction/predictionEngine.js";
 import AACButton from "./components/AACButton.jsx";
 import SymbolImage from "./components/SymbolImage.jsx";
 
@@ -63,6 +68,15 @@ function uniqueWords(items = []) {
   });
 }
 
+function titleFromContext(context = "") {
+  if (!context) return "";
+  const last = String(context).split("/").pop() || "";
+  return last
+    .split("-")
+    .map(part => part ? part.slice(0, 1).toUpperCase() + part.slice(1) : "")
+    .join(" ");
+}
+
 export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
   const [activeTopic, setActiveTopic] = useState("");
   const phrase = phraseFromProfile(profile) || "I want to go outside with you";
@@ -79,18 +93,23 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const photo = profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
 
-  const selectWord = (word) => {
-    // If the lower grid is showing a topic list, selecting any item should add the word
-    // and immediately return the lower grid to the normal sentence/default tree.
-    if (activeTopic) setActiveTopic("");
-
+  const addWordToSentence = (word) => {
     if (word.includes(" ") && onPhrase) return onPhrase(word);
     onTap?.(word);
   };
 
+  const selectWord = (word) => {
+    if (activeTopic && topicWordHasChildren(activeTopic, word)) {
+      const nextTopic = getNextTopicNode(activeTopic, word);
+      setActiveTopic(nextTopic);
+      return;
+    }
+
+    if (activeTopic) setActiveTopic("");
+    addWordToSentence(word);
+  };
+
   const selectTopic = (topic) => {
-    // Topic selection is navigation only. It should not enter the sentence box.
-    // It only loads the topic words into the lower active tree grid.
     setActiveTopic(topic);
     onContext?.(topic);
   };
@@ -136,7 +155,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           {QUICK_PHRASES.map(item => (
             <button key={item} className="approvedQuickPhrase" onClick={() => {
               setActiveTopic("");
-              onPhrase ? onPhrase(item) : selectWord(item);
+              onPhrase ? onPhrase(item) : addWordToSentence(item);
             }}>
               <SymbolImage word={item} />
               <span>{item}</span>
@@ -158,7 +177,11 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           <section className="approvedFringeSection">
             <div className="approvedSectionTitle">
               <h2>ACTIVE TREE / CONNECTORS / ENDINGS</h2>
-              <p>{activeTopic ? `${activeTopic} words — select one to return to the tree.` : "These change with the sentence branch."}</p>
+              <p>
+                {activeTopic
+                  ? `${titleFromContext(activeTopic)} — choose a branch or word.`
+                  : "These change with the sentence branch."}
+              </p>
             </div>
             <div className="approvedFringeGrid">
               {activeBranch.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}

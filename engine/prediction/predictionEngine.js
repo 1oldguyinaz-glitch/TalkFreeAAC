@@ -4,6 +4,8 @@ import {
   getFixedCoreLanguage,
   getDynamicBranch,
   getTopicAttributes,
+  getNextTopicContext,
+  isTopicNavigationWord,
   uniqueWords
 } from "../language/languageTree.js";
 
@@ -28,6 +30,14 @@ export function getContextWords(profile = {}) {
 
 export function getTopicWords(topic = "") {
   return uniqueWords(getTopicAttributes(topic)).slice(0, 27);
+}
+
+export function getNextTopicNode(currentContext = "", selectedWord = "") {
+  return getNextTopicContext(currentContext, selectedWord);
+}
+
+export function topicWordHasChildren(currentContext = "", selectedWord = "") {
+  return isTopicNavigationWord(currentContext, selectedWord);
 }
 
 export function getFullBoard(profile = {}) {
@@ -98,6 +108,8 @@ export default {
   getPredictions,
   getContextWords,
   getTopicWords,
+  getNextTopicNode,
+  topicWordHasChildren,
   getFullBoard,
   getBoard,
   buildPredictionBoard,
