@@ -1,56 +1,29 @@
-const KEY = "talkfreeaac.profile.rebuild8";
+import { migrateProfile } from "../../engine/profile/profileMigration.js";
 
-export function defaultProfile() {
-  return {
-    selectedStage: "Stage 1: Emerging Communicator",
-    activeContext: "Core Needs",
-    sentence: [],
-    wordCounts: {},
-    phraseCounts: {},
-    tapHistory: [],
-    sentenceHistory: [],
-    timeline: [],
-    frictionLog: [],
-    teamNotes: [],
-    teamMembers: [],
-    goals: [],
-    vocabularyRecommendations: [],
-    approvalQueue: [],
-    customVocabulary: {},
-    favorites: [],
-    recentWords: [],
-    recentContexts: [],
-    justCompletedSentence: false,
-    lastCompletedSentence: "",
-    displaySettings: { scheme: "talkfree_pop", buttonScale: 100, textScale: 100 },
-    inputSettings: { activeInput: "touch", eyeTrackingEnabled: false, eyeTrackingDwellMs: 900 },
-    aiSettings: { localPredictionEnabled: true, parentApprovalRequired: true },
-    userProfile: {
-      name: "",
-      photo: "",
-      emergencyDescription: "I use AAC to communicate.",
-      contacts: [],
-      allergies: "",
-      medicalNotes: ""
-    }
-  };
-}
+const STORAGE_KEY = "talkfreeaac.profile.v4";
 
 export function loadProfile() {
   try {
-    return { ...defaultProfile(), ...JSON.parse(localStorage.getItem(KEY) || "{}") };
-  } catch {
-    return defaultProfile();
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return migrateProfile({});
+    return migrateProfile(JSON.parse(raw));
+  } catch (error) {
+    console.warn("TalkFreeAAC profile load failed; using safe default.", error);
+    return migrateProfile({});
   }
 }
 
 export function saveProfile(profile) {
-  localStorage.setItem(KEY, JSON.stringify({ ...profile, updatedAt: new Date().toISOString() }));
-  return { ...profile };
+  const migrated = migrateProfile(profile);
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+  } catch (error) {
+    console.warn("TalkFreeAAC profile save failed.", error);
+  }
+  return migrated;
 }
 
 export function resetProfile() {
-  const p = defaultProfile();
-  saveProfile(p);
-  return p;
+  localStorage.removeItem(STORAGE_KEY);
+  return migrateProfile({});
 }
