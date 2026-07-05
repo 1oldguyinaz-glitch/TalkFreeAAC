@@ -1,0 +1,4194 @@
+{
+  "version": "4.0.5",
+  "name": "TalkFreeAAC Communication Genome v4",
+  "description": "Human-first AAC communication genome focused on needs, emotions, relationships, conversation, school, safety, and daily life.",
+  "entries": [
+    {
+      "id": "cg_0001",
+      "word": "",
+      "phrase": "I love you",
+      "display": "I love you",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 999,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "love",
+        "love you",
+        "i love",
+        "family love"
+      ],
+      "relatedWords": [
+        "hug",
+        "kiss",
+        "mom",
+        "dad"
+      ],
+      "relatedPhrases": [
+        "hug",
+        "kiss",
+        "mom",
+        "dad"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/i_love_you.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0002",
+      "word": "",
+      "phrase": "Can I have a hug",
+      "display": "Can I have a hug",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 998,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "hug",
+        "hold me",
+        "comfort"
+      ],
+      "relatedWords": [
+        "I love you",
+        "I'm sad"
+      ],
+      "relatedPhrases": [
+        "I love you",
+        "I'm sad"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/can_i_have_a_hug.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0003",
+      "word": "",
+      "phrase": "Thank you",
+      "display": "Thank you",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 997,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "thanks",
+        "thank"
+      ],
+      "relatedWords": [
+        "You're welcome",
+        "Good job"
+      ],
+      "relatedPhrases": [
+        "You're welcome",
+        "Good job"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/thank_you.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0004",
+      "word": "",
+      "phrase": "You're welcome",
+      "display": "You're welcome",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 996,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "welcome"
+      ],
+      "relatedWords": [
+        "Thank you"
+      ],
+      "relatedPhrases": [
+        "Thank you"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/youre_welcome.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0005",
+      "word": "",
+      "phrase": "I'm sorry",
+      "display": "I'm sorry",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 995,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sorry",
+        "apologize"
+      ],
+      "relatedWords": [
+        "I love you",
+        "hug"
+      ],
+      "relatedPhrases": [
+        "I love you",
+        "hug"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/im_sorry.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0006",
+      "word": "",
+      "phrase": "I miss you",
+      "display": "I miss you",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 994,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "miss you",
+        "miss"
+      ],
+      "relatedWords": [
+        "I love you",
+        "mom",
+        "dad"
+      ],
+      "relatedPhrases": [
+        "I love you",
+        "mom",
+        "dad"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/i_miss_you.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0007",
+      "word": "",
+      "phrase": "Good morning",
+      "display": "Good morning",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 993,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "morning"
+      ],
+      "relatedWords": [
+        "Hi",
+        "I love you"
+      ],
+      "relatedPhrases": [
+        "Hi",
+        "I love you"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/good_morning.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0008",
+      "word": "",
+      "phrase": "Good night",
+      "display": "Good night",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 992,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "night",
+        "bedtime"
+      ],
+      "relatedWords": [
+        "I love you",
+        "hug"
+      ],
+      "relatedPhrases": [
+        "I love you",
+        "hug"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/good_night.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0009",
+      "word": "Hi",
+      "phrase": "",
+      "display": "Hi",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 991,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "hello",
+        "hey"
+      ],
+      "relatedWords": [
+        "How are you",
+        "Good morning"
+      ],
+      "relatedPhrases": [
+        "How are you",
+        "Good morning"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/hi.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0010",
+      "word": "Bye",
+      "phrase": "",
+      "display": "Bye",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 990,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "goodbye",
+        "see you"
+      ],
+      "relatedWords": [
+        "See you later"
+      ],
+      "relatedPhrases": [
+        "See you later"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/bye.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0011",
+      "word": "",
+      "phrase": "Good job",
+      "display": "Good job",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 989,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "proud",
+        "nice work"
+      ],
+      "relatedWords": [
+        "I'm proud of you"
+      ],
+      "relatedPhrases": [
+        "I'm proud of you"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/good_job.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0012",
+      "word": "",
+      "phrase": "I'm proud of you",
+      "display": "I'm proud of you",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 988,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "proud"
+      ],
+      "relatedWords": [
+        "Good job"
+      ],
+      "relatedPhrases": [
+        "Good job"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/im_proud_of_you.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0013",
+      "word": "",
+      "phrase": "Best friend",
+      "display": "Best friend",
+      "grammar": "phrase",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 987,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "friend",
+        "buddy"
+      ],
+      "relatedWords": [
+        "Let's play"
+      ],
+      "relatedPhrases": [
+        "Let's play"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/best_friend.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0014",
+      "word": "Family",
+      "phrase": "",
+      "display": "Family",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 986,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "home people"
+      ],
+      "relatedWords": [
+        "mom",
+        "dad"
+      ],
+      "relatedPhrases": [
+        "mom",
+        "dad"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/family.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0015",
+      "word": "Mom",
+      "phrase": "",
+      "display": "Mom",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 985,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "mother",
+        "mama"
+      ],
+      "relatedWords": [
+        "I love you",
+        "hug"
+      ],
+      "relatedPhrases": [
+        "I love you",
+        "hug"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/mom.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0016",
+      "word": "Dad",
+      "phrase": "",
+      "display": "Dad",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 984,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "father",
+        "daddy"
+      ],
+      "relatedWords": [
+        "I love you",
+        "hug"
+      ],
+      "relatedPhrases": [
+        "I love you",
+        "hug"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/dad.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0017",
+      "word": "Grandma",
+      "phrase": "",
+      "display": "Grandma",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 983,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "nana"
+      ],
+      "relatedWords": [
+        "I love you"
+      ],
+      "relatedPhrases": [
+        "I love you"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/grandma.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0018",
+      "word": "Grandpa",
+      "phrase": "",
+      "display": "Grandpa",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 982,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "papa"
+      ],
+      "relatedWords": [
+        "I love you"
+      ],
+      "relatedPhrases": [
+        "I love you"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/grandpa.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0019",
+      "word": "Brother",
+      "phrase": "",
+      "display": "Brother",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 981,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sibling"
+      ],
+      "relatedWords": [
+        "play"
+      ],
+      "relatedPhrases": [
+        "play"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/brother.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0020",
+      "word": "Sister",
+      "phrase": "",
+      "display": "Sister",
+      "grammar": "word",
+      "purpose": "relationship",
+      "topic": "Relationships",
+      "subcategory": "Relationships",
+      "predictionWeight": 980,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sibling"
+      ],
+      "relatedWords": [
+        "play"
+      ],
+      "relatedPhrases": [
+        "play"
+      ],
+      "icon": "\u2764\ufe0f",
+      "cartoon": "/symbols/v4/sister.png",
+      "color": "#ef5da8"
+    },
+    {
+      "id": "cg_0021",
+      "word": "",
+      "phrase": "I want",
+      "display": "I want",
+      "grammar": "phrase",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 629,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "want"
+      ],
+      "relatedWords": [
+        "to",
+        "more"
+      ],
+      "relatedPhrases": [
+        "to",
+        "more"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/i_want.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0022",
+      "word": "",
+      "phrase": "I need",
+      "display": "I need",
+      "grammar": "phrase",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 628,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "need"
+      ],
+      "relatedWords": [
+        "help",
+        "water"
+      ],
+      "relatedPhrases": [
+        "help",
+        "water"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/i_need.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0023",
+      "word": "",
+      "phrase": "Help me",
+      "display": "Help me",
+      "grammar": "phrase",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 627,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "help"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/help_me.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0024",
+      "word": "More",
+      "phrase": "",
+      "display": "More",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 626,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "again",
+        "more please"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/more.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0025",
+      "word": "",
+      "phrase": "All done",
+      "display": "All done",
+      "grammar": "phrase",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 625,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "finished",
+        "done"
+      ],
+      "relatedWords": [
+        "thank you"
+      ],
+      "relatedPhrases": [
+        "thank you"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/all_done.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0026",
+      "word": "Yes",
+      "phrase": "",
+      "display": "Yes",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 624,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "yeah",
+        "yep"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/yes.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0027",
+      "word": "No",
+      "phrase": "",
+      "display": "No",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 623,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "nope"
+      ],
+      "relatedWords": [
+        "stop"
+      ],
+      "relatedPhrases": [
+        "stop"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/no.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0028",
+      "word": "Please",
+      "phrase": "",
+      "display": "Please",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 622,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "plz"
+      ],
+      "relatedWords": [
+        "thank you"
+      ],
+      "relatedPhrases": [
+        "thank you"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/please.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0029",
+      "word": "Water",
+      "phrase": "",
+      "display": "Water",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 621,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "drink water"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/water.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0030",
+      "word": "Food",
+      "phrase": "",
+      "display": "Food",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 620,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "eat",
+        "hungry"
+      ],
+      "relatedWords": [
+        "more"
+      ],
+      "relatedPhrases": [
+        "more"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/food.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0031",
+      "word": "Potty",
+      "phrase": "",
+      "display": "Potty",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 619,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "bathroom",
+        "toilet"
+      ],
+      "relatedWords": [
+        "help"
+      ],
+      "relatedPhrases": [
+        "help"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/potty.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0032",
+      "word": "Stop",
+      "phrase": "",
+      "display": "Stop",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 618,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "no more",
+        "quit"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/stop.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0033",
+      "word": "Wait",
+      "phrase": "",
+      "display": "Wait",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 617,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "hold on"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/wait.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0034",
+      "word": "Open",
+      "phrase": "",
+      "display": "Open",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 616,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "unlock"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/open.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0035",
+      "word": "Close",
+      "phrase": "",
+      "display": "Close",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 615,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "shut"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/close.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0036",
+      "word": "Break",
+      "phrase": "",
+      "display": "Break",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 614,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "rest",
+        "pause"
+      ],
+      "relatedWords": [
+        "I need"
+      ],
+      "relatedPhrases": [
+        "I need"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/break.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0037",
+      "word": "Quiet",
+      "phrase": "",
+      "display": "Quiet",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 613,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "too loud"
+      ],
+      "relatedWords": [
+        "I need"
+      ],
+      "relatedPhrases": [
+        "I need"
+      ],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/quiet.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0038",
+      "word": "Loud",
+      "phrase": "",
+      "display": "Loud",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 612,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "turn up"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/loud.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0039",
+      "word": "Hot",
+      "phrase": "",
+      "display": "Hot",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 611,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "warm"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/hot.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0040",
+      "word": "Cold",
+      "phrase": "",
+      "display": "Cold",
+      "grammar": "word",
+      "purpose": "need",
+      "topic": "Needs",
+      "subcategory": "Needs",
+      "predictionWeight": 610,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "chilly"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udd98",
+      "cartoon": "/symbols/v4/cold.png",
+      "color": "#1688ff"
+    },
+    {
+      "id": "cg_0041",
+      "word": "",
+      "phrase": "I am happy",
+      "display": "I am happy",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 609,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "happy"
+      ],
+      "relatedWords": [
+        "because"
+      ],
+      "relatedPhrases": [
+        "because"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_happy.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0042",
+      "word": "",
+      "phrase": "I am sad",
+      "display": "I am sad",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 608,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sad"
+      ],
+      "relatedWords": [
+        "because",
+        "hug"
+      ],
+      "relatedPhrases": [
+        "because",
+        "hug"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_sad.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0043",
+      "word": "",
+      "phrase": "I am mad",
+      "display": "I am mad",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 607,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "angry"
+      ],
+      "relatedWords": [
+        "because",
+        "break"
+      ],
+      "relatedPhrases": [
+        "because",
+        "break"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_mad.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0044",
+      "word": "",
+      "phrase": "I am scared",
+      "display": "I am scared",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 606,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "afraid"
+      ],
+      "relatedWords": [
+        "hug",
+        "help"
+      ],
+      "relatedPhrases": [
+        "hug",
+        "help"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_scared.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0045",
+      "word": "",
+      "phrase": "I am excited",
+      "display": "I am excited",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 605,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "excited"
+      ],
+      "relatedWords": [
+        "because"
+      ],
+      "relatedPhrases": [
+        "because"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_excited.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0046",
+      "word": "",
+      "phrase": "I am tired",
+      "display": "I am tired",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 604,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sleepy"
+      ],
+      "relatedWords": [
+        "break",
+        "bed"
+      ],
+      "relatedPhrases": [
+        "break",
+        "bed"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_tired.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0047",
+      "word": "",
+      "phrase": "I am frustrated",
+      "display": "I am frustrated",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 603,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "frustrated"
+      ],
+      "relatedWords": [
+        "break",
+        "help"
+      ],
+      "relatedPhrases": [
+        "break",
+        "help"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_frustrated.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0048",
+      "word": "",
+      "phrase": "I am calm",
+      "display": "I am calm",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 602,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "calm"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_calm.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0049",
+      "word": "",
+      "phrase": "It hurts",
+      "display": "It hurts",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 601,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "pain",
+        "hurt"
+      ],
+      "relatedWords": [
+        "here",
+        "help"
+      ],
+      "relatedPhrases": [
+        "here",
+        "help"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/it_hurts.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0050",
+      "word": "",
+      "phrase": "I feel sick",
+      "display": "I feel sick",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 600,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sick",
+        "ill"
+      ],
+      "relatedWords": [
+        "help"
+      ],
+      "relatedPhrases": [
+        "help"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_feel_sick.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0051",
+      "word": "",
+      "phrase": "I don't understand",
+      "display": "I don't understand",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 599,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "confused"
+      ],
+      "relatedWords": [
+        "help"
+      ],
+      "relatedPhrases": [
+        "help"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_dont_understand.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0052",
+      "word": "",
+      "phrase": "I need a break",
+      "display": "I need a break",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 598,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "break"
+      ],
+      "relatedWords": [
+        "quiet"
+      ],
+      "relatedPhrases": [
+        "quiet"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_need_a_break.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0053",
+      "word": "",
+      "phrase": "I feel better",
+      "display": "I feel better",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 597,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "better"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_feel_better.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0054",
+      "word": "",
+      "phrase": "I am okay",
+      "display": "I am okay",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 596,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "okay"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/i_am_okay.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0055",
+      "word": "",
+      "phrase": "I'm nervous",
+      "display": "I'm nervous",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 595,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "nervous"
+      ],
+      "relatedWords": [
+        "because"
+      ],
+      "relatedPhrases": [
+        "because"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/im_nervous.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0056",
+      "word": "",
+      "phrase": "I'm bored",
+      "display": "I'm bored",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 594,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "bored"
+      ],
+      "relatedWords": [
+        "play"
+      ],
+      "relatedPhrases": [
+        "play"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/im_bored.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0057",
+      "word": "",
+      "phrase": "I'm proud",
+      "display": "I'm proud",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 593,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "proud"
+      ],
+      "relatedWords": [
+        "Good job"
+      ],
+      "relatedPhrases": [
+        "Good job"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/im_proud.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0058",
+      "word": "",
+      "phrase": "I'm embarrassed",
+      "display": "I'm embarrassed",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 592,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "embarrassed"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/im_embarrassed.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0059",
+      "word": "",
+      "phrase": "I'm lonely",
+      "display": "I'm lonely",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 591,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "lonely"
+      ],
+      "relatedWords": [
+        "I miss you",
+        "hug"
+      ],
+      "relatedPhrases": [
+        "I miss you",
+        "hug"
+      ],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/im_lonely.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0060",
+      "word": "",
+      "phrase": "I'm safe",
+      "display": "I'm safe",
+      "grammar": "phrase",
+      "purpose": "emotion",
+      "topic": "Feelings",
+      "subcategory": "Feelings",
+      "predictionWeight": 590,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "safe"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\ude0a",
+      "cartoon": "/symbols/v4/im_safe.png",
+      "color": "#ef382e"
+    },
+    {
+      "id": "cg_0061",
+      "word": "Why",
+      "phrase": "",
+      "display": "Why",
+      "grammar": "word",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 589,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "why?"
+      ],
+      "relatedWords": [
+        "because"
+      ],
+      "relatedPhrases": [
+        "because"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/why.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0062",
+      "word": "",
+      "phrase": "What happened",
+      "display": "What happened",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 588,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "what happened?"
+      ],
+      "relatedWords": [
+        "Tell me more"
+      ],
+      "relatedPhrases": [
+        "Tell me more"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/what_happened.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0063",
+      "word": "",
+      "phrase": "Tell me more",
+      "display": "Tell me more",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 587,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "more story"
+      ],
+      "relatedWords": [
+        "Really"
+      ],
+      "relatedPhrases": [
+        "Really"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/tell_me_more.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0064",
+      "word": "Really",
+      "phrase": "",
+      "display": "Really",
+      "grammar": "word",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 586,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "really?"
+      ],
+      "relatedWords": [
+        "That's funny"
+      ],
+      "relatedPhrases": [
+        "That's funny"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/really.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0065",
+      "word": "",
+      "phrase": "That's funny",
+      "display": "That's funny",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 585,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "funny",
+        "laugh"
+      ],
+      "relatedWords": [
+        "again"
+      ],
+      "relatedPhrases": [
+        "again"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/thats_funny.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0066",
+      "word": "",
+      "phrase": "I have a question",
+      "display": "I have a question",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 584,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "question"
+      ],
+      "relatedWords": [
+        "what",
+        "why"
+      ],
+      "relatedPhrases": [
+        "what",
+        "why"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/i_have_a_question.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0067",
+      "word": "",
+      "phrase": "I don't know",
+      "display": "I don't know",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 583,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "don't know"
+      ],
+      "relatedWords": [
+        "help"
+      ],
+      "relatedPhrases": [
+        "help"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/i_dont_know.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0068",
+      "word": "Maybe",
+      "phrase": "",
+      "display": "Maybe",
+      "grammar": "word",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 582,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "maybe"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/maybe.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0069",
+      "word": "",
+      "phrase": "I agree",
+      "display": "I agree",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 581,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "agree"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/i_agree.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0070",
+      "word": "",
+      "phrase": "I don't agree",
+      "display": "I don't agree",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 580,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "disagree"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/i_dont_agree.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0071",
+      "word": "",
+      "phrase": "I have an idea",
+      "display": "I have an idea",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 579,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "idea"
+      ],
+      "relatedWords": [
+        "listen"
+      ],
+      "relatedPhrases": [
+        "listen"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/i_have_an_idea.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0072",
+      "word": "Look",
+      "phrase": "",
+      "display": "Look",
+      "grammar": "word",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 578,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "see this"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/look.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0073",
+      "word": "Listen",
+      "phrase": "",
+      "display": "Listen",
+      "grammar": "word",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 577,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "hear me"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/listen.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0074",
+      "word": "",
+      "phrase": "My turn",
+      "display": "My turn",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 576,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "turn"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/my_turn.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0075",
+      "word": "",
+      "phrase": "Your turn",
+      "display": "Your turn",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 575,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "turn"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/your_turn.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0076",
+      "word": "Again",
+      "phrase": "",
+      "display": "Again",
+      "grammar": "word",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 574,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "do again"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/again.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0077",
+      "word": "",
+      "phrase": "That is cool",
+      "display": "That is cool",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 573,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "cool",
+        "awesome"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/that_is_cool.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0078",
+      "word": "",
+      "phrase": "I like that",
+      "display": "I like that",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 572,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "like"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/i_like_that.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0079",
+      "word": "",
+      "phrase": "I don't like that",
+      "display": "I don't like that",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 571,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "dislike"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/i_dont_like_that.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0080",
+      "word": "",
+      "phrase": "Can you help",
+      "display": "Can you help",
+      "grammar": "phrase",
+      "purpose": "conversation",
+      "topic": "Conversation",
+      "subcategory": "Conversation",
+      "predictionWeight": 570,
+      "developmentStage": 1,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "help question"
+      ],
+      "relatedWords": [
+        "please"
+      ],
+      "relatedPhrases": [
+        "please"
+      ],
+      "icon": "\ud83d\udcac",
+      "cartoon": "/symbols/v4/can_you_help.png",
+      "color": "#00a6a6"
+    },
+    {
+      "id": "cg_0081",
+      "word": "Go",
+      "phrase": "",
+      "display": "Go",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 569,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "move"
+      ],
+      "relatedWords": [
+        "to"
+      ],
+      "relatedPhrases": [
+        "to"
+      ],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/go.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0082",
+      "word": "Come",
+      "phrase": "",
+      "display": "Come",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 568,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "come here"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/come.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0083",
+      "word": "Eat",
+      "phrase": "",
+      "display": "Eat",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 567,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "food"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/eat.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0084",
+      "word": "Drink",
+      "phrase": "",
+      "display": "Drink",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 566,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "beverage"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/drink.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0085",
+      "word": "Play",
+      "phrase": "",
+      "display": "Play",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 565,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "game"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/play.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0086",
+      "word": "Sleep",
+      "phrase": "",
+      "display": "Sleep",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 564,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "bed"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/sleep.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0087",
+      "word": "Watch",
+      "phrase": "",
+      "display": "Watch",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 563,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "see"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/watch.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0088",
+      "word": "Read",
+      "phrase": "",
+      "display": "Read",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 562,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "book"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/read.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0089",
+      "word": "Write",
+      "phrase": "",
+      "display": "Write",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 561,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "draw"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/write.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0090",
+      "word": "Draw",
+      "phrase": "",
+      "display": "Draw",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 560,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "color"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/draw.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0091",
+      "word": "Sing",
+      "phrase": "",
+      "display": "Sing",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 559,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "music"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/sing.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0092",
+      "word": "Dance",
+      "phrase": "",
+      "display": "Dance",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 558,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "move"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/dance.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0093",
+      "word": "Run",
+      "phrase": "",
+      "display": "Run",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 557,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "fast"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/run.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0094",
+      "word": "Walk",
+      "phrase": "",
+      "display": "Walk",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 556,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "go"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/walk.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0095",
+      "word": "Sit",
+      "phrase": "",
+      "display": "Sit",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 555,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sit down"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/sit.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0096",
+      "word": "Stand",
+      "phrase": "",
+      "display": "Stand",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 554,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "stand up"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/stand.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0097",
+      "word": "Open",
+      "phrase": "",
+      "display": "Open",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 553,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "unlock"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/open.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0098",
+      "word": "Close",
+      "phrase": "",
+      "display": "Close",
+      "grammar": "word",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 552,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "shut"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/close.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0099",
+      "word": "",
+      "phrase": "Turn on",
+      "display": "Turn on",
+      "grammar": "phrase",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 551,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "on"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/turn_on.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0100",
+      "word": "",
+      "phrase": "Turn off",
+      "display": "Turn off",
+      "grammar": "phrase",
+      "purpose": "action",
+      "topic": "Actions",
+      "subcategory": "Actions",
+      "predictionWeight": 550,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "off"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udfc3",
+      "cartoon": "/symbols/v4/turn_off.png",
+      "color": "#62c83f"
+    },
+    {
+      "id": "cg_0101",
+      "word": "Home",
+      "phrase": "",
+      "display": "Home",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 549,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "house"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/home.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0102",
+      "word": "School",
+      "phrase": "",
+      "display": "School",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 548,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "class"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/school.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0103",
+      "word": "Outside",
+      "phrase": "",
+      "display": "Outside",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 547,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "outdoors"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/outside.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0104",
+      "word": "Park",
+      "phrase": "",
+      "display": "Park",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 546,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "playground"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/park.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0105",
+      "word": "Bathroom",
+      "phrase": "",
+      "display": "Bathroom",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 545,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "potty"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/bathroom.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0106",
+      "word": "Bedroom",
+      "phrase": "",
+      "display": "Bedroom",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 544,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "bed"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/bedroom.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0107",
+      "word": "Kitchen",
+      "phrase": "",
+      "display": "Kitchen",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 543,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "food room"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/kitchen.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0108",
+      "word": "Car",
+      "phrase": "",
+      "display": "Car",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 542,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "vehicle"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/car.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0109",
+      "word": "Store",
+      "phrase": "",
+      "display": "Store",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 541,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "shopping"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/store.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0110",
+      "word": "Doctor",
+      "phrase": "",
+      "display": "Doctor",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 540,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "clinic"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/doctor.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0111",
+      "word": "Dentist",
+      "phrase": "",
+      "display": "Dentist",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 539,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "teeth doctor"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/dentist.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0112",
+      "word": "Restaurant",
+      "phrase": "",
+      "display": "Restaurant",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 538,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "eat out"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/restaurant.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0113",
+      "word": "Library",
+      "phrase": "",
+      "display": "Library",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 537,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "books"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/library.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0114",
+      "word": "",
+      "phrase": "Grandma's house",
+      "display": "Grandma's house",
+      "grammar": "phrase",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 536,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "grandma"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/grandmas_house.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0115",
+      "word": "",
+      "phrase": "Grandpa's house",
+      "display": "Grandpa's house",
+      "grammar": "phrase",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 535,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "grandpa"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/grandpas_house.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0116",
+      "word": "Therapy",
+      "phrase": "",
+      "display": "Therapy",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 534,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "therapist"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/therapy.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0117",
+      "word": "Playground",
+      "phrase": "",
+      "display": "Playground",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 533,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "play"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/playground.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0118",
+      "word": "Bus",
+      "phrase": "",
+      "display": "Bus",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 532,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "school bus"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/bus.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0119",
+      "word": "Classroom",
+      "phrase": "",
+      "display": "Classroom",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 531,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "class"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/classroom.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0120",
+      "word": "Office",
+      "phrase": "",
+      "display": "Office",
+      "grammar": "word",
+      "purpose": "place",
+      "topic": "Places",
+      "subcategory": "Places",
+      "predictionWeight": 530,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "work"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udccd",
+      "cartoon": "/symbols/v4/office.png",
+      "color": "#9b57d6"
+    },
+    {
+      "id": "cg_0121",
+      "word": "Water",
+      "phrase": "",
+      "display": "Water",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 529,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "drink"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/water.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0122",
+      "word": "Milk",
+      "phrase": "",
+      "display": "Milk",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 528,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "drink"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/milk.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0123",
+      "word": "",
+      "phrase": "Apple juice",
+      "display": "Apple juice",
+      "grammar": "phrase",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 527,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "juice"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/apple_juice.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0124",
+      "word": "",
+      "phrase": "Orange juice",
+      "display": "Orange juice",
+      "grammar": "phrase",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 526,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "juice"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/orange_juice.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0125",
+      "word": "",
+      "phrase": "Chicken nuggets",
+      "display": "Chicken nuggets",
+      "grammar": "phrase",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 525,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "nuggets"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/chicken_nuggets.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0126",
+      "word": "Pizza",
+      "phrase": "",
+      "display": "Pizza",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 524,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "food"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/pizza.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0127",
+      "word": "",
+      "phrase": "Mac and cheese",
+      "display": "Mac and cheese",
+      "grammar": "phrase",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 523,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "macaroni"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/mac_and_cheese.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0128",
+      "word": "Apple",
+      "phrase": "",
+      "display": "Apple",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 522,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "fruit"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/apple.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0129",
+      "word": "Banana",
+      "phrase": "",
+      "display": "Banana",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 521,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "fruit"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/banana.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0130",
+      "word": "Strawberry",
+      "phrase": "",
+      "display": "Strawberry",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 520,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "fruit"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/strawberry.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0131",
+      "word": "Blueberry",
+      "phrase": "",
+      "display": "Blueberry",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 519,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "fruit"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/blueberry.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0132",
+      "word": "",
+      "phrase": "Green beans",
+      "display": "Green beans",
+      "grammar": "phrase",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 518,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "vegetable"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/green_beans.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0133",
+      "word": "Cucumber",
+      "phrase": "",
+      "display": "Cucumber",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 517,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "vegetable"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/cucumber.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0134",
+      "word": "Cookie",
+      "phrase": "",
+      "display": "Cookie",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 516,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "snack"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/cookie.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0135",
+      "word": "Cracker",
+      "phrase": "",
+      "display": "Cracker",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 515,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "snack"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/cracker.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0136",
+      "word": "Chips",
+      "phrase": "",
+      "display": "Chips",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 514,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "snack"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/chips.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0137",
+      "word": "",
+      "phrase": "Ice cream",
+      "display": "Ice cream",
+      "grammar": "phrase",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 513,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "dessert"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/ice_cream.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0138",
+      "word": "Breakfast",
+      "phrase": "",
+      "display": "Breakfast",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 512,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "morning food"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/breakfast.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0139",
+      "word": "Lunch",
+      "phrase": "",
+      "display": "Lunch",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 511,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "midday food"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/lunch.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0140",
+      "word": "Dinner",
+      "phrase": "",
+      "display": "Dinner",
+      "grammar": "word",
+      "purpose": "food",
+      "topic": "Food & Drinks",
+      "subcategory": "Food & Drinks",
+      "predictionWeight": 510,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "evening food"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83c\udf4e",
+      "cartoon": "/symbols/v4/dinner.png",
+      "color": "#ff8c00"
+    },
+    {
+      "id": "cg_0141",
+      "word": "Teacher",
+      "phrase": "",
+      "display": "Teacher",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 509,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "school adult"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/teacher.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0142",
+      "word": "Friend",
+      "phrase": "",
+      "display": "Friend",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 508,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "peer"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/friend.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0143",
+      "word": "Book",
+      "phrase": "",
+      "display": "Book",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 507,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "read"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/book.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0144",
+      "word": "Pencil",
+      "phrase": "",
+      "display": "Pencil",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 506,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "write"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/pencil.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0145",
+      "word": "Paper",
+      "phrase": "",
+      "display": "Paper",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 505,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "worksheet"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/paper.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0146",
+      "word": "Computer",
+      "phrase": "",
+      "display": "Computer",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 504,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "chromebook"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/computer.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0147",
+      "word": "Math",
+      "phrase": "",
+      "display": "Math",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 503,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "numbers"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/math.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0148",
+      "word": "Reading",
+      "phrase": "",
+      "display": "Reading",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 502,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "books"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/reading.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0149",
+      "word": "Writing",
+      "phrase": "",
+      "display": "Writing",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 501,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "letters"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/writing.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0150",
+      "word": "Science",
+      "phrase": "",
+      "display": "Science",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 500,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "learn"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/science.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0151",
+      "word": "Art",
+      "phrase": "",
+      "display": "Art",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 499,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "draw"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/art.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0152",
+      "word": "Music",
+      "phrase": "",
+      "display": "Music",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 498,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "song"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/music.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0153",
+      "word": "Recess",
+      "phrase": "",
+      "display": "Recess",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 497,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "playground"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/recess.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0154",
+      "word": "",
+      "phrase": "Circle time",
+      "display": "Circle time",
+      "grammar": "phrase",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 496,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "class"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/circle_time.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0155",
+      "word": "Homework",
+      "phrase": "",
+      "display": "Homework",
+      "grammar": "word",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 495,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "work"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/homework.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0156",
+      "word": "",
+      "phrase": "I need help",
+      "display": "I need help",
+      "grammar": "phrase",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 494,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "school help"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/i_need_help.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0157",
+      "word": "",
+      "phrase": "I know the answer",
+      "display": "I know the answer",
+      "grammar": "phrase",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 493,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "answer"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/i_know_the_answer.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0158",
+      "word": "",
+      "phrase": "I have a question",
+      "display": "I have a question",
+      "grammar": "phrase",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 492,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "question"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/i_have_a_question.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0159",
+      "word": "",
+      "phrase": "Can I go to bathroom",
+      "display": "Can I go to bathroom",
+      "grammar": "phrase",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 491,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "bathroom"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/can_i_go_to_bathroom.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0160",
+      "word": "",
+      "phrase": "I'm done",
+      "display": "I'm done",
+      "grammar": "phrase",
+      "purpose": "learning",
+      "topic": "School",
+      "subcategory": "School",
+      "predictionWeight": 490,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "finished"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udcda",
+      "cartoon": "/symbols/v4/im_done.png",
+      "color": "#ffd400"
+    },
+    {
+      "id": "cg_0161",
+      "word": "",
+      "phrase": "Help me",
+      "display": "Help me",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 489,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": true,
+      "aliases": [
+        "emergency help"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/help_me.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0162",
+      "word": "",
+      "phrase": "I am hurt",
+      "display": "I am hurt",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 488,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "hurt"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_am_hurt.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0163",
+      "word": "",
+      "phrase": "I am scared",
+      "display": "I am scared",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 487,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "scared"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_am_scared.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0164",
+      "word": "Stop",
+      "phrase": "",
+      "display": "Stop",
+      "grammar": "word",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 486,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "danger"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/stop.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0165",
+      "word": "",
+      "phrase": "Call mom",
+      "display": "Call mom",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 485,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "mom emergency"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/call_mom.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0166",
+      "word": "",
+      "phrase": "Call dad",
+      "display": "Call dad",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 484,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "dad emergency"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/call_dad.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0167",
+      "word": "",
+      "phrase": "I am lost",
+      "display": "I am lost",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 483,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "lost"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_am_lost.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0168",
+      "word": "",
+      "phrase": "I feel sick",
+      "display": "I feel sick",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 482,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "sick"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_feel_sick.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0169",
+      "word": "",
+      "phrase": "It hurts here",
+      "display": "It hurts here",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 481,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "pain"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/it_hurts_here.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0170",
+      "word": "",
+      "phrase": "I need medicine",
+      "display": "I need medicine",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 480,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "medicine"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_need_medicine.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0171",
+      "word": "",
+      "phrase": "Too loud",
+      "display": "Too loud",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 479,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "noise"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/too_loud.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0172",
+      "word": "",
+      "phrase": "I need quiet",
+      "display": "I need quiet",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 478,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "quiet"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_need_quiet.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0173",
+      "word": "",
+      "phrase": "Don't touch me",
+      "display": "Don't touch me",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 477,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "touch"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/dont_touch_me.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0174",
+      "word": "",
+      "phrase": "I need space",
+      "display": "I need space",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 476,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "space"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_need_space.png",
+      "color": "#b00020"
+    },
+    {
+      "id": "cg_0175",
+      "word": "",
+      "phrase": "I can't breathe",
+      "display": "I can't breathe",
+      "grammar": "phrase",
+      "purpose": "safety",
+      "topic": "Safety",
+      "subcategory": "Safety",
+      "predictionWeight": 475,
+      "developmentStage": 2,
+      "frequency": 0,
+      "favorite": false,
+      "aliases": [
+        "breathing"
+      ],
+      "relatedWords": [],
+      "relatedPhrases": [],
+      "icon": "\ud83d\udea8",
+      "cartoon": "/symbols/v4/i_cant_breathe.png",
+      "color": "#b00020"
+    }
+  ],
+  "topics": [
+    "Relationships",
+    "Needs",
+    "Feelings",
+    "Conversation",
+    "Actions",
+    "Places",
+    "Food & Drinks",
+    "School",
+    "Safety"
+  ]
+}

@@ -1,32 +1,29 @@
 import { GENOME, CONTEXT_BOARDS } from "../genome/genome.js";
 import { LIFE_BOARDS } from "../language/communicationGenome.js";
+import { COMMUNICATION_GENOME, getEntriesByTopic, getEntryDisplay } from "../genome/communicationGenomeLoader.js";
 
 export const NAV_TOPICS = [
-  "Connect",
-  "Feel",
-  "Need",
-  "Talk",
-  "Play",
-  "Daily Life",
-  "Food & Drinks",
-  "Bathroom",
-  "People",
+  "Relationships",
+  "Needs",
+  "Feelings",
+  "Conversation",
+  "Actions",
   "Places",
-  "School Curriculum",
-  "Outside",
-  "Health & Body",
-  "Emergency",
+  "Food & Drinks",
+  "School",
+  "Safety",
   "Bedtime",
   "Morning",
-  "School",
   "Doctor",
   "Restaurant",
-  "Playground"
+  "Playground",
+  "Emergency"
 ];
 
 export function isNavigationButton(word) {
   return word === "Topics" ||
     NAV_TOPICS.includes(word) ||
+    (COMMUNICATION_GENOME.topics || []).includes(word) ||
     Boolean(GENOME.domains?.[word]) ||
     Boolean(CONTEXT_BOARDS?.[word]) ||
     Boolean(LIFE_BOARDS?.[word]);
@@ -37,6 +34,8 @@ export function getNavigationTopics() {
 }
 
 export function getTopicWords(topic) {
+  const genomeWords = getEntriesByTopic(topic).map(getEntryDisplay);
+  if (genomeWords.length) return genomeWords;
   if (LIFE_BOARDS?.[topic]) return LIFE_BOARDS[topic];
   if (CONTEXT_BOARDS?.[topic]) return CONTEXT_BOARDS[topic];
   if (GENOME.domains?.[topic]) return GENOME.domains[topic];

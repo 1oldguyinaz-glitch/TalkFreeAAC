@@ -1,32 +1,46 @@
 import { KNOWLEDGE_OBJECTS, GENOME } from "../genome/genome.js";
 import { getWordObject } from "../language/languageEngine.js";
-import { HUMAN_FIRST_PHRASES, LIFE_BOARDS, normalizeText } from "../language/communicationGenome.js";
+import { getCommunicationEntries, getEntryDisplay, normalize } from "../genome/communicationGenomeLoader.js";
+import { HUMAN_FIRST_PHRASES, LIFE_BOARDS } from "../language/communicationGenome.js";
 
 function scoreCandidate(candidate, query) {
-  const q = normalizeText(query);
-  const name = normalizeText(candidate.name || candidate.phrase || candidate.word || "");
-  const aliases = (candidate.aliases || []).map(normalizeText);
-  const topic = normalizeText(candidate.topic || candidate.domain || candidate.category || "");
-  const purpose = normalizeText(candidate.purpose || candidate.communication_purpose || "");
+  const q = normalize(query);
+  const name = normalize(candidate.name || candidate.phrase || candidate.word || candidate.display || "");
+  const aliases = (candidate.aliases || []).map(normalize);
+  const topic = normalize(candidate.topic || candidate.domain || candidate.category || "");
+  const purpose = normalize(candidate.purpose || candidate.communication_purpose || "");
 
   let score = 0;
-  if (name === q) score += 200;
-  if (name.startsWith(q)) score += 140;
-  if (name.includes(q)) score += 100;
-  if (aliases.some(alias => alias === q)) score += 180;
-  if (aliases.some(alias => alias.includes(q))) score += 120;
-  if (topic.includes(q)) score += 55;
-  if (purpose.includes(q)) score += 45;
-  score += candidate.priority || candidate.prediction_weight || 0;
-
+  if (name === q) score += 220;
+  if (name.startsWith(q)) score += 150;
+  if (name.includes(q)) score += 110;
+  if (aliases.some(alias => alias === q)) score += 200;
+  if (aliases.some(alias => alias.includes(q))) score += 140;
+  if (topic.includes(q)) score += 60;
+  if (purpose.includes(q)) score += 50;
+  score += candidate.priority || candidate.predictionWeight || candidate.prediction_weight || 0;
   return score;
 }
 
 export function searchObjects(query, limit = 60) {
-  const q = normalizeText(query);
+  const q = normalize(query);
   if (!q) return [];
 
   const candidates = [];
+
+  getCommunicationEntries().forEach(entry => {
+    candidates.push({
+      ...entry,
+      name: getEntryDisplay(entry),
+      phrase: entry.phrase,
+      aliases: entry.aliases,
+      purpose: entry.purpose,
+      priority: entry.predictionWeight,
+      grammar_type: entry.grammar,
+      icon: entry.icon,
+      color: entry.color
+    });
+  });
 
   Object.keys(KNOWLEDGE_OBJECTS || {}).forEach(word => {
     const obj = getWordObject(word);
@@ -63,7 +77,7 @@ export function searchObjects(query, limit = 60) {
     .sort((a, b) => b.score - a.score)
     .map(item => item.candidate)
     .filter(item => {
-      const key = item.name || item.phrase;
+      const key = item.name || item.phrase || item.display;
       if (seen.has(key)) return false;
       seen.add(key);
       return true;

@@ -1,23 +1,28 @@
 import { KNOWLEDGE_OBJECTS } from "../genome/genome.js";
+import { getCommunicationEntries, getEntriesByTopic, getEntryDisplay, findCommunicationEntry } from "../genome/communicationGenomeLoader.js";
 import { getGrammarPredictions, CONNECTORS, HUMAN_CONNECTION_PHRASES, shouldShowConnectors } from "./coreGrammar.js";
 import { getTopicWords, getNavigationTopics } from "../navigation/navigationEngine.js";
 
 const CORE_HOME = [
-  "I love you", "I want", "I need", "I am", "I can", "Help me",
-  "Thank you", "Hi", "Bye", "more", "all done", "yes", "no", "please",
+  "I love you", "Can I have a hug", "Thank you", "Hi", "Bye",
+  "I want", "I need", "I am", "I can", "Help me",
+  "more", "all done", "yes", "no", "please",
   "water", "food", "potty", "outside", "happy", "sad", "hurt", "play"
 ];
 
 export function inferGrammarType(word = "") {
+  const entry = findCommunicationEntry(word);
+  if (entry?.purpose === "relationship") return "relationship";
+  if (entry?.purpose === "emotion") return "feeling";
+  if (entry?.purpose === "food") return "food";
+  if (entry?.purpose === "place") return "place";
+  if (entry?.purpose === "safety") return "safety";
+  if (entry?.purpose === "conversation") return "conversation";
+
   const w = String(word).toLowerCase();
   if (["i", "you", "we", "he", "she", "they", "it"].includes(w)) return "pronoun";
   if (["want", "need", "can", "will", "am", "feel", "have", "see", "like", "don't", "go", "eat", "drink", "play", "help", "stop"].includes(w)) return "verb";
   if (CONNECTORS.includes(w)) return "connector";
-  if (["i love you", "hug", "can i have a hug", "thank you", "hi", "bye", "i'm sorry", "i miss you", "good job", "good morning", "good night"].includes(w)) return "relationship";
-  if (["happy", "sad", "mad", "scared", "hurt", "sick", "tired", "calm", "excited"].includes(w)) return "feeling";
-  if (["mom", "dad", "teacher", "friend", "brother", "sister"].includes(w)) return "person";
-  if (["outside", "home", "school", "park", "bathroom", "bedroom"].includes(w)) return "place";
-  if (["food", "drink", "water", "milk", "apple juice", "snack"].includes(w)) return "food";
   return "object";
 }
 
@@ -28,6 +33,7 @@ export function colorForType(type) {
     connector: "#ffffff",
     relationship: "#ef5da8",
     feeling: "#ef382e",
+    conversation: "#00a6a6",
     person: "#ffd400",
     place: "#9b57d6",
     food: "#ff8c00",
@@ -38,6 +44,9 @@ export function colorForType(type) {
 }
 
 export function iconFor(word = "") {
+  const entry = findCommunicationEntry(word);
+  if (entry?.icon) return entry.icon;
+
   const w = String(word).toLowerCase();
   const icons = {
     "i":"👦","you":"👉","we":"👫","it":"⭐",
@@ -53,6 +62,27 @@ export function iconFor(word = "") {
 }
 
 export function getWordObject(word) {
+  const entry = findCommunicationEntry(word);
+  if (entry) {
+    const type = inferGrammarType(entry.display);
+    return {
+      id: entry.id,
+      name: entry.display,
+      display_text: entry.display,
+      grammar_type: type,
+      communication_purpose: entry.purpose,
+      domain: entry.topic,
+      icon: entry.icon || iconFor(entry.display),
+      cartoon: entry.cartoon,
+      color: entry.color || colorForType(type),
+      developmental_stage: entry.developmentStage || 1,
+      prediction_weight: entry.predictionWeight || 50,
+      aliases: entry.aliases || [],
+      relatedWords: entry.relatedWords || [],
+      relatedPhrases: entry.relatedPhrases || []
+    };
+  }
+
   const known = KNOWLEDGE_OBJECTS[word];
   if (known) return { ...known, color: known.color || colorForType(known.grammar_type), icon: known.icon || iconFor(word) };
   const type = inferGrammarType(word);
@@ -61,7 +91,7 @@ export function getWordObject(word) {
     name: word,
     display_text: word,
     grammar_type: type,
-    communication_purpose: type === "relationship" ? "relationship" : type === "feeling" ? "emotion" : "communication",
+    communication_purpose: type,
     domain: "Core",
     icon: iconFor(word),
     color: colorForType(type),
@@ -94,12 +124,18 @@ export function buildLanguageBoard(profile, options = {}) {
 
   const grammar = getGrammarPredictions(sentence);
   const connectorWords = shouldShowConnectors(sentence) ? CONNECTORS.slice(0, 10) : [];
-  const contextWords = activeContext === "Core Needs" ? CORE_HOME : getTopicWords(activeContext);
+
+  const genomeTopicWords = getEntriesByTopic(activeContext).map(getEntryDisplay);
+  const contextWords = activeContext === "Core Needs"
+    ? CORE_HOME
+    : genomeTopicWords.length
+      ? genomeTopicWords
+      : getTopicWords(activeContext);
 
   if (sentence.length === 0 && activeContext === "Core Needs") {
     return {
       predictions: rankByUse(profile, HUMAN_CONNECTION_PHRASES.concat(CORE_HOME)).slice(0, maxPredictions),
-      contextWords: rankByUse(profile, CORE_HOME).slice(0, maxContext),
+      contextWords: rankByUse(profile, CORE_HOME.concat(getCommunicationEntries().filter(e => e.favorite).map(getEntryDisplay))).slice(0, maxContext),
       topics: getNavigationTopics()
     };
   }
