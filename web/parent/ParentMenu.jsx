@@ -8,6 +8,7 @@ import ProfessionalInsightsPanel from "./components/ProfessionalInsightsPanel.js
 import TimelinePanel from "./components/TimelinePanel.jsx";
 import ReportsPanel from "./components/ReportsPanel.jsx";
 import CareTeamPanel from "./components/CareTeamPanel.jsx";
+import ReleaseChecklistPanel from "./components/ReleaseChecklistPanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
   const [goalForm, setGoalForm] = useState({ title: "", targetWords: "", level: "Emerging", notes: "" });
@@ -60,6 +61,10 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
         <MetricCard label="Affection Expressed" value={metrics.affectionExpressed} />
         <MetricCard label="Questions Asked" value={metrics.questionsAsked} />
         <MetricCard label="Active Goals" value={metrics.activeGoals} />
+      </section>
+
+      <section className="parentGrid">
+        <ReleaseChecklistPanel profile={profile} />
       </section>
 
       <section className="parentGrid twoColumnV4">

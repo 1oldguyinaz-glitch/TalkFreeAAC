@@ -1,0 +1,95 @@
+.releaseCrashScreen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #07162d;
+  color: white;
+}
+
+.releaseCrashScreen section {
+  max-width: 720px;
+  background: white;
+  color: #0b1f3a;
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+}
+
+.releaseCrashScreen pre {
+  white-space: pre-wrap;
+  background: #eef3fb;
+  border-radius: 16px;
+  padding: 14px;
+  overflow: auto;
+}
+
+.releaseCrashScreen button,
+.releasePanel button {
+  border: 0;
+  border-radius: 16px;
+  background: #1688ff;
+  color: white;
+  font-weight: 950;
+  padding: 12px 16px;
+}
+
+.releasePanel {
+  border: 3px solid #22c55e;
+  background: #f7fff9;
+}
+
+.releaseTag {
+  display: inline-block;
+  background: #22c55e;
+  color: #052e16;
+  border-radius: 999px;
+  padding: 6px 12px;
+  margin-bottom: 8px;
+  font-weight: 950;
+}
+
+.releaseScore {
+  min-width: 86px;
+  height: 86px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #0b1f3a;
+  color: white;
+  font-size: 26px;
+  font-weight: 950;
+}
+
+.releaseChecklist {
+  display: grid;
+  gap: 10px;
+}
+
+.releaseCheck {
+  display: grid;
+  gap: 4px;
+  border-radius: 18px;
+  padding: 12px;
+  border: 2px solid #d7e2f2;
+  background: white;
+}
+
+.releaseCheck.pass {
+  border-color: #86efac;
+  background: #f0fdf4;
+}
+
+.releaseCheck.needs-review {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+
+.releaseCheck strong {
+  color: #0b1f3a;
+}
+
+.releaseCheck small {
+  color: #31445f;
+  font-weight: 750;
+}
