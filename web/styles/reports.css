@@ -1,0 +1,116 @@
+.timelinePanel,
+.reportsPanel,
+.careTeamPanel {
+  min-width: 0;
+}
+
+.panelTitleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.countPill {
+  background: #0b1f3a;
+  color: white;
+  border-radius: 999px;
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+
+.timelineList {
+  display: grid;
+  gap: 14px;
+  max-height: 520px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.timelineDay {
+  display: grid;
+  gap: 8px;
+}
+
+.timelineDay h3 {
+  margin: 0;
+  color: #0b1f3a;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  background: #eef7ff;
+  border: 2px solid #d7e2f2;
+  border-radius: 18px;
+  padding: 10px 12px;
+}
+
+.timelineItem span {
+  font-weight: 850;
+}
+
+.reportTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.reportTabs button,
+.reportActions button,
+.panelTitleRow button {
+  border: 0;
+  border-radius: 16px;
+  background: #0b1f3a;
+  color: white;
+  font-weight: 950;
+  padding: 11px 15px;
+}
+
+.reportTabs button.active {
+  background: #1688ff;
+}
+
+.reportText {
+  width: 100%;
+  min-height: 310px;
+  border: 2px solid #d7e2f2;
+  border-radius: 18px;
+  padding: 14px;
+  color: #0b1f3a;
+  font-size: 15px;
+  font-weight: 750;
+  white-space: pre-wrap;
+}
+
+.reportActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+}
+
+.teamMessage p {
+  margin: 8px 0;
+  font-weight: 750;
+}
+
+@media (max-width: 780px) {
+  .timelineItem {
+    grid-template-columns: 1fr;
+  }
+
+  .panelTitleRow {
+    flex-direction: column;
+  }
+}

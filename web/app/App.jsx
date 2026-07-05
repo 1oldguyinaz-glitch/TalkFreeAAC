@@ -18,6 +18,7 @@ import "../styles/parent.css";
 import "../styles/adaptive-ui.css";
 import "../styles/professional-insights.css";
 import "../styles/prediction-ui.css";
+import "../styles/reports.css";
 
 export default function App() {
   const [profile, setProfileState] = useState(ensureCommunicationProfile(loadProfile()));
