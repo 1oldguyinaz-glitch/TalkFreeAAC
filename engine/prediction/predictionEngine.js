@@ -4,6 +4,9 @@ import { getContextPredictions } from "./contextPredictionEngine.js";
 import { getRoutinePredictions } from "./routineEngine.js";
 import { getPersonalizedPredictions } from "./personalizationEngine.js";
 import { getConversationMemoryPredictions } from "./conversationMemory.js";
+import { getRelationshipPredictions } from "./relationshipPredictionEngine.js";
+import { getEmotionPredictions } from "./emotionPredictionEngine.js";
+import { getSafetyPredictions } from "./safetyPredictionEngine.js";
 import { rankPredictions } from "./predictionScoring.js";
 import { ensureCommunicationProfile } from "../profile/userCommunicationProfile.js";
 
@@ -21,10 +24,18 @@ export function getFullBoard(rawProfile = {}) {
   const activeContext = profile.activeContext || "Core Needs";
 
   const board = buildLanguageBoard(profile);
+
   const candidates = [
+    ...getSafetyPredictions(profile, sentence),
+    ...getEmotionPredictions(profile, sentence),
+    ...getRelationshipPredictions(profile, sentence),
     ...getConversationPredictions(profile, 16).map(word => ({
       word,
-      reasons: { grammar: true, relationship: /love|hug|thank|miss|good night/i.test(word) },
+      reasons: {
+        grammar: true,
+        relationship: /love|hug|thank|miss|good night/i.test(word),
+        emotion: /sad|happy|mad|scared|hurt|sick|tired/i.test(word)
+      },
       score: 160
     })),
     ...getContextPredictions(profile),
