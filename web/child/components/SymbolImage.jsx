@@ -2,49 +2,48 @@ import React, { useMemo, useState } from "react";
 
 const FALLBACKS = {
   "i": "🧒",
+  "you": "👉",
+  "me": "🙋",
   "want": "🤲",
   "need": "🆘",
-  "feel": "🙂",
+  "feel": "😊",
   "am": "=",
-  "can": "🙋",
-  "don't": "✕",
-  "like": "☺",
-  "love": "♡",
+  "can": "💪",
+  "don't": "❌",
+  "like": "👍",
+  "love": "❤️",
   "have": "🤲",
   "see": "👀",
   "hear": "👂",
   "think": "💭",
-  "go": "→",
+  "go": "➡️",
   "stop": "🛑",
   "help": "🤝",
-  "get": "🤲",
-  "do": "🙌",
-  "more": "☝",
+  "more": "➕",
   "food": "🍎",
   "drink": "🥤",
   "water": "💧",
-  "snack": "🍪",
   "outside": "🌳",
-  "inside": "🏠",
-  "break": "🛝",
-  "and": "+",
-  "because": "♣",
+  "home": "🏠",
+  "school": "🏫",
+  "bathroom": "🚽",
+  "mom": "👩",
+  "dad": "👨",
+  "happy": "😊",
+  "sad": "😢",
+  "mad": "😠",
+  "scared": "😨",
+  "tired": "😴",
+  "hurt": "🤕",
+  "and": "＋",
+  "because": "💭",
   "but": "≠",
   "to": "→",
   "with": "👥",
-  "then": "◷",
-  "when": "?",
-  "if": "↔",
-  "so": "→",
-  "yes": "✓",
-  "no": "✕",
-  "finished": "🙌",
   "please": "🙏",
-  "thank you": "♡",
-  "mom": "👩",
-  "dad": "👨",
-  "you": "☝",
-  "me": "🙋"
+  "yes": "✅",
+  "no": "❌",
+  "finished": "🙌"
 };
 
 function slugify(word = "") {
@@ -59,20 +58,19 @@ function slugify(word = "") {
 function fallbackFor(word = "") {
   const key = String(word).toLowerCase().trim();
   if (FALLBACKS[key]) return FALLBACKS[key];
-  if (key.includes("love")) return "♡";
+  if (key.includes("love")) return "❤️";
   if (key.includes("hug")) return "🤗";
-  if (key.includes("thank")) return "♡";
-  if (key.includes("sorry")) return "☹";
-  if (key.includes("morning")) return "☀";
-  if (key.includes("night")) return "☾";
-  if (key.includes("food")) return "🍎";
-  if (key.includes("drink")) return "🥤";
+  if (key.includes("thank")) return "🙏";
+  if (key.includes("help")) return "🆘";
+  if (key.includes("food") || key.includes("eat")) return "🍎";
+  if (key.includes("drink") || key.includes("water")) return "🥤";
   if (key.includes("school")) return "🏫";
-  if (key.includes("place")) return "📍";
-  if (key.includes("question")) return "?";
-  if (key.includes("search")) return "⌕";
-  if (key.includes("emergency")) return "⚠";
-  return "•";
+  if (key.includes("home")) return "🏠";
+  if (key.includes("outside") || key.includes("park")) return "🌳";
+  if (key.includes("sad")) return "😢";
+  if (key.includes("scared")) return "😨";
+  if (key.includes("hurt")) return "🤕";
+  return "💬";
 }
 
 export default function SymbolImage({ word, className = "symbolImage" }) {
