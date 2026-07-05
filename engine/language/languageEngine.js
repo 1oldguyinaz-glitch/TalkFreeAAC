@@ -1,148 +1,166 @@
-import { KNOWLEDGE_OBJECTS } from "../genome/genome.js";
-import { getCommunicationEntries, getEntriesByTopic, getEntryDisplay, findCommunicationEntry } from "../genome/communicationGenomeLoader.js";
-import { getGrammarPredictions, CONNECTORS, HUMAN_CONNECTION_PHRASES, shouldShowConnectors } from "./coreGrammar.js";
-import { getTopicWords, getNavigationTopics } from "../navigation/navigationEngine.js";
+import {
+  getCommunicationEntries,
+  getEntriesByTopic,
+  findCommunicationEntry
+} from "../genome/communicationGenomeLoader.js";
 
-const CORE_HOME = [
-  "I love you", "Can I have a hug", "Thank you", "Hi", "Bye",
-  "I want", "I need", "I am", "I can", "Help me",
-  "more", "all done", "yes", "no", "please",
-  "water", "food", "potty", "outside", "happy", "sad", "hurt", "play"
+export const HUMAN_FIRST_PHRASES = [
+  "I love you",
+  "Can I have a hug",
+  "Thank you",
+  "Hi",
+  "Bye",
+  "I'm sorry",
+  "I miss you",
+  "Good job",
+  "Good morning",
+  "Good night"
 ];
 
-export function inferGrammarType(word = "") {
-  const entry = findCommunicationEntry(word);
-  if (entry?.purpose === "relationship") return "relationship";
-  if (entry?.purpose === "emotion") return "feeling";
-  if (entry?.purpose === "food") return "food";
-  if (entry?.purpose === "place") return "place";
-  if (entry?.purpose === "safety") return "safety";
-  if (entry?.purpose === "conversation") return "conversation";
+export const SENTENCE_STARTERS = [
+  "I am",
+  "I want",
+  "I need",
+  "I can",
+  "I can't",
+  "I feel",
+  "I like",
+  "I don't",
+  "Can I",
+  "Help me"
+];
 
-  const w = String(word).toLowerCase();
-  if (["i", "you", "we", "he", "she", "they", "it"].includes(w)) return "pronoun";
-  if (["want", "need", "can", "will", "am", "feel", "have", "see", "like", "don't", "go", "eat", "drink", "play", "help", "stop"].includes(w)) return "verb";
-  if (CONNECTORS.includes(w)) return "connector";
-  return "object";
+export const CORE_TOPICS = [
+  "Core Needs",
+  "Relationships",
+  "Feelings",
+  "Conversation",
+  "Food & Drinks",
+  "Places",
+  "School",
+  "Safety",
+  "Actions",
+  "Search",
+  "Recents",
+  "Favorites",
+  "Emergency"
+];
+
+export const CORE_WORDS = [
+  "I", "you", "want", "need", "help", "more", "stop", "go", "yes", "no",
+  "please", "thank you", "love", "hug", "sad", "happy", "mad", "scared",
+  "because", "and", "but", "to", "with", "without", "now", "later"
+];
+
+export function normalizeText(value = "") {
+  return String(value).toLowerCase().replace(/[^\w\s']/g, "").replace(/\s+/g, " ").trim();
 }
 
-export function colorForType(type) {
-  const colors = {
-    pronoun: "#1688ff",
-    verb: "#62c83f",
-    connector: "#ffffff",
-    relationship: "#ef5da8",
-    feeling: "#ef382e",
-    conversation: "#00a6a6",
-    person: "#ffd400",
-    place: "#9b57d6",
-    food: "#ff8c00",
-    safety: "#b00020",
-    object: "#00a6a6"
-  };
-  return colors[type] || colors.object;
-}
-
-export function iconFor(word = "") {
+export function getWordObject(word = "") {
   const entry = findCommunicationEntry(word);
-  if (entry?.icon) return entry.icon;
 
-  const w = String(word).toLowerCase();
-  const icons = {
-    "i":"👦","you":"👉","we":"👫","it":"⭐",
-    "i love you":"❤️","love":"❤️","hug":"🤗","can i have a hug":"🤗","thank you":"🙏","hi":"👋","bye":"👋","i'm sorry":"😢","i miss you":"🥰","good job":"⭐","good morning":"☀️","good night":"🌙",
-    "want":"🙋","need":"🆘","can":"✅","will":"➡️","am":"🙂","feel":"❤️","like":"👍","don't":"🚫",
-    "to":"➡️","and":"➕","because":"💬","but":"↔️","so":"➡️","then":"⏭️",
-    "help":"🆘","more":"➕","all done":"✅","yes":"👍","no":"👎","please":"🙏",
-    "water":"💧","food":"🍎","drink":"🥤","apple juice":"🧃","potty":"🚽",
-    "outside":"🛝","school":"🏫","home":"🏠","bathroom":"🚽","play":"🎮",
-    "happy":"😊","sad":"😢","mad":"😠","hurt":"🤕"
-  };
-  return icons[w] || "💬";
-}
-
-export function getWordObject(word) {
-  const entry = findCommunicationEntry(word);
   if (entry) {
-    const type = inferGrammarType(entry.display);
     return {
-      id: entry.id,
-      name: entry.display,
-      display_text: entry.display,
-      grammar_type: type,
-      communication_purpose: entry.purpose,
-      domain: entry.topic,
-      icon: entry.icon || iconFor(entry.display),
-      cartoon: entry.cartoon,
-      color: entry.color || colorForType(type),
-      developmental_stage: entry.developmentStage || 1,
-      prediction_weight: entry.predictionWeight || 50,
+      name: entry.display || entry.word || word,
+      display_text: entry.display || entry.word || word,
+      grammar_type: entry.grammar || entry.grammar_type || "word",
+      communication_purpose: entry.purpose || entry.communication_purpose || "communication",
+      topic: entry.topic || "Core Needs",
       aliases: entry.aliases || [],
       relatedWords: entry.relatedWords || [],
-      relatedPhrases: entry.relatedPhrases || []
+      relatedPhrases: entry.relatedPhrases || [],
+      icon: entry.icon || "💬",
+      cartoon: entry.cartoon,
+      color: entry.color || "#1688ff",
+      predictionWeight: entry.predictionWeight || 1
     };
   }
 
-  const known = KNOWLEDGE_OBJECTS[word];
-  if (known) return { ...known, color: known.color || colorForType(known.grammar_type), icon: known.icon || iconFor(word) };
-  const type = inferGrammarType(word);
+  const lower = normalizeText(word);
+  const phrase = String(word).includes(" ");
+
+  const type =
+    ["i", "you", "me", "my", "mine", "we", "they"].includes(lower) ? "pronoun" :
+    ["want", "need", "go", "stop", "help", "like", "love", "feel", "eat", "drink"].includes(lower) ? "verb" :
+    ["sad", "happy", "mad", "scared", "tired", "hurt", "sick"].includes(lower) ? "feeling" :
+    phrase ? "phrase" :
+    "word";
+
+  const purpose =
+    /love|hug|thank|sorry|miss|good morning|good night|hi|bye/.test(lower) ? "relationship" :
+    /sad|happy|mad|scared|hurt|sick|tired|feel/.test(lower) ? "emotion" :
+    /help|stop|hurt|scared|emergency/.test(lower) ? "safety" :
+    "communication";
+
+  const color =
+    purpose === "relationship" ? "#ff4fa3" :
+    purpose === "emotion" ? "#ef4444" :
+    purpose === "safety" ? "#dc2626" :
+    type === "verb" ? "#22c55e" :
+    type === "pronoun" ? "#1688ff" :
+    "#1688ff";
+
   return {
-    id: String(word).toLowerCase().replace(/\s+/g, "_"),
     name: word,
     display_text: word,
     grammar_type: type,
-    communication_purpose: type,
-    domain: "Core",
-    icon: iconFor(word),
-    color: colorForType(type),
-    developmental_stage: 1,
-    prediction_weight: type === "relationship" ? 120 : 50
+    communication_purpose: purpose,
+    topic: "Core Needs",
+    aliases: [],
+    relatedWords: [],
+    relatedPhrases: [],
+    icon: purpose === "relationship" ? "❤️" : purpose === "emotion" ? "😊" : purpose === "safety" ? "🚨" : "💬",
+    color,
+    predictionWeight: 1
   };
 }
 
-export function rankByUse(profile, words = []) {
-  const counts = profile.wordCounts || {};
-  const recents = profile.recentWords || [];
-  const favorites = profile.favorites || [];
-  return [...new Set(words)].filter(Boolean).sort((a, b) => {
-    const score = word => {
-      const obj = getWordObject(word);
-      return (counts[word] || 0) * 10 +
-        (favorites.includes(word) ? 120 : 0) +
-        (recents.includes(word) ? 55 - recents.indexOf(word) : 0) +
-        (obj.prediction_weight || 0);
-    };
-    return score(b) - score(a);
-  });
+function getTopicList() {
+  const entries = getCommunicationEntries();
+  const topics = entries.map(entry => entry.topic).filter(Boolean);
+  return Array.from(new Set([...CORE_TOPICS, ...topics]));
 }
 
-export function buildLanguageBoard(profile, options = {}) {
-  const sentence = profile.sentence || [];
-  const activeContext = profile.activeContext || "Core Needs";
-  const maxPredictions = options.maxPredictions || 12;
-  const maxContext = options.maxContext || 24;
+function wordsForTopic(topic = "Core Needs") {
+  if (topic === "Core Needs") return [...HUMAN_FIRST_PHRASES, ...CORE_WORDS];
+  if (topic === "Relationships") return [...HUMAN_FIRST_PHRASES, ...getEntriesByTopic("Relationships").map(e => e.display || e.word)];
+  if (topic === "Feelings") return getEntriesByTopic("Feelings").map(e => e.display || e.word);
+  if (topic === "Conversation") return getEntriesByTopic("Conversation").map(e => e.display || e.word);
+  if (topic === "Food & Drinks") return getEntriesByTopic("Food & Drinks").map(e => e.display || e.word);
+  if (topic === "Places") return getEntriesByTopic("Places").map(e => e.display || e.word);
+  if (topic === "School") return getEntriesByTopic("School").map(e => e.display || e.word);
+  if (topic === "Safety") return getEntriesByTopic("Safety").map(e => e.display || e.word);
+  if (topic === "Actions") return getEntriesByTopic("Actions").map(e => e.display || e.word);
 
-  const grammar = getGrammarPredictions(sentence);
-  const connectorWords = shouldShowConnectors(sentence) ? CONNECTORS.slice(0, 10) : [];
+  return getEntriesByTopic(topic).map(e => e.display || e.word);
+}
 
-  const genomeTopicWords = getEntriesByTopic(activeContext).map(getEntryDisplay);
-  const contextWords = activeContext === "Core Needs"
-    ? CORE_HOME
-    : genomeTopicWords.length
-      ? genomeTopicWords
-      : getTopicWords(activeContext);
+function grammarPredictions(sentence = []) {
+  const phrase = sentence.join(" ").toLowerCase();
 
-  if (sentence.length === 0 && activeContext === "Core Needs") {
-    return {
-      predictions: rankByUse(profile, HUMAN_CONNECTION_PHRASES.concat(CORE_HOME)).slice(0, maxPredictions),
-      contextWords: rankByUse(profile, CORE_HOME.concat(getCommunicationEntries().filter(e => e.favorite).map(getEntryDisplay))).slice(0, maxContext),
-      topics: getNavigationTopics()
-    };
+  if (!sentence.length) {
+    return ["I love you", "I want", "I need", "I feel", "Can I have a hug", "Help me", "Hi", "Thank you", "Good morning", "Good night"];
   }
 
+  if (phrase === "i") return ["want", "need", "can", "am", "feel", "like", "love", "don't", "have", "see"];
+  if (phrase === "i want") return ["to", "more", "please", "help", "food", "drink", "outside", "hug", "a break"];
+  if (phrase === "i need") return ["help", "a break", "bathroom", "water", "food", "you", "medicine", "space"];
+  if (phrase === "i feel" || phrase === "i am") return ["happy", "sad", "mad", "scared", "tired", "sick", "hurt", "frustrated"];
+  if (phrase === "can i") return ["have", "go", "play", "help", "take a break", "tell you something"];
+  if (phrase.endsWith("because")) return ["I am sad", "it hurts", "I miss you", "I don't know", "I need help", "I'm tired"];
+
+  return ["and", "because", "but", "please", "thank you", "more", "help", "finished"];
+}
+
+export function buildLanguageBoard(profile = {}) {
+  const activeContext = profile.activeContext || "Core Needs";
+  const sentence = profile.sentence || [];
+  const topicWords = wordsForTopic(activeContext);
+  const predictions = grammarPredictions(sentence);
+
   return {
-    predictions: rankByUse(profile, [...grammar, ...connectorWords]).slice(0, maxPredictions),
-    contextWords: rankByUse(profile, contextWords).filter(w => !grammar.includes(w)).slice(0, maxContext),
-    topics: getNavigationTopics()
+    predictions,
+    contextWords: topicWords,
+    topics: getTopicList()
   };
 }
