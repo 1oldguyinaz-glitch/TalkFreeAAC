@@ -1,4 +1,4 @@
-export const TREE_VERSION = "5.20";
+export const TREE_VERSION = "5.21";
 
 export const FIXED_CORE_LANGUAGE = [
   "I", "want", "need", "feel", "am", "can",
@@ -867,6 +867,1443 @@ export const TOPIC_TREE = {
     label: "Too Cold",
     children: ["too cold", "wait", "warm up", "hurt teeth", "stop", "all done", "water", "help me", "cold", "no more", "finished", "please"]
   }
+};
+
+
+  // V5.21 — Remaining sidebar topics expanded with the same drilldown structure.
+  // Pattern: topic → branch → sub-branch → selectable word.
+
+  "places": {
+    label: "Places",
+    children: ["Home Places", "School Places", "Outside Places", "Community Places", "Travel Places", "Care Places", "Room Places", "Place Words"]
+  },
+  "places/home-places": {
+    label: "Home Places",
+    children: ["Inside Home", "Bedroom", "Bathroom", "Kitchen", "Living Room", "Yard", "Home Needs"]
+  },
+  "places/home-places/inside-home": {
+    label: "Inside Home",
+    children: ["home", "inside", "house", "apartment", "room", "hallway", "stairs", "door", "window", "floor", "couch", "chair"]
+  },
+  "places/home-places/bedroom": {
+    label: "Bedroom",
+    children: ["bedroom", "bed", "blanket", "pillow", "closet", "dresser", "lamp", "night light", "tablet", "book", "toy", "sleep"]
+  },
+  "places/home-places/bathroom": {
+    label: "Bathroom",
+    children: ["bathroom", "toilet", "sink", "tub", "shower", "soap", "towel", "wash hands", "brush teeth", "potty", "privacy", "help me"]
+  },
+  "places/home-places/kitchen": {
+    label: "Kitchen",
+    children: ["kitchen", "table", "chair", "fridge", "freezer", "sink", "cup", "plate", "spoon", "fork", "food", "drink"]
+  },
+  "places/home-places/living-room": {
+    label: "Living Room",
+    children: ["living room", "couch", "chair", "tv", "remote", "tablet", "toy", "blanket", "music", "game", "family", "sit"]
+  },
+  "places/home-places/yard": {
+    label: "Yard",
+    children: ["yard", "outside", "grass", "tree", "swing", "porch", "driveway", "garage", "play", "ball", "bike", "go inside"]
+  },
+  "places/home-places/home-needs": {
+    label: "Home Needs",
+    children: ["go home", "stay home", "inside", "outside", "bathroom", "bedroom", "kitchen", "water", "snack", "blanket", "help me", "safe"]
+  },
+
+  "places/school-places": {
+    label: "School Places",
+    children: ["Classroom", "Playground", "Cafeteria", "Library", "Nurse Office", "Bus Area", "School Needs"]
+  },
+  "places/school-places/classroom": {
+    label: "Classroom",
+    children: ["classroom", "desk", "chair", "rug", "table", "board", "computer", "pencil", "paper", "book", "teacher", "class"]
+  },
+  "places/school-places/playground": {
+    label: "Playground",
+    children: ["playground", "slide", "swing", "climber", "sandbox", "ball", "run", "jump", "outside", "friend", "my turn", "all done"]
+  },
+  "places/school-places/cafeteria": {
+    label: "Cafeteria",
+    children: ["cafeteria", "lunch room", "table", "chair", "tray", "lunch", "milk", "water", "snack", "food", "trash", "all done"]
+  },
+  "places/school-places/library": {
+    label: "Library",
+    children: ["library", "book", "read", "quiet", "shelf", "computer", "story", "sit", "teacher", "friend", "help me", "all done"]
+  },
+  "places/school-places/nurse-office": {
+    label: "Nurse Office",
+    children: ["nurse office", "nurse", "medicine", "hurt", "sick", "rest", "water", "bathroom", "call mom", "call dad", "help me", "safe"]
+  },
+  "places/school-places/bus-area": {
+    label: "Bus Area",
+    children: ["bus", "bus stop", "bus line", "seat", "driver", "home", "school", "wait", "too loud", "safe", "help me", "all done"]
+  },
+  "places/school-places/school-needs": {
+    label: "School Needs",
+    children: ["go to class", "go to bathroom", "go to nurse", "go outside", "go inside", "go home", "break", "help me", "teacher", "friend", "finished", "wait"]
+  },
+
+  "places/outside-places": {
+    label: "Outside Places",
+    children: ["Park", "Playground Outside", "Yard Outside", "Water Places", "Animal Places", "Outside Safety"]
+  },
+  "places/outside-places/park": {
+    label: "Park",
+    children: ["park", "grass", "tree", "bench", "path", "picnic", "play", "walk", "run", "friend", "water", "go home"]
+  },
+  "places/outside-places/playground-outside": {
+    label: "Playground Outside",
+    children: ["playground", "slide", "swing", "climber", "seesaw", "sandbox", "ball", "run", "jump", "my turn", "your turn", "stop"]
+  },
+  "places/outside-places/yard-outside": {
+    label: "Yard Outside",
+    children: ["yard", "porch", "driveway", "garage", "grass", "tree", "swing", "bike", "ball", "outside", "inside", "help me"]
+  },
+  "places/outside-places/water-places": {
+    label: "Water Places",
+    children: ["pool", "splash pad", "beach", "lake", "bath", "water", "swim", "wet", "towel", "safe", "stop", "all done"]
+  },
+  "places/outside-places/animal-places": {
+    label: "Animal Places",
+    children: ["zoo", "farm", "pet store", "dog park", "animal", "dog", "cat", "bird", "fish", "look", "scared", "safe"]
+  },
+  "places/outside-places/outside-safety": {
+    label: "Outside Safety",
+    children: ["stop", "wait", "hold hand", "stay with me", "too hot", "too cold", "water", "shade", "inside", "safe", "help me", "all done"]
+  },
+
+  "places/community-places": {
+    label: "Community Places",
+    children: ["Stores", "Restaurants", "Medical Places", "Family Places", "Fun Places", "Quiet Places"]
+  },
+  "places/community-places/stores": {
+    label: "Stores",
+    children: ["store", "grocery store", "toy store", "clothes store", "pharmacy", "cart", "checkout", "line", "snack", "toy", "go home", "help me"]
+  },
+  "places/community-places/restaurants": {
+    label: "Restaurants",
+    children: ["restaurant", "fast food", "table", "chair", "menu", "drink", "food", "fries", "nuggets", "pizza", "all done", "go home"]
+  },
+  "places/community-places/medical-places": {
+    label: "Medical Places",
+    children: ["doctor", "dentist", "hospital", "clinic", "therapy", "nurse", "medicine", "hurt", "sick", "wait", "help me", "safe"]
+  },
+  "places/community-places/family-places": {
+    label: "Family Places",
+    children: ["grandma house", "grandpa house", "friend house", "family house", "home", "visit", "hug", "play", "eat", "go home", "stay", "bye"]
+  },
+  "places/community-places/fun-places": {
+    label: "Fun Places",
+    children: ["movie", "museum", "zoo", "park", "play place", "arcade", "library", "pool", "party", "game", "more", "all done"]
+  },
+  "places/community-places/quiet-places": {
+    label: "Quiet Places",
+    children: ["quiet room", "library", "bedroom", "car", "home", "nurse office", "corner", "chair", "blanket", "break", "space", "safe"]
+  },
+
+  "places/travel-places": {
+    label: "Travel Places",
+    children: ["Car", "Bus", "Walking", "Parking", "Trips", "Travel Needs"]
+  },
+  "places/travel-places/car": {
+    label: "Car",
+    children: ["car", "car seat", "seat belt", "door", "window", "music", "tablet", "snack", "water", "go home", "stop car", "help me"]
+  },
+  "places/travel-places/bus": {
+    label: "Bus",
+    children: ["bus", "bus seat", "bus driver", "bus stop", "school bus", "wait", "too loud", "friend", "home", "school", "safe", "all done"]
+  },
+  "places/travel-places/walking": {
+    label: "Walking",
+    children: ["walk", "sidewalk", "crosswalk", "hold hand", "stop", "wait", "go", "outside", "inside", "tired", "help me", "safe"]
+  },
+  "places/travel-places/parking": {
+    label: "Parking",
+    children: ["parking lot", "car", "hold hand", "stop", "wait", "go inside", "go outside", "cart", "store", "safe", "help me", "too loud"]
+  },
+  "places/travel-places/trips": {
+    label: "Trips",
+    children: ["trip", "go", "home", "school", "store", "park", "doctor", "restaurant", "grandma house", "car", "bus", "all done"]
+  },
+  "places/travel-places/travel-needs": {
+    label: "Travel Needs",
+    children: ["I need break", "I need bathroom", "I need water", "I feel sick", "too loud", "stop", "go home", "wait", "tablet", "snack", "help me", "safe"]
+  },
+
+  "places/care-places": {
+    label: "Care Places",
+    children: ["Doctor Office", "Dentist", "Therapy", "Nurse", "Hospital", "Care Needs"]
+  },
+  "places/care-places/doctor-office": {
+    label: "Doctor Office",
+    children: ["doctor office", "doctor", "nurse", "scale", "table", "medicine", "shot", "hurt", "wait", "help me", "mom", "dad"]
+  },
+  "places/care-places/dentist": {
+    label: "Dentist",
+    children: ["dentist", "teeth", "mouth", "toothbrush", "chair", "open mouth", "hurt", "scared", "help me", "all done", "mom", "dad"]
+  },
+  "places/care-places/therapy": {
+    label: "Therapy",
+    children: ["therapy", "speech", "occupational therapy", "physical therapy", "teacher", "helper", "try", "break", "good job", "finished", "help me", "again"]
+  },
+  "places/care-places/nurse": {
+    label: "Nurse",
+    children: ["nurse", "nurse office", "medicine", "bandage", "hurt", "sick", "rest", "water", "call mom", "call dad", "safe", "all done"]
+  },
+  "places/care-places/hospital": {
+    label: "Hospital",
+    children: ["hospital", "doctor", "nurse", "bed", "medicine", "hurt", "sick", "scared", "mom", "dad", "safe", "help me"]
+  },
+  "places/care-places/care-needs": {
+    label: "Care Needs",
+    children: ["help me", "I am hurt", "I feel sick", "I am scared", "hold hand", "stay with me", "medicine", "water", "break", "all done", "safe", "stop"]
+  },
+
+  "places/room-places": {
+    label: "Room Places",
+    children: ["Bedroom Room", "Bathroom Room", "Kitchen Room", "Classroom Room", "Quiet Room", "Play Room"]
+  },
+  "places/room-places/bedroom-room": {
+    label: "Bedroom Room",
+    children: ["bedroom", "bed", "blanket", "pillow", "lamp", "closet", "dresser", "toy", "book", "tablet", "sleep", "quiet"]
+  },
+  "places/room-places/bathroom-room": {
+    label: "Bathroom Room",
+    children: ["bathroom", "toilet", "sink", "shower", "tub", "soap", "towel", "wash hands", "brush teeth", "privacy", "help me", "all done"]
+  },
+  "places/room-places/kitchen-room": {
+    label: "Kitchen Room",
+    children: ["kitchen", "table", "chair", "fridge", "freezer", "sink", "food", "drink", "cup", "plate", "spoon", "fork"]
+  },
+  "places/room-places/classroom-room": {
+    label: "Classroom Room",
+    children: ["classroom", "desk", "chair", "table", "rug", "board", "computer", "paper", "pencil", "book", "teacher", "friend"]
+  },
+  "places/room-places/quiet-room": {
+    label: "Quiet Room",
+    children: ["quiet room", "chair", "blanket", "headphones", "light", "dark", "music", "break", "space", "safe", "calm", "all done"]
+  },
+  "places/room-places/play-room": {
+    label: "Play Room",
+    children: ["play room", "toy", "game", "ball", "blocks", "tablet", "music", "book", "friend", "play", "more", "all done"]
+  },
+
+  "places/place-words": {
+    label: "Place Words",
+    children: ["Where Words", "Direction Words", "Position Words", "Going Words", "Leaving Words", "Safety Place Words"]
+  },
+  "places/place-words/where-words": {
+    label: "Where Words",
+    children: ["where", "where is", "here", "there", "this place", "that place", "home", "school", "outside", "inside", "bathroom", "help me"]
+  },
+  "places/place-words/direction-words": {
+    label: "Direction Words",
+    children: ["to", "from", "in", "out", "inside", "outside", "up", "down", "left", "right", "around", "through"]
+  },
+  "places/place-words/position-words": {
+    label: "Position Words",
+    children: ["on", "under", "over", "next to", "behind", "in front", "near", "far", "top", "bottom", "middle", "beside"]
+  },
+  "places/place-words/going-words": {
+    label: "Going Words",
+    children: ["go", "go to", "go home", "go inside", "go outside", "go bathroom", "go school", "go car", "come here", "stay", "wait", "stop"]
+  },
+  "places/place-words/leaving-words": {
+    label: "Leaving Words",
+    children: ["leave", "go home", "bye", "all done", "finished", "come back", "stay", "wait", "not ready", "ready", "car", "bus"]
+  },
+  "places/place-words/safety-place-words": {
+    label: "Safety Place Words",
+    children: ["safe", "not safe", "stop", "wait", "hold hand", "stay with me", "help me", "too loud", "too close", "inside", "home", "teacher"]
+  },
+
+  "school": {
+    label: "School",
+    children: ["School People", "Classroom Work", "School Tools", "Reading & Writing", "Schedule", "Break & Sensory", "School Places", "School Needs"]
+  },
+  "school/school-people": {
+    label: "School People",
+    children: ["Teachers", "Classmates", "Helpers", "Therapy People", "Bus People", "School Office"]
+  },
+  "school/school-people/teachers": {
+    label: "Teachers",
+    children: ["teacher", "main teacher", "helper teacher", "substitute teacher", "speech teacher", "ask teacher", "help me", "show me", "tell me", "I don't understand", "good job", "all done"]
+  },
+  "school/school-people/classmates": {
+    label: "Classmates",
+    children: ["classmate", "friend", "student", "kids", "my friend", "my turn", "your turn", "share", "play with me", "stop please", "thank you", "sorry"]
+  },
+  "school/school-people/helpers": {
+    label: "Helpers",
+    children: ["helper", "aide", "principal", "nurse", "office", "lunch helper", "playground helper", "bus helper", "help me", "I am hurt", "bathroom", "break"]
+  },
+  "school/school-people/therapy-people": {
+    label: "Therapy People",
+    children: ["speech teacher", "therapist", "occupational therapist", "physical therapist", "doctor", "nurse", "try", "again", "break", "good job", "finished", "help me"]
+  },
+  "school/school-people/bus-people": {
+    label: "Bus People",
+    children: ["bus driver", "bus helper", "friend", "student", "seat", "home", "school", "wait", "too loud", "safe", "help me", "all done"]
+  },
+  "school/school-people/school-office": {
+    label: "School Office",
+    children: ["office", "principal", "secretary", "nurse", "call mom", "call dad", "help me", "I am sick", "I am hurt", "wait", "safe", "all done"]
+  },
+
+  "school/classroom-work": {
+    label: "Classroom Work",
+    children: ["Work Choices", "Answering", "Following Directions", "Group Work", "Finished Work", "Help With Work"]
+  },
+  "school/classroom-work/work-choices": {
+    label: "Work Choices",
+    children: ["work", "worksheet", "paper", "book", "computer", "tablet", "puzzle", "matching", "sorting", "math", "reading", "writing"]
+  },
+  "school/classroom-work/answering": {
+    label: "Answering",
+    children: ["answer", "yes", "no", "maybe", "I know", "I don't know", "choose", "point", "show me", "tell me", "again", "help me"]
+  },
+  "school/classroom-work/following-directions": {
+    label: "Following Directions",
+    children: ["listen", "look", "sit", "stand", "wait", "line up", "come here", "go there", "open", "close", "put in", "take out"]
+  },
+  "school/classroom-work/group-work": {
+    label: "Group Work",
+    children: ["group", "circle time", "table work", "partner", "friend", "teacher", "my turn", "your turn", "share", "wait", "listen", "good job"]
+  },
+  "school/classroom-work/finished-work": {
+    label: "Finished Work",
+    children: ["finished", "all done", "turn in", "clean up", "put away", "check work", "more work", "break", "play", "good job", "help me", "next"]
+  },
+  "school/classroom-work/help-with-work": {
+    label: "Help With Work",
+    children: ["help me", "I need help", "I don't understand", "show me", "tell me", "again", "too hard", "try again", "break", "teacher", "please", "thank you"]
+  },
+
+  "school/school-tools": {
+    label: "School Tools",
+    children: ["Writing Tools", "Paper Tools", "Technology", "Art Tools", "Classroom Items", "Tool Needs"]
+  },
+  "school/school-tools/writing-tools": {
+    label: "Writing Tools",
+    children: ["pencil", "pen", "marker", "crayon", "eraser", "highlighter", "color pencil", "write", "draw", "paper", "help me", "more"]
+  },
+  "school/school-tools/paper-tools": {
+    label: "Paper Tools",
+    children: ["paper", "worksheet", "notebook", "folder", "book", "card", "page", "cut", "glue", "turn page", "finished", "help me"]
+  },
+  "school/school-tools/technology": {
+    label: "Technology",
+    children: ["tablet", "computer", "keyboard", "mouse", "screen", "headphones", "charger", "video", "game", "type", "help me", "all done"]
+  },
+  "school/school-tools/art-tools": {
+    label: "Art Tools",
+    children: ["crayon", "marker", "paint", "brush", "glue", "scissors", "paper", "color", "draw", "cut", "messy", "all done"]
+  },
+  "school/school-tools/classroom-items": {
+    label: "Classroom Items",
+    children: ["desk", "chair", "table", "rug", "board", "door", "window", "light", "book", "bin", "backpack", "lunch box"]
+  },
+  "school/school-tools/tool-needs": {
+    label: "Tool Needs",
+    children: ["I need pencil", "I need paper", "I need book", "I need tablet", "I need headphones", "open", "close", "broken", "lost", "help me", "please", "thank you"]
+  },
+
+  "school/reading-writing": {
+    label: "Reading & Writing",
+    children: ["Reading", "Writing", "Letters", "Numbers", "Books", "Story Words"]
+  },
+  "school/reading-writing/reading": {
+    label: "Reading",
+    children: ["read", "book", "story", "page", "turn page", "picture", "word", "letter", "listen", "look", "again", "all done"]
+  },
+  "school/reading-writing/writing": {
+    label: "Writing",
+    children: ["write", "draw", "trace", "copy", "name", "letter", "word", "sentence", "pencil", "paper", "eraser", "help me"]
+  },
+  "school/reading-writing/letters": {
+    label: "Letters",
+    children: ["letter", "alphabet", "A", "B", "C", "my name", "sound", "word", "spell", "read", "write", "help me"]
+  },
+  "school/reading-writing/numbers": {
+    label: "Numbers",
+    children: ["number", "count", "one", "two", "three", "more", "less", "same", "different", "how many", "math", "help me"]
+  },
+  "school/reading-writing/books": {
+    label: "Books",
+    children: ["book", "library", "story", "picture book", "chapter book", "favorite book", "read again", "turn page", "close book", "open book", "all done", "quiet"]
+  },
+  "school/reading-writing/story-words": {
+    label: "Story Words",
+    children: ["who", "what", "where", "when", "why", "how", "first", "next", "then", "last", "again", "tell me"]
+  },
+
+  "school/schedule": {
+    label: "Schedule",
+    children: ["Daily Schedule", "Transitions", "Before/After", "Waiting", "School Events", "Going Home"]
+  },
+  "school/schedule/daily-schedule": {
+    label: "Daily Schedule",
+    children: ["arrival", "morning work", "circle time", "reading", "math", "lunch", "recess", "specials", "therapy", "pack up", "bus", "home"]
+  },
+  "school/schedule/transitions": {
+    label: "Transitions",
+    children: ["transition", "change", "next", "first", "then", "wait", "not ready", "ready", "help me", "break", "go", "stop"]
+  },
+  "school/schedule/before-after": {
+    label: "Before/After",
+    children: ["before", "after", "first", "next", "then", "last", "now", "later", "today", "tomorrow", "finished", "all done"]
+  },
+  "school/schedule/waiting": {
+    label: "Waiting",
+    children: ["wait", "timer", "line up", "my turn", "your turn", "soon", "not yet", "ready", "too long", "help me", "break", "all done"]
+  },
+  "school/schedule/school-events": {
+    label: "School Events",
+    children: ["recess", "lunch", "assembly", "field trip", "party", "music", "art", "gym", "library", "therapy", "more", "all done"]
+  },
+  "school/schedule/going-home": {
+    label: "Going Home",
+    children: ["go home", "bus", "car", "pack up", "backpack", "lunch box", "mom", "dad", "wait", "bye", "finished", "all done"]
+  },
+
+  "school/break-sensory": {
+    label: "Break & Sensory",
+    children: ["Break Choices", "Quiet Tools", "Movement Tools", "Sensory Needs", "Too Much", "Return To Work"]
+  },
+  "school/break-sensory/break-choices": {
+    label: "Break Choices",
+    children: ["break", "quiet break", "walk break", "bathroom", "water", "snack", "chair", "calm corner", "tablet", "book", "timer", "all done"]
+  },
+  "school/break-sensory/quiet-tools": {
+    label: "Quiet Tools",
+    children: ["quiet", "headphones", "music", "book", "blanket", "dark room", "chair", "space", "breathe", "break", "safe", "finished"]
+  },
+  "school/break-sensory/movement-tools": {
+    label: "Movement Tools",
+    children: ["walk", "jump", "stretch", "wiggle", "swing", "run", "outside", "stand", "sit", "heavy work", "break", "all done"]
+  },
+  "school/break-sensory/sensory-needs": {
+    label: "Sensory Needs",
+    children: ["too loud", "too bright", "too close", "too much", "need quiet", "need space", "headphones", "break", "help me", "stop", "safe", "all done"]
+  },
+  "school/break-sensory/too-much": {
+    label: "Too Much",
+    children: ["too much", "stop", "break", "quiet", "space", "help me", "I am mad", "I am scared", "I need teacher", "all done", "finished", "safe"]
+  },
+  "school/break-sensory/return-to-work": {
+    label: "Return To Work",
+    children: ["ready", "not ready", "one more minute", "first break then work", "try again", "help me", "teacher", "work", "finished", "good job", "yes", "no"]
+  },
+
+  "school/school-places": {
+    label: "School Places",
+    children: ["Classroom", "Bathroom", "Cafeteria", "Playground", "Library", "Nurse Office", "Bus"]
+  },
+  "school/school-places/classroom": {
+    label: "Classroom",
+    children: ["classroom", "desk", "chair", "table", "rug", "board", "computer", "book", "paper", "pencil", "teacher", "friend"]
+  },
+  "school/school-places/bathroom": {
+    label: "Bathroom",
+    children: ["bathroom", "toilet", "sink", "wash hands", "privacy", "help me", "now", "wait", "all done", "teacher", "nurse", "safe"]
+  },
+  "school/school-places/cafeteria": {
+    label: "Cafeteria",
+    children: ["cafeteria", "lunch", "table", "chair", "tray", "milk", "water", "snack", "food", "friend", "all done", "trash"]
+  },
+  "school/school-places/playground": {
+    label: "Playground",
+    children: ["playground", "slide", "swing", "ball", "run", "jump", "friend", "my turn", "your turn", "stop", "help me", "all done"]
+  },
+  "school/school-places/library": {
+    label: "Library",
+    children: ["library", "book", "read", "quiet", "story", "computer", "shelf", "teacher", "friend", "help me", "finished", "all done"]
+  },
+  "school/school-places/nurse-office": {
+    label: "Nurse Office",
+    children: ["nurse office", "nurse", "hurt", "sick", "medicine", "rest", "water", "bathroom", "call mom", "call dad", "safe", "all done"]
+  },
+  "school/school-places/bus": {
+    label: "Bus",
+    children: ["bus", "bus driver", "seat", "seat belt", "window", "home", "school", "wait", "too loud", "friend", "safe", "all done"]
+  },
+
+  "school/school-needs": {
+    label: "School Needs",
+    children: ["Help Needs", "Body Needs", "Communication Needs", "Social Needs", "Work Needs", "Safety Needs"]
+  },
+  "school/school-needs/help-needs": {
+    label: "Help Needs",
+    children: ["I need help", "help me", "show me", "tell me", "I don't understand", "too hard", "again", "teacher", "friend", "please", "thank you", "finished"]
+  },
+  "school/school-needs/body-needs": {
+    label: "Body Needs",
+    children: ["bathroom", "water", "snack", "hurt", "sick", "tired", "hot", "cold", "medicine", "nurse", "break", "help me"]
+  },
+  "school/school-needs/communication-needs": {
+    label: "Communication Needs",
+    children: ["I want", "I need", "I feel", "yes", "no", "maybe", "again", "more", "finished", "I don't know", "help me", "wait"]
+  },
+  "school/school-needs/social-needs": {
+    label: "Social Needs",
+    children: ["friend", "play with me", "my turn", "your turn", "share", "stop please", "sorry", "thank you", "good job", "I need space", "help me", "all done"]
+  },
+  "school/school-needs/work-needs": {
+    label: "Work Needs",
+    children: ["pencil", "paper", "book", "tablet", "computer", "turn page", "open", "close", "write", "read", "help me", "finished"]
+  },
+  "school/school-needs/safety-needs": {
+    label: "Safety Needs",
+    children: ["safe", "not safe", "stop", "help me", "teacher", "nurse", "too loud", "too much", "hurt", "scared", "call mom", "call dad"]
+  },
+
+  "actions": {
+    label: "Actions",
+    children: ["Movement", "Body Actions", "Communication Actions", "Play Actions", "Self Care Actions", "School Actions", "Home Actions", "Control Actions"]
+  },
+  "actions/movement": {
+    label: "Movement",
+    children: ["Go Actions", "Stop Actions", "Walk/Run", "Sit/Stand", "Up/Down", "Travel Actions"]
+  },
+  "actions/movement/go-actions": {
+    label: "Go Actions",
+    children: ["go", "come", "leave", "start", "move", "go inside", "go outside", "go home", "go school", "go car", "go bathroom", "go play"]
+  },
+  "actions/movement/stop-actions": {
+    label: "Stop Actions",
+    children: ["stop", "wait", "pause", "slow down", "hold on", "all done", "finished", "no more", "stop please", "too fast", "safe", "help me"]
+  },
+  "actions/movement/walk-run": {
+    label: "Walk/Run",
+    children: ["walk", "run", "jump", "skip", "march", "crawl", "climb", "dance", "stretch", "swing", "outside", "break"]
+  },
+  "actions/movement/sit-stand": {
+    label: "Sit/Stand",
+    children: ["sit", "stand", "lay down", "kneel", "chair", "floor", "couch", "bed", "up", "down", "help me", "all done"]
+  },
+  "actions/movement/up-down": {
+    label: "Up/Down",
+    children: ["up", "down", "climb up", "climb down", "pick up", "put down", "stairs", "slide", "lift", "drop", "help me", "again"]
+  },
+  "actions/movement/travel-actions": {
+    label: "Travel Actions",
+    children: ["ride", "drive", "walk", "bus", "car", "cross", "hold hand", "wait", "stop", "go", "go home", "safe"]
+  },
+
+  "actions/body-actions": {
+    label: "Body Actions",
+    children: ["Eat/Drink", "Sleep/Rest", "Bathroom Actions", "Wash/Clean", "Dress", "Health Actions"]
+  },
+  "actions/body-actions/eat-drink": {
+    label: "Eat/Drink",
+    children: ["eat", "drink", "bite", "chew", "swallow", "sip", "taste", "more", "all done", "hungry", "thirsty", "help me"]
+  },
+  "actions/body-actions/sleep-rest": {
+    label: "Sleep/Rest",
+    children: ["sleep", "rest", "nap", "lay down", "close eyes", "blanket", "pillow", "quiet", "good night", "wake up", "tired", "all done"]
+  },
+  "actions/body-actions/bathroom-actions": {
+    label: "Bathroom Actions",
+    children: ["go bathroom", "pee", "poop", "flush", "wipe", "wash hands", "privacy", "help me", "pants", "clean", "all done", "now"]
+  },
+  "actions/body-actions/wash-clean": {
+    label: "Wash/Clean",
+    children: ["wash", "clean", "wipe", "dry", "soap", "water", "towel", "brush teeth", "bath", "shower", "dirty", "all done"]
+  },
+  "actions/body-actions/dress": {
+    label: "Dress",
+    children: ["dress", "undress", "shirt", "pants", "socks", "shoes", "jacket", "zip", "button", "take off", "put on", "help me"]
+  },
+  "actions/body-actions/health-actions": {
+    label: "Health Actions",
+    children: ["take medicine", "rest", "tell doctor", "show hurt", "point", "breathe", "cough", "drink water", "hold hand", "help me", "safe", "all done"]
+  },
+
+  "actions/communication-actions": {
+    label: "Communication Actions",
+    children: ["Say", "Ask", "Tell", "Show", "Choose", "Answer", "Repeat"]
+  },
+  "actions/communication-actions/say": {
+    label: "Say",
+    children: ["say", "talk", "speak", "tell", "use words", "use button", "voice", "quiet voice", "loud voice", "again", "help me", "thank you"]
+  },
+  "actions/communication-actions/ask": {
+    label: "Ask",
+    children: ["ask", "question", "can I", "can you", "where", "what", "who", "when", "why", "how", "help me", "please"]
+  },
+  "actions/communication-actions/tell": {
+    label: "Tell",
+    children: ["tell me", "I tell you", "I want", "I need", "I feel", "I like", "I don't like", "because", "show me", "listen", "look", "wait"]
+  },
+  "actions/communication-actions/show": {
+    label: "Show",
+    children: ["show me", "show you", "look", "point", "touch", "bring it", "give it", "picture", "button", "again", "help me", "thank you"]
+  },
+  "actions/communication-actions/choose": {
+    label: "Choose",
+    children: ["choose", "pick", "this one", "that one", "yes", "no", "maybe", "more", "all done", "my turn", "your turn", "help me"]
+  },
+  "actions/communication-actions/answer": {
+    label: "Answer",
+    children: ["answer", "yes", "no", "I know", "I don't know", "maybe", "again", "question", "help me", "wait", "please", "thank you"]
+  },
+  "actions/communication-actions/repeat": {
+    label: "Repeat",
+    children: ["again", "say again", "do again", "read again", "show again", "try again", "more", "not again", "all done", "finished", "help me", "please"]
+  },
+
+  "actions/play-actions": {
+    label: "Play Actions",
+    children: ["Toy Play", "Game Play", "Outside Play", "Tablet Play", "Pretend Play", "Turn Taking"]
+  },
+  "actions/play-actions/toy-play": {
+    label: "Toy Play",
+    children: ["play", "build", "stack", "roll", "throw", "catch", "push", "pull", "open", "close", "again", "all done"]
+  },
+  "actions/play-actions/game-play": {
+    label: "Game Play",
+    children: ["play game", "start game", "pause game", "win", "lose", "try again", "my turn", "your turn", "help me", "more", "all done", "fun"]
+  },
+  "actions/play-actions/outside-play": {
+    label: "Outside Play",
+    children: ["run", "jump", "swing", "slide", "climb", "kick", "throw", "catch", "walk", "sit", "stop", "all done"]
+  },
+  "actions/play-actions/tablet-play": {
+    label: "Tablet Play",
+    children: ["watch", "play", "tap", "swipe", "open app", "close app", "pause", "volume up", "volume down", "more", "all done", "help me"]
+  },
+  "actions/play-actions/pretend-play": {
+    label: "Pretend Play",
+    children: ["pretend", "make food", "drive car", "doctor", "teacher", "baby", "animal", "house", "talk", "play with me", "again", "all done"]
+  },
+  "actions/play-actions/turn-taking": {
+    label: "Turn Taking",
+    children: ["my turn", "your turn", "wait", "share", "again", "more", "stop", "all done", "good job", "thank you", "sorry", "help me"]
+  },
+
+  "actions/self-care-actions": {
+    label: "Self Care Actions",
+    children: ["Eating Help", "Dressing Help", "Cleaning Help", "Bathroom Help", "Calming Actions", "Safety Actions"]
+  },
+  "actions/self-care-actions/eating-help": {
+    label: "Eating Help",
+    children: ["open", "cut", "pour", "mix", "cool down", "blow on it", "more", "all done", "spoon", "fork", "cup", "help me"]
+  },
+  "actions/self-care-actions/dressing-help": {
+    label: "Dressing Help",
+    children: ["put on", "take off", "zip", "button", "tie shoes", "shirt", "pants", "socks", "shoes", "jacket", "help me", "all done"]
+  },
+  "actions/self-care-actions/cleaning-help": {
+    label: "Cleaning Help",
+    children: ["wash hands", "wipe face", "wipe table", "clean up", "throw away", "put away", "dirty", "clean", "soap", "towel", "help me", "all done"]
+  },
+  "actions/self-care-actions/bathroom-help": {
+    label: "Bathroom Help",
+    children: ["go bathroom", "pull down", "pull up", "wipe", "flush", "wash hands", "privacy", "help me", "all done", "now", "wait", "clean"]
+  },
+  "actions/self-care-actions/calming-actions": {
+    label: "Calming Actions",
+    children: ["breathe", "quiet", "space", "hug", "sit", "rest", "walk", "music", "blanket", "headphones", "safe", "all done"]
+  },
+  "actions/self-care-actions/safety-actions": {
+    label: "Safety Actions",
+    children: ["stop", "wait", "hold hand", "stay with me", "help me", "safe", "not safe", "too close", "too loud", "inside", "teacher", "mom"]
+  },
+
+  "actions/school-actions": {
+    label: "School Actions",
+    children: ["Work Actions", "Reading Actions", "Writing Actions", "Listening Actions", "Transition Actions", "Help Actions"]
+  },
+  "actions/school-actions/work-actions": {
+    label: "Work Actions",
+    children: ["work", "try", "finish", "start", "match", "sort", "count", "circle", "cut", "glue", "turn in", "help me"]
+  },
+  "actions/school-actions/reading-actions": {
+    label: "Reading Actions",
+    children: ["read", "listen", "turn page", "look", "point", "find", "sound out", "read again", "book", "story", "help me", "finished"]
+  },
+  "actions/school-actions/writing-actions": {
+    label: "Writing Actions",
+    children: ["write", "draw", "trace", "copy", "erase", "color", "spell", "name", "letter", "word", "help me", "finished"]
+  },
+  "actions/school-actions/listening-actions": {
+    label: "Listening Actions",
+    children: ["listen", "look", "sit", "quiet", "wait", "answer", "ask", "raise hand", "try", "again", "help me", "finished"]
+  },
+  "actions/school-actions/transition-actions": {
+    label: "Transition Actions",
+    children: ["line up", "walk", "go", "stop", "wait", "pack up", "clean up", "next", "first", "then", "ready", "not ready"]
+  },
+  "actions/school-actions/help-actions": {
+    label: "Help Actions",
+    children: ["help me", "show me", "tell me", "again", "I don't understand", "too hard", "break", "teacher", "friend", "please", "thank you", "finished"]
+  },
+
+  "actions/home-actions": {
+    label: "Home Actions",
+    children: ["Eating At Home", "Playing At Home", "Resting At Home", "Cleaning At Home", "Family Actions", "Bedtime Actions"]
+  },
+  "actions/home-actions/eating-at-home": {
+    label: "Eating At Home",
+    children: ["eat", "drink", "snack", "dinner", "breakfast", "lunch", "more", "all done", "help me", "table", "chair", "kitchen"]
+  },
+  "actions/home-actions/playing-at-home": {
+    label: "Playing At Home",
+    children: ["play", "toy", "tablet", "tv", "music", "game", "outside", "inside", "again", "more", "all done", "clean up"]
+  },
+  "actions/home-actions/resting-at-home": {
+    label: "Resting At Home",
+    children: ["rest", "sleep", "nap", "sit", "lay down", "blanket", "pillow", "quiet", "music", "water", "all done", "wake up"]
+  },
+  "actions/home-actions/cleaning-at-home": {
+    label: "Cleaning At Home",
+    children: ["clean up", "put away", "throw away", "wipe", "wash", "laundry", "trash", "dirty", "clean", "help me", "all done", "good job"]
+  },
+  "actions/home-actions/family-actions": {
+    label: "Family Actions",
+    children: ["hug", "talk", "play", "read", "watch", "eat", "help", "come here", "stay", "go home", "thank you", "I love you"]
+  },
+  "actions/home-actions/bedtime-actions": {
+    label: "Bedtime Actions",
+    children: ["bath", "pajamas", "brush teeth", "read book", "lights off", "blanket", "sleep", "good night", "hug", "water", "all done", "stay"]
+  },
+
+  "actions/control-actions": {
+    label: "Control Actions",
+    children: ["Open/Close", "On/Off", "More/Less", "Start/Stop", "Fix/Change", "Choice Control"]
+  },
+  "actions/control-actions/open-close": {
+    label: "Open/Close",
+    children: ["open", "close", "open door", "close door", "open box", "close box", "open app", "close app", "open book", "close book", "help me", "all done"]
+  },
+  "actions/control-actions/on-off": {
+    label: "On/Off",
+    children: ["turn on", "turn off", "lights on", "lights off", "tv on", "tv off", "music on", "music off", "volume up", "volume down", "help me", "stop"]
+  },
+  "actions/control-actions/more-less": {
+    label: "More/Less",
+    children: ["more", "less", "again", "no more", "one more", "too much", "not enough", "all done", "finished", "help me", "please", "thank you"]
+  },
+  "actions/control-actions/start-stop": {
+    label: "Start/Stop",
+    children: ["start", "stop", "pause", "go", "wait", "ready", "not ready", "again", "all done", "finished", "help me", "safe"]
+  },
+  "actions/control-actions/fix-change": {
+    label: "Fix/Change",
+    children: ["fix", "change", "different", "same", "broken", "wrong", "right", "try again", "help me", "show me", "more", "all done"]
+  },
+  "actions/control-actions/choice-control": {
+    label: "Choice Control",
+    children: ["choose", "pick", "this one", "that one", "same", "different", "yes", "no", "maybe", "my turn", "your turn", "help me"]
+  },
+
+  "things": {
+    label: "Things",
+    children: ["Toys", "Technology", "Comfort Items", "Home Items", "School Items", "Eating Items", "Clothing", "Outside Things"]
+  },
+  "things/toys": {
+    label: "Toys",
+    children: ["Soft Toys", "Building Toys", "Vehicle Toys", "Ball Toys", "Pretend Toys", "Game Toys"]
+  },
+  "things/toys/soft-toys": {
+    label: "Soft Toys",
+    children: ["stuffed animal", "teddy bear", "doll", "blanket", "pillow", "soft toy", "puppet", "plush", "hug toy", "favorite toy", "more", "all done"]
+  },
+  "things/toys/building-toys": {
+    label: "Building Toys",
+    children: ["blocks", "Legos", "magnet tiles", "puzzle", "stack", "build", "tower", "pieces", "more blocks", "clean up", "help me", "all done"]
+  },
+  "things/toys/vehicle-toys": {
+    label: "Vehicle Toys",
+    children: ["car toy", "truck", "train", "bus", "plane", "tractor", "boat", "race car", "track", "drive", "more", "all done"]
+  },
+  "things/toys/ball-toys": {
+    label: "Ball Toys",
+    children: ["ball", "soccer ball", "basketball", "football", "baseball", "kick", "throw", "catch", "roll", "bounce", "outside", "all done"]
+  },
+  "things/toys/pretend-toys": {
+    label: "Pretend Toys",
+    children: ["play food", "doctor kit", "toy phone", "doll house", "costume", "kitchen toy", "tools", "pretend", "make food", "talk", "more", "all done"]
+  },
+  "things/toys/game-toys": {
+    label: "Game Toys",
+    children: ["game", "board game", "cards", "dice", "puzzle", "tablet game", "controller", "my turn", "your turn", "win", "try again", "all done"]
+  },
+
+  "things/technology": {
+    label: "Technology",
+    children: ["Tablet", "TV", "Phone", "Computer", "Music", "Charging"]
+  },
+  "things/technology/tablet": {
+    label: "Tablet",
+    children: ["tablet", "iPad", "app", "game", "video", "YouTube", "pause", "play", "volume up", "volume down", "charger", "all done"]
+  },
+  "things/technology/tv": {
+    label: "TV",
+    children: ["tv", "remote", "show", "movie", "cartoon", "pause", "play", "volume", "too loud", "more show", "all done", "help me"]
+  },
+  "things/technology/phone": {
+    label: "Phone",
+    children: ["phone", "call mom", "call dad", "video call", "picture", "message", "speaker", "volume", "charger", "help me", "all done", "hello"]
+  },
+  "things/technology/computer": {
+    label: "Computer",
+    children: ["computer", "keyboard", "mouse", "screen", "headphones", "game", "video", "type", "click", "open", "close", "help me"]
+  },
+  "things/technology/music": {
+    label: "Music",
+    children: ["music", "song", "speaker", "headphones", "quiet music", "loud music", "volume up", "volume down", "dance", "again", "all done", "stop"]
+  },
+  "things/technology/charging": {
+    label: "Charging",
+    children: ["charger", "plug", "battery", "charge tablet", "charge phone", "outlet", "cord", "broken", "help me", "wait", "all done", "safe"]
+  },
+
+  "things/comfort-items": {
+    label: "Comfort Items",
+    children: ["Soft Comfort", "Sensory Items", "Calm Items", "Sleep Items", "Favorite Items", "Safety Items"]
+  },
+  "things/comfort-items/soft-comfort": {
+    label: "Soft Comfort",
+    children: ["blanket", "pillow", "stuffed animal", "soft toy", "hoodie", "sweater", "couch", "bed", "hug", "safe", "more", "all done"]
+  },
+  "things/comfort-items/sensory-items": {
+    label: "Sensory Items",
+    children: ["headphones", "fidget", "chewy", "weighted blanket", "squishy", "spinner", "sensory toy", "quiet", "space", "break", "help me", "all done"]
+  },
+  "things/comfort-items/calm-items": {
+    label: "Calm Items",
+    children: ["book", "music", "tablet", "blanket", "water", "snack", "chair", "lamp", "night light", "toy", "safe", "calm"]
+  },
+  "things/comfort-items/sleep-items": {
+    label: "Sleep Items",
+    children: ["bed", "blanket", "pillow", "pajamas", "night light", "stuffed animal", "water", "book", "music", "good night", "sleep", "all done"]
+  },
+  "things/comfort-items/favorite-items": {
+    label: "Favorite Items",
+    children: ["favorite toy", "tablet", "blanket", "book", "music", "snack", "drink", "stuffed animal", "game", "show", "more", "all done"]
+  },
+  "things/comfort-items/safety-items": {
+    label: "Safety Items",
+    children: ["helmet", "seat belt", "car seat", "bandage", "medicine", "glasses", "shoes", "jacket", "safe", "help me", "stop", "wait"]
+  },
+
+  "things/home-items": {
+    label: "Home Items",
+    children: ["Furniture", "Kitchen Items", "Bathroom Items", "Bedroom Items", "Cleaning Items", "Light/Doors"]
+  },
+  "things/home-items/furniture": {
+    label: "Furniture",
+    children: ["chair", "table", "couch", "bed", "desk", "dresser", "shelf", "stool", "bench", "sit", "help me", "all done"]
+  },
+  "things/home-items/kitchen-items": {
+    label: "Kitchen Items",
+    children: ["cup", "plate", "bowl", "spoon", "fork", "straw", "napkin", "fridge", "freezer", "sink", "food", "drink"]
+  },
+  "things/home-items/bathroom-items": {
+    label: "Bathroom Items",
+    children: ["toilet", "sink", "soap", "towel", "toothbrush", "toothpaste", "shower", "tub", "brush", "mirror", "help me", "all done"]
+  },
+  "things/home-items/bedroom-items": {
+    label: "Bedroom Items",
+    children: ["bed", "blanket", "pillow", "dresser", "closet", "lamp", "night light", "book", "toy", "pajamas", "sleep", "all done"]
+  },
+  "things/home-items/cleaning-items": {
+    label: "Cleaning Items",
+    children: ["trash", "wipe", "towel", "soap", "broom", "vacuum", "laundry", "basket", "clean up", "dirty", "clean", "help me"]
+  },
+  "things/home-items/light-doors": {
+    label: "Light/Doors",
+    children: ["door", "window", "light", "lamp", "switch", "open", "close", "on", "off", "too bright", "dark", "help me"]
+  },
+
+  "things/school-items": {
+    label: "School Items",
+    children: ["Writing Items", "Paper Items", "Book Items", "Backpack Items", "Classroom Items", "Art Items"]
+  },
+  "things/school-items/writing-items": {
+    label: "Writing Items",
+    children: ["pencil", "pen", "marker", "crayon", "eraser", "highlighter", "colored pencil", "sharpener", "write", "draw", "help me", "all done"]
+  },
+  "things/school-items/paper-items": {
+    label: "Paper Items",
+    children: ["paper", "worksheet", "notebook", "folder", "page", "card", "picture", "cut", "glue", "turn in", "finished", "help me"]
+  },
+  "things/school-items/book-items": {
+    label: "Book Items",
+    children: ["book", "story", "library book", "page", "picture", "word", "letter", "read", "turn page", "open book", "close book", "all done"]
+  },
+  "things/school-items/backpack-items": {
+    label: "Backpack Items",
+    children: ["backpack", "lunch box", "folder", "book", "paper", "water bottle", "snack", "jacket", "zipper", "open", "close", "help me"]
+  },
+  "things/school-items/classroom-items": {
+    label: "Classroom Items",
+    children: ["desk", "chair", "table", "rug", "board", "computer", "tablet", "bin", "timer", "headphones", "teacher", "help me"]
+  },
+  "things/school-items/art-items": {
+    label: "Art Items",
+    children: ["paint", "brush", "marker", "crayon", "glue", "scissors", "paper", "stickers", "color", "draw", "messy", "all done"]
+  },
+
+  "things/eating-items": {
+    label: "Eating Items",
+    children: ["Dishes", "Utensils", "Drink Items", "Food Containers", "Snack Items", "Meal Tools"]
+  },
+  "things/eating-items/dishes": {
+    label: "Dishes",
+    children: ["plate", "bowl", "tray", "cup", "napkin", "table", "chair", "more", "all done", "clean", "dirty", "help me"]
+  },
+  "things/eating-items/utensils": {
+    label: "Utensils",
+    children: ["spoon", "fork", "knife", "straw", "chopsticks", "scoop", "cut", "mix", "help me", "more", "all done", "finished"]
+  },
+  "things/eating-items/drink-items": {
+    label: "Drink Items",
+    children: ["cup", "straw", "water bottle", "juice box", "milk carton", "lid", "ice", "open", "close", "spill", "help me", "all done"]
+  },
+  "things/eating-items/food-containers": {
+    label: "Food Containers",
+    children: ["lunch box", "bag", "wrapper", "container", "pouch", "box", "bowl", "open", "close", "trash", "help me", "all done"]
+  },
+  "things/eating-items/snack-items": {
+    label: "Snack Items",
+    children: ["chips bag", "gummies pack", "cracker box", "cookie", "bar wrapper", "pouch", "napkin", "open", "more", "all done", "trash", "help me"]
+  },
+  "things/eating-items/meal-tools": {
+    label: "Meal Tools",
+    children: ["fork", "spoon", "plate", "bowl", "cup", "napkin", "ketchup", "sauce", "cut", "cool down", "help me", "all done"]
+  },
+
+  "things/clothing": {
+    label: "Clothing",
+    children: ["Daily Clothes", "Shoes", "Weather Clothes", "Sleep Clothes", "School Clothes", "Clothing Help"]
+  },
+  "things/clothing/daily-clothes": {
+    label: "Daily Clothes",
+    children: ["shirt", "pants", "shorts", "socks", "underwear", "dress", "skirt", "hoodie", "jacket", "put on", "take off", "help me"]
+  },
+  "things/clothing/shoes": {
+    label: "Shoes",
+    children: ["shoes", "sneakers", "boots", "sandals", "socks", "tie shoes", "velcro", "put on shoes", "take off shoes", "too tight", "help me", "all done"]
+  },
+  "things/clothing/weather-clothes": {
+    label: "Weather Clothes",
+    children: ["jacket", "coat", "hat", "gloves", "raincoat", "boots", "sweater", "shorts", "too hot", "too cold", "help me", "all done"]
+  },
+  "things/clothing/sleep-clothes": {
+    label: "Sleep Clothes",
+    children: ["pajamas", "shirt", "pants", "blanket", "socks", "slippers", "put on pajamas", "take off", "sleep", "good night", "help me", "all done"]
+  },
+  "things/clothing/school-clothes": {
+    label: "School Clothes",
+    children: ["backpack", "jacket", "shoes", "socks", "shirt", "pants", "lunch box", "hat", "put on", "take off", "help me", "ready"]
+  },
+  "things/clothing/clothing-help": {
+    label: "Clothing Help",
+    children: ["help me dress", "zip", "button", "tie", "too tight", "itchy", "wet", "dirty", "change clothes", "take off", "put on", "all done"]
+  },
+
+  "things/outside-things": {
+    label: "Outside Things",
+    children: ["Playground Things", "Sports Things", "Weather Things", "Vehicle Things", "Nature Things", "Safety Things"]
+  },
+  "things/outside-things/playground-things": {
+    label: "Playground Things",
+    children: ["slide", "swing", "climber", "sandbox", "seesaw", "bench", "ball", "bike", "helmet", "my turn", "your turn", "all done"]
+  },
+  "things/outside-things/sports-things": {
+    label: "Sports Things",
+    children: ["ball", "soccer ball", "basketball", "football", "baseball", "bat", "glove", "goal", "bike", "helmet", "water", "all done"]
+  },
+  "things/outside-things/weather-things": {
+    label: "Weather Things",
+    children: ["sun", "rain", "snow", "wind", "cloud", "umbrella", "jacket", "hat", "gloves", "too hot", "too cold", "go inside"]
+  },
+  "things/outside-things/vehicle-things": {
+    label: "Vehicle Things",
+    children: ["car", "bus", "bike", "scooter", "wagon", "stroller", "truck", "train", "helmet", "seat belt", "safe", "help me"]
+  },
+  "things/outside-things/nature-things": {
+    label: "Nature Things",
+    children: ["tree", "flower", "grass", "rock", "stick", "leaf", "bug", "bird", "dog", "cat", "look", "don't touch"]
+  },
+  "things/outside-things/safety-things": {
+    label: "Safety Things",
+    children: ["helmet", "seat belt", "shoes", "jacket", "sunscreen", "water", "hold hand", "stop", "wait", "safe", "help me", "inside"]
+  },
+
+  "body-and-health": {
+    label: "Body & Health",
+    children: ["Body Parts", "Pain & Hurt", "Sick Words", "Bathroom Health", "Medicine & Care", "Sensory Body", "Safety Health", "Body Needs"]
+  },
+  "body-and-health/body-parts": {
+    label: "Body Parts",
+    children: ["Head & Face", "Mouth & Teeth", "Arms & Hands", "Legs & Feet", "Belly & Back", "Whole Body"]
+  },
+  "body-and-health/body-parts/head-face": {
+    label: "Head & Face",
+    children: ["head", "face", "eyes", "ears", "nose", "mouth", "hair", "cheek", "chin", "forehead", "head hurts", "help me"]
+  },
+  "body-and-health/body-parts/mouth-teeth": {
+    label: "Mouth & Teeth",
+    children: ["mouth", "teeth", "tongue", "lips", "throat", "tooth", "brush teeth", "mouth hurts", "dentist", "drink", "eat", "help me"]
+  },
+  "body-and-health/body-parts/arms-hands": {
+    label: "Arms & Hands",
+    children: ["arm", "hand", "finger", "thumb", "elbow", "wrist", "shoulder", "hand hurts", "hold hand", "wash hands", "help me", "all done"]
+  },
+  "body-and-health/body-parts/legs-feet": {
+    label: "Legs & Feet",
+    children: ["leg", "foot", "feet", "toe", "knee", "ankle", "walk", "run", "foot hurts", "shoes", "help me", "sit"]
+  },
+  "body-and-health/body-parts/belly-back": {
+    label: "Belly & Back",
+    children: ["stomach", "belly", "back", "chest", "side", "bottom", "stomach hurts", "back hurts", "bathroom", "rest", "help me", "doctor"]
+  },
+  "body-and-health/body-parts/whole-body": {
+    label: "Whole Body",
+    children: ["body", "skin", "bones", "muscles", "blood", "heart", "breathing", "hurt", "sick", "tired", "safe", "help me"]
+  },
+
+  "body-and-health/pain-hurt": {
+    label: "Pain & Hurt",
+    children: ["Pain Location", "Pain Type", "Injury", "Too Much Body", "Ask For Help", "Comfort For Pain"]
+  },
+  "body-and-health/pain-hurt/pain-location": {
+    label: "Pain Location",
+    children: ["head hurts", "ear hurts", "mouth hurts", "teeth hurt", "stomach hurts", "back hurts", "hand hurts", "foot hurts", "leg hurts", "arm hurts", "throat hurts", "help me"]
+  },
+  "body-and-health/pain-hurt/pain-type": {
+    label: "Pain Type",
+    children: ["hurt", "pain", "ouch", "sharp pain", "sore", "itchy", "burning", "stinging", "too hot", "too cold", "not okay", "help me"]
+  },
+  "body-and-health/pain-hurt/injury": {
+    label: "Injury",
+    children: ["cut", "scratch", "bruise", "bump", "fall", "bleeding", "bandage", "ice pack", "doctor", "nurse", "help me", "safe"]
+  },
+  "body-and-health/pain-hurt/too-much-body": {
+    label: "Too Much Body",
+    children: ["too loud", "too bright", "too close", "too much touch", "head hurts", "tired", "break", "quiet", "space", "help me", "stop", "safe"]
+  },
+  "body-and-health/pain-hurt/ask-for-help": {
+    label: "Ask For Help",
+    children: ["help me", "I am hurt", "I need doctor", "I need nurse", "call mom", "call dad", "medicine", "bandage", "ice pack", "stay with me", "please", "now"]
+  },
+  "body-and-health/pain-hurt/comfort-for-pain": {
+    label: "Comfort For Pain",
+    children: ["hug", "hold hand", "ice pack", "medicine", "water", "rest", "blanket", "quiet", "sit with me", "safe", "all done", "thank you"]
+  },
+
+  "body-and-health/sick-words": {
+    label: "Sick Words",
+    children: ["Feeling Sick", "Cold Symptoms", "Stomach Sick", "Fever", "Doctor Words", "Rest Needs"]
+  },
+  "body-and-health/sick-words/feeling-sick": {
+    label: "Feeling Sick",
+    children: ["sick", "I feel sick", "not okay", "tired", "dizzy", "weak", "hurt", "doctor", "nurse", "medicine", "help me", "rest"]
+  },
+  "body-and-health/sick-words/cold-symptoms": {
+    label: "Cold Symptoms",
+    children: ["cough", "sneeze", "runny nose", "stuffy nose", "throat hurts", "ear hurts", "tissue", "water", "medicine", "rest", "doctor", "help me"]
+  },
+  "body-and-health/sick-words/stomach-sick": {
+    label: "Stomach Sick",
+    children: ["stomach hurts", "throw up", "nauseous", "bathroom", "poop", "diarrhea", "water", "rest", "trash can", "doctor", "help me", "all done"]
+  },
+  "body-and-health/sick-words/fever": {
+    label: "Fever",
+    children: ["fever", "hot", "cold", "chills", "sweaty", "thermometer", "medicine", "water", "blanket", "rest", "doctor", "help me"]
+  },
+  "body-and-health/sick-words/doctor-words": {
+    label: "Doctor Words",
+    children: ["doctor", "nurse", "medicine", "shot", "check ears", "open mouth", "blood pressure", "scale", "wait", "help me", "all done", "safe"]
+  },
+  "body-and-health/sick-words/rest-needs": {
+    label: "Rest Needs",
+    children: ["rest", "sleep", "nap", "bed", "blanket", "quiet", "water", "medicine", "mom", "dad", "all done", "help me"]
+  },
+
+  "body-and-health/bathroom-health": {
+    label: "Bathroom Health",
+    children: ["Bathroom Needs", "Toilet Words", "Clean Words", "Privacy Words", "Accident Words", "Bathroom Help"]
+  },
+  "body-and-health/bathroom-health/bathroom-needs": {
+    label: "Bathroom Needs",
+    children: ["bathroom", "I need bathroom", "go now", "wait", "help me", "toilet", "pee", "poop", "privacy", "all done", "wash hands", "safe"]
+  },
+  "body-and-health/bathroom-health/toilet-words": {
+    label: "Toilet Words",
+    children: ["toilet", "potty", "pee", "poop", "flush", "wipe", "pants", "pull down", "pull up", "help me", "finished", "all done"]
+  },
+  "body-and-health/bathroom-health/clean-words": {
+    label: "Clean Words",
+    children: ["wash hands", "soap", "water", "towel", "clean", "dirty", "wipe", "dry hands", "sink", "help me", "all done", "thank you"]
+  },
+  "body-and-health/bathroom-health/privacy-words": {
+    label: "Privacy Words",
+    children: ["privacy", "door closed", "wait outside", "help me", "all done", "pants", "bathroom", "safe", "mom", "dad", "teacher", "nurse"]
+  },
+  "body-and-health/bathroom-health/accident-words": {
+    label: "Accident Words",
+    children: ["accident", "wet", "dirty", "change clothes", "help me", "bathroom", "clean", "pants", "underwear", "nurse", "mom", "dad"]
+  },
+  "body-and-health/bathroom-health/bathroom-help": {
+    label: "Bathroom Help",
+    children: ["help me", "I need help", "wipe", "flush", "wash hands", "pull up", "pull down", "clean", "privacy", "finished", "all done", "thank you"]
+  },
+
+  "body-and-health/medicine-care": {
+    label: "Medicine & Care",
+    children: ["Medicine", "First Aid", "Doctor Care", "Dentist Care", "Therapy Care", "Care Choices"]
+  },
+  "body-and-health/medicine-care/medicine": {
+    label: "Medicine",
+    children: ["medicine", "take medicine", "pill", "liquid medicine", "inhaler", "cream", "drops", "vitamin", "water", "all done", "help me", "yucky"]
+  },
+  "body-and-health/medicine-care/first-aid": {
+    label: "First Aid",
+    children: ["bandage", "ice pack", "tissue", "wipe", "wash", "clean cut", "ointment", "hurt", "blood", "help me", "safe", "all done"]
+  },
+  "body-and-health/medicine-care/doctor-care": {
+    label: "Doctor Care",
+    children: ["doctor", "nurse", "check body", "listen heart", "check ears", "open mouth", "shot", "scale", "wait", "safe", "help me", "all done"]
+  },
+  "body-and-health/medicine-care/dentist-care": {
+    label: "Dentist Care",
+    children: ["dentist", "teeth", "brush teeth", "open mouth", "tooth hurts", "toothbrush", "toothpaste", "chair", "light", "help me", "all done", "safe"]
+  },
+  "body-and-health/medicine-care/therapy-care": {
+    label: "Therapy Care",
+    children: ["therapy", "speech", "occupational therapy", "physical therapy", "try", "again", "break", "help me", "good job", "finished", "all done", "safe"]
+  },
+  "body-and-health/medicine-care/care-choices": {
+    label: "Care Choices",
+    children: ["water", "rest", "medicine", "doctor", "nurse", "bandage", "ice pack", "hug", "quiet", "blanket", "help me", "all done"]
+  },
+
+  "body-and-health/sensory-body": {
+    label: "Sensory Body",
+    children: ["Sound", "Light", "Touch", "Movement", "Taste/Texture", "Sensory Tools"]
+  },
+  "body-and-health/sensory-body/sound": {
+    label: "Sound",
+    children: ["too loud", "quiet", "headphones", "music", "voice", "stop sound", "volume down", "hurt ears", "break", "space", "help me", "safe"]
+  },
+  "body-and-health/sensory-body/light": {
+    label: "Light",
+    children: ["too bright", "dark", "light", "lamp", "night light", "sunglasses", "turn off light", "turn on light", "hurt eyes", "break", "help me", "safe"]
+  },
+  "body-and-health/sensory-body/touch": {
+    label: "Touch",
+    children: ["too close", "don't touch", "hug", "soft", "scratchy", "itchy", "wet", "sticky", "dirty", "wash", "space", "help me"]
+  },
+  "body-and-health/sensory-body/movement": {
+    label: "Movement",
+    children: ["wiggly", "move", "walk", "jump", "swing", "spin", "sit", "stand", "heavy work", "break", "help me", "all done"]
+  },
+  "body-and-health/sensory-body/taste-texture": {
+    label: "Taste/Texture",
+    children: ["yucky", "too spicy", "too hot", "too cold", "crunchy", "soft", "sticky", "chewy", "smooth", "drink", "all done", "help me"]
+  },
+  "body-and-health/sensory-body/sensory-tools": {
+    label: "Sensory Tools",
+    children: ["headphones", "fidget", "chewy", "weighted blanket", "squishy", "blanket", "music", "quiet", "space", "break", "safe", "all done"]
+  },
+
+  "body-and-health/safety-health": {
+    label: "Safety Health",
+    children: ["Emergency Words", "Safe People", "Stop Safety", "Body Boundaries", "Medical Safety", "Outside Safety"]
+  },
+  "body-and-health/safety-health/emergency-words": {
+    label: "Emergency Words",
+    children: ["help me", "I am hurt", "I am scared", "call mom", "call dad", "doctor", "nurse", "stop", "safe", "not safe", "now", "please"]
+  },
+  "body-and-health/safety-health/safe-people": {
+    label: "Safe People",
+    children: ["mom", "dad", "teacher", "nurse", "doctor", "helper", "safe person", "police officer", "firefighter", "friend", "family", "help me"]
+  },
+  "body-and-health/safety-health/stop-safety": {
+    label: "Stop Safety",
+    children: ["stop", "stop please", "don't", "no", "wait", "too close", "not safe", "help me", "teacher", "mom", "dad", "safe"]
+  },
+  "body-and-health/safety-health/body-boundaries": {
+    label: "Body Boundaries",
+    children: ["my body", "don't touch", "stop", "privacy", "bathroom", "space", "safe", "not safe", "help me", "mom", "dad", "teacher"]
+  },
+  "body-and-health/safety-health/medical-safety": {
+    label: "Medical Safety",
+    children: ["medicine", "doctor", "nurse", "allergy", "hurt", "sick", "shot", "safe", "help me", "wait", "stop", "all done"]
+  },
+  "body-and-health/safety-health/outside-safety": {
+    label: "Outside Safety",
+    children: ["hold hand", "stop", "wait", "car", "street", "helmet", "seat belt", "water", "too hot", "too cold", "safe", "help me"]
+  },
+
+  "body-and-health/body-needs": {
+    label: "Body Needs",
+    children: ["Food/Drink Needs", "Rest Needs", "Bathroom Needs", "Pain Needs", "Sensory Needs", "People Needs"]
+  },
+  "body-and-health/body-needs/food-drink-needs": {
+    label: "Food/Drink Needs",
+    children: ["hungry", "thirsty", "food", "snack", "water", "drink", "juice", "milk", "eat", "more", "all done", "please"]
+  },
+  "body-and-health/body-needs/rest-needs": {
+    label: "Rest Needs",
+    children: ["tired", "sleepy", "rest", "nap", "bed", "blanket", "quiet", "dark room", "music", "all done", "help me", "safe"]
+  },
+  "body-and-health/body-needs/bathroom-needs": {
+    label: "Bathroom Needs",
+    children: ["bathroom", "pee", "poop", "wash hands", "privacy", "help me", "now", "wait", "pants", "clean", "all done", "teacher"]
+  },
+  "body-and-health/body-needs/pain-needs": {
+    label: "Pain Needs",
+    children: ["hurt", "pain", "medicine", "doctor", "nurse", "bandage", "ice pack", "hug", "hold hand", "rest", "help me", "now"]
+  },
+  "body-and-health/body-needs/sensory-needs": {
+    label: "Sensory Needs",
+    children: ["quiet", "space", "break", "headphones", "fidget", "blanket", "music", "too loud", "too bright", "too close", "help me", "safe"]
+  },
+  "body-and-health/body-needs/people-needs": {
+    label: "People Needs",
+    children: ["mom", "dad", "teacher", "nurse", "doctor", "friend", "helper", "stay with me", "help me", "call mom", "call dad", "please"]
+  },
+
+  "questions": {
+    label: "Questions",
+    children: ["Who Questions", "What Questions", "Where Questions", "When Questions", "Why Questions", "How Questions", "Can Questions", "Choice Questions"]
+  },
+  "questions/who-questions": {
+    label: "Who Questions",
+    children: ["People Who", "Family Who", "School Who", "Helper Who", "Friend Who", "Who Phrases"]
+  },
+  "questions/who-questions/people-who": {
+    label: "People Who",
+    children: ["who", "who is it", "who is there", "who did it", "who wants", "who needs", "who can help", "someone", "everyone", "teacher", "mom", "dad"]
+  },
+  "questions/who-questions/family-who": {
+    label: "Family Who",
+    children: ["where is mom", "where is dad", "who is home", "who is coming", "call mom", "call dad", "grandma", "grandpa", "family", "who helps", "who is that", "who"]
+  },
+  "questions/who-questions/school-who": {
+    label: "School Who",
+    children: ["who is teacher", "who is helper", "who is friend", "who is next", "who is here", "who is absent", "classmate", "nurse", "principal", "bus driver", "who can help", "who"]
+  },
+  "questions/who-questions/helper-who": {
+    label: "Helper Who",
+    children: ["who can help", "who is doctor", "who is nurse", "who is safe", "who do I ask", "teacher", "helper", "mom", "dad", "safe person", "help me", "who"]
+  },
+  "questions/who-questions/friend-who": {
+    label: "Friend Who",
+    children: ["who is friend", "who wants to play", "who has toy", "who goes first", "who is next", "who is with me", "friend", "classmate", "my turn", "your turn", "share", "who"]
+  },
+  "questions/who-questions/who-phrases": {
+    label: "Who Phrases",
+    children: ["who", "who is", "who has", "who wants", "who needs", "who can", "who did", "who goes", "who helps", "who is next", "who is there", "who is that"]
+  },
+
+  "questions/what-questions": {
+    label: "What Questions",
+    children: ["What Object", "What Activity", "What Food", "What Feeling", "What Happened", "What Phrases"]
+  },
+  "questions/what-questions/what-object": {
+    label: "What Object",
+    children: ["what is it", "what is that", "what do you have", "what do I need", "what toy", "what book", "what food", "what drink", "show me", "tell me", "again", "what"]
+  },
+  "questions/what-questions/what-activity": {
+    label: "What Activity",
+    children: ["what are we doing", "what next", "what now", "what game", "what work", "what play", "what class", "what happened", "show me", "tell me", "again", "what"]
+  },
+  "questions/what-questions/what-food": {
+    label: "What Food",
+    children: ["what food", "what drink", "what snack", "what lunch", "what dinner", "what breakfast", "what fruit", "what chips", "what gummies", "show me", "I want", "what"]
+  },
+  "questions/what-questions/what-feeling": {
+    label: "What Feeling",
+    children: ["what do you feel", "what do I feel", "what is wrong", "what hurts", "what happened", "happy", "sad", "mad", "scared", "hurt", "help me", "what"]
+  },
+  "questions/what-questions/what-happened": {
+    label: "What Happened",
+    children: ["what happened", "what did you do", "what did I do", "what changed", "what is wrong", "why", "show me", "tell me", "again", "help me", "stop", "what"]
+  },
+  "questions/what-questions/what-phrases": {
+    label: "What Phrases",
+    children: ["what", "what is", "what are", "what do", "what did", "what happened", "what next", "what now", "what else", "what color", "what size", "what kind"]
+  },
+
+  "questions/where-questions": {
+    label: "Where Questions",
+    children: ["Where Place", "Where Person", "Where Object", "Where Going", "Where Body", "Where Phrases"]
+  },
+  "questions/where-questions/where-place": {
+    label: "Where Place",
+    children: ["where", "where are we", "where is it", "where to go", "home", "school", "bathroom", "outside", "inside", "car", "store", "park"]
+  },
+  "questions/where-questions/where-person": {
+    label: "Where Person",
+    children: ["where is mom", "where is dad", "where is teacher", "where is friend", "where is nurse", "where is helper", "home", "school", "come here", "call mom", "call dad", "where"]
+  },
+  "questions/where-questions/where-object": {
+    label: "Where Object",
+    children: ["where is toy", "where is tablet", "where is book", "where is cup", "where is blanket", "where is backpack", "find it", "show me", "there", "here", "help me", "where"]
+  },
+  "questions/where-questions/where-going": {
+    label: "Where Going",
+    children: ["where are we going", "go home", "go school", "go store", "go doctor", "go outside", "go inside", "go bathroom", "car", "bus", "wait", "where"]
+  },
+  "questions/where-questions/where-body": {
+    label: "Where Body",
+    children: ["where hurts", "where is pain", "head", "stomach", "ear", "mouth", "hand", "foot", "back", "show me", "doctor", "where"]
+  },
+  "questions/where-questions/where-phrases": {
+    label: "Where Phrases",
+    children: ["where", "where is", "where are", "where do", "where did", "where to", "where now", "where next", "where else", "here", "there", "not here"]
+  },
+
+  "questions/when-questions": {
+    label: "When Questions",
+    children: ["Time Words", "Schedule When", "Before/After When", "Waiting When", "Routine When", "When Phrases"]
+  },
+  "questions/when-questions/time-words": {
+    label: "Time Words",
+    children: ["when", "now", "later", "soon", "today", "tomorrow", "morning", "afternoon", "night", "first", "then", "last"]
+  },
+  "questions/when-questions/schedule-when": {
+    label: "Schedule When",
+    children: ["when is lunch", "when is break", "when go home", "when outside", "when therapy", "when school", "when bus", "when mom", "when dad", "wait", "timer", "soon"]
+  },
+  "questions/when-questions/before-after-when": {
+    label: "Before/After When",
+    children: ["before", "after", "first", "then", "next", "last", "when finished", "when done", "after lunch", "after school", "before bed", "wait"]
+  },
+  "questions/when-questions/waiting-when": {
+    label: "Waiting When",
+    children: ["how long", "when", "soon", "wait", "timer", "not yet", "now", "later", "finished", "ready", "not ready", "help me"]
+  },
+  "questions/when-questions/routine-when": {
+    label: "Routine When",
+    children: ["when eat", "when drink", "when bathroom", "when sleep", "when play", "when work", "when bath", "when bed", "when car", "when home", "when school", "when"]
+  },
+  "questions/when-questions/when-phrases": {
+    label: "When Phrases",
+    children: ["when", "when is", "when are", "when do", "when did", "when can", "when next", "when now", "how long", "soon", "later", "not yet"]
+  },
+
+  "questions/why-questions": {
+    label: "Why Questions",
+    children: ["Why Feelings", "Why Rules", "Why Change", "Why Not", "Why Help", "Why Phrases"]
+  },
+  "questions/why-questions/why-feelings": {
+    label: "Why Feelings",
+    children: ["why sad", "why mad", "why scared", "why hurt", "why tired", "why crying", "what happened", "because", "help me", "tell me", "show me", "why"]
+  },
+  "questions/why-questions/why-rules": {
+    label: "Why Rules",
+    children: ["why no", "why stop", "why wait", "why not", "why do I have to", "rule", "safe", "because", "help me", "I don't understand", "tell me", "why"]
+  },
+  "questions/why-questions/why-change": {
+    label: "Why Change",
+    children: ["why change", "what changed", "why different", "why now", "why later", "schedule", "first", "then", "help me", "I don't understand", "wait", "why"]
+  },
+  "questions/why-questions/why-not": {
+    label: "Why Not",
+    children: ["why not", "why can't I", "why no", "not fair", "I want", "I need", "because", "help me", "wait", "later", "safe", "why"]
+  },
+  "questions/why-questions/why-help": {
+    label: "Why Help",
+    children: ["why help", "why doctor", "why medicine", "why school", "why work", "why bath", "why clean", "because", "safe", "healthy", "help me", "why"]
+  },
+  "questions/why-questions/why-phrases": {
+    label: "Why Phrases",
+    children: ["why", "why is", "why are", "why do", "why did", "why can", "why not", "why now", "why later", "because", "I don't know", "tell me"]
+  },
+
+  "questions/how-questions": {
+    label: "How Questions",
+    children: ["How Help", "How Many", "How Much", "How Feel", "How To", "How Phrases"]
+  },
+  "questions/how-questions/how-help": {
+    label: "How Help",
+    children: ["how", "how do I", "show me", "help me", "tell me", "again", "try again", "first", "then", "step", "I don't know", "how"]
+  },
+  "questions/how-questions/how-many": {
+    label: "How Many",
+    children: ["how many", "one", "two", "three", "more", "less", "count", "number", "all", "some", "enough", "how many"]
+  },
+  "questions/how-questions/how-much": {
+    label: "How Much",
+    children: ["how much", "more", "less", "too much", "not enough", "a little", "a lot", "full", "empty", "some", "all done", "how much"]
+  },
+  "questions/how-questions/how-feel": {
+    label: "How Feel",
+    children: ["how do you feel", "how do I feel", "happy", "sad", "mad", "scared", "hurt", "sick", "tired", "okay", "help me", "how"]
+  },
+  "questions/how-questions/how-to": {
+    label: "How To",
+    children: ["how to", "show me", "teach me", "help me", "open", "close", "use", "make", "fix", "clean", "write", "read"]
+  },
+  "questions/how-questions/how-phrases": {
+    label: "How Phrases",
+    children: ["how", "how is", "how are", "how do", "how did", "how can", "how many", "how much", "how long", "how to", "show me", "tell me"]
+  },
+
+  "questions/can-questions": {
+    label: "Can Questions",
+    children: ["Can I", "Can You", "Can We", "Permission", "Help Requests", "Choice Requests"]
+  },
+  "questions/can-questions/can-i": {
+    label: "Can I",
+    children: ["can I", "can I have", "can I go", "can I play", "can I eat", "can I drink", "can I stop", "can I rest", "can I watch", "can I use tablet", "please", "thank you"]
+  },
+  "questions/can-questions/can-you": {
+    label: "Can You",
+    children: ["can you", "can you help", "can you open", "can you close", "can you show me", "can you tell me", "can you stay", "can you stop", "can you come here", "please", "thank you", "help me"]
+  },
+  "questions/can-questions/can-we": {
+    label: "Can We",
+    children: ["can we", "can we go", "can we play", "can we eat", "can we watch", "can we read", "can we stop", "can we go home", "can we go outside", "please", "thank you", "all done"]
+  },
+  "questions/can-questions/permission": {
+    label: "Permission",
+    children: ["can I have", "can I go", "can I use", "can I play", "can I help", "can I stop", "can I be done", "please", "yes", "no", "maybe", "wait"]
+  },
+  "questions/can-questions/help-requests": {
+    label: "Help Requests",
+    children: ["can you help", "can you show me", "can you tell me", "can you fix it", "can you open it", "can you get it", "help me", "please", "thank you", "again", "I don't know", "wait"]
+  },
+  "questions/can-questions/choice-requests": {
+    label: "Choice Requests",
+    children: ["can I choose", "which one", "this one", "that one", "same", "different", "more", "all done", "yes", "no", "maybe", "help me"]
+  },
+
+  "questions/choice-questions": {
+    label: "Choice Questions",
+    children: ["Yes/No", "This/That", "More/Done", "Same/Different", "Like/Don't Like", "Question Helpers"]
+  },
+  "questions/choice-questions/yes-no": {
+    label: "Yes/No",
+    children: ["yes", "no", "maybe", "I don't know", "yes please", "no thank you", "not yet", "later", "wait", "all done", "help me", "again"]
+  },
+  "questions/choice-questions/this-that": {
+    label: "This/That",
+    children: ["this", "that", "this one", "that one", "here", "there", "same", "different", "choose", "pick", "show me", "help me"]
+  },
+  "questions/choice-questions/more-done": {
+    label: "More/Done",
+    children: ["more", "all done", "finished", "again", "one more", "no more", "stop", "go", "wait", "please", "thank you", "help me"]
+  },
+  "questions/choice-questions/same-different": {
+    label: "Same/Different",
+    children: ["same", "different", "other one", "another", "not that", "yes", "no", "maybe", "choose", "show me", "again", "help me"]
+  },
+  "questions/choice-questions/like-dont-like": {
+    label: "Like/Don't Like",
+    children: ["like", "don't like", "love", "hate", "favorite", "not favorite", "yucky", "good", "bad", "more", "all done", "help me"]
+  },
+  "questions/choice-questions/question-helpers": {
+    label: "Question Helpers",
+    children: ["show me", "tell me", "help me", "again", "I don't know", "wait", "please", "thank you", "what", "where", "who", "how"]
+  },
 };
 
 export const FLAT_TOPIC_ATTRIBUTES = {
