@@ -1,4 +1,4 @@
-export const TREE_VERSION = "5.18";
+export const TREE_VERSION = "5.20";
 
 export const FIXED_CORE_LANGUAGE = [
   "I", "want", "need", "feel", "am", "can",
@@ -949,7 +949,22 @@ export function slugNode(value = "") {
 }
 
 export function normalizeTopicName(topic = "") {
-  const key = normalizeTreeKey(topic);
+  const raw = String(topic || "").trim();
+
+  // Important:
+  // Nested topic paths must keep their slash separators.
+  // Example: "relationships/people" must stay "relationships/people".
+  // The old normalizer flattened it into "relationships-people",
+  // which made the active tree fall back to the default/home words.
+  if (raw.includes("/")) {
+    return raw
+      .split("/")
+      .map(part => slugNode(part))
+      .filter(Boolean)
+      .join("/");
+  }
+
+  const key = normalizeTreeKey(raw);
   const aliases = {
     "food drink": "food-and-drink",
     "food and drink": "food-and-drink",
