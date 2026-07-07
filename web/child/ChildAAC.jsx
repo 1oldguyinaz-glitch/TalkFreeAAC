@@ -15,6 +15,7 @@ import {
   saveCustomVocabularyItem
 } from "../../engine/storage/customVocabularyStore.js";
 import "../styles/aac-keyboard.css";
+import "../styles/aac-unified-board.css";
 
 const QUICK_PHRASES = [
   "I love you",
@@ -87,14 +88,28 @@ function phraseFromProfile(profile) {
   return String(sentence || "");
 }
 
+function normalizeBoardWord(word = "") {
+  return String(word || "")
+    .toLowerCase()
+    .replace(/[’]/g, "'")
+    .replace(/[^\w\s']/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function uniqueWords(items = []) {
   const seen = new Set();
   return items.filter(item => {
-    const key = String(item || "").toLowerCase().trim();
+    const key = normalizeBoardWord(item);
     if (!key || seen.has(key)) return false;
     seen.add(key);
     return true;
   });
+}
+
+function removeCoreDuplicates(items = [], coreItems = FIXED_CORE_LANGUAGE) {
+  const coreKeys = new Set(coreItems.map(normalizeBoardWord));
+  return uniqueWords(items).filter(item => !coreKeys.has(normalizeBoardWord(item)));
 }
 
 function titleFromContext(context = "") {
@@ -124,7 +139,12 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   }), [profile, activeTopic]);
 
   const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, phrase]);
-  const activeBranch = uniqueWords(board.contextWords?.length ? board.contextWords : HOME_BRANCH).slice(0, 27);
+  const activeBranchSource = board.contextWords?.length ? board.contextWords : HOME_BRANCH;
+  const activeBranch = removeCoreDuplicates(activeBranchSource).slice(0, 27);
+  const unifiedBoardWords = [
+    ...FIXED_CORE_LANGUAGE.map(word => ({ word, boardArea: "core" })),
+    ...activeBranch.map(word => ({ word, boardArea: "active" }))
+  ];
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const profileTrackingId = profile?.userProfile?.id || profile?.id || profile?.userProfile?.name || profile?.name || "default";
   const photo = profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
@@ -397,30 +417,19 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           ))}
         </section>
 
-        <section className="approvedBoard">
-          <section className="approvedCoreSection">
-            <div className="approvedSectionTitle">
-              <h2>CORE LANGUAGE <span>(Always Available)</span></h2>
-              <p>These stay fixed. They never disappear.</p>
-            </div>
-            <div className="approvedCoreGrid">
-              {FIXED_CORE_LANGUAGE.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}
-            </div>
-          </section>
-
-          <section className="approvedFringeSection">
-            <div className="approvedSectionTitle">
-              <h2>ACTIVE TREE / CONNECTORS / ENDINGS</h2>
-              <p>
-                {activeTopic
-                  ? `${titleFromContext(activeTopic)} — choose a branch or word.`
-                  : "These change with the sentence branch."}
-              </p>
-            </div>
-            <div className="approvedFringeGrid">
-              {activeBranch.map(word => <AACButton key={word} word={word} onSelect={selectWord} />)}
-            </div>
-          </section>
+        <section
+          className="approvedBoard approvedUnifiedBoard"
+          aria-label={activeTopic ? `${titleFromContext(activeTopic)} board` : "Core and active communication board"}
+        >
+          <div className="approvedUnifiedBoardGrid">
+            {unifiedBoardWords.map(({ word, boardArea }, index) => (
+              <AACButton
+                key={`${boardArea}-${word}-${index}`}
+                word={word}
+                onSelect={selectWord}
+              />
+            ))}
+          </div>
         </section>
       </main>
 
