@@ -7,6 +7,14 @@ import {
 } from "../../engine/prediction/predictionEngine.js";
 import AACButton from "./components/AACButton.jsx";
 import SymbolImage from "./components/SymbolImage.jsx";
+import {
+  recordTypedVocabularyFromKeyboard,
+  markTypedVocabularyCustomAdded
+} from "../../engine/storage/typedVocabularyTracker.js";
+import {
+  saveCustomVocabularyItem
+} from "../../engine/storage/customVocabularyStore.js";
+import "../styles/aac-keyboard.css";
 
 const QUICK_PHRASES = [
   "I love you",
@@ -52,6 +60,27 @@ const SECONDARY = [
   "Emergency"
 ];
 
+const LETTER_ROWS = [
+  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+  ["z", "x", "c", "v", "b", "n", "m"]
+];
+
+const SYMBOL_ROWS = [
+  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+  ["-", "/", ":", ";", "(", ")", "$", "&", "@", "\""],
+  [".", ",", "?", "!", "'", "#", "%", "*", "+", "="],
+  ["[", "]", "{", "}", "<", ">", "_", "\\", "|", "~"]
+];
+
+const EMOJI_ROWS = [
+  ["😀", "😃", "😄", "😁", "🙂", "😊", "😍", "😘", "😂", "😭"],
+  ["😢", "😡", "😨", "😴", "🤒", "🤕", "🤢", "👍", "👎", "👏"],
+  ["❤️", "💙", "⭐", "✨", "🎉", "🧸", "📚", "🎮", "🎵", "📺"],
+  ["🍕", "🍟", "🍔", "🍗", "🍎", "🍌", "🥤", "🧃", "💧", "🏠"],
+  ["🏫", "🚗", "🚌", "🌳", "🚽", "🛏️", "🆘", "✅", "❌", "❓"]
+];
+
 function phraseFromProfile(profile) {
   const sentence = profile?.sentence || [];
   if (Array.isArray(sentence)) return currentPhrase(sentence);
@@ -79,6 +108,12 @@ function titleFromContext(context = "") {
 
 export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
   const [activeTopic, setActiveTopic] = useState("");
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+  const [keyboardText, setKeyboardText] = useState("");
+  const [keyboardMode, setKeyboardMode] = useState("letters");
+  const [shiftOn, setShiftOn] = useState(false);
+  const [keyboardSaveStatus, setKeyboardSaveStatus] = useState("");
+
   const phrase = phraseFromProfile(profile) || "I want to go outside with you";
 
   const boardProfile = useMemo(() => ({
@@ -91,6 +126,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, phrase]);
   const activeBranch = uniqueWords(board.contextWords?.length ? board.contextWords : HOME_BRANCH).slice(0, 27);
   const name = profile?.userProfile?.name || profile?.name || "Austin";
+  const profileTrackingId = profile?.userProfile?.id || profile?.id || profile?.userProfile?.name || profile?.name || "default";
   const photo = profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
 
   const addWordToSentence = (word) => {
@@ -123,6 +159,204 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     setActiveTopic("");
     onSpeak?.();
   };
+
+  const openKeyboard = () => {
+    setActiveTopic("");
+    setKeyboardOpen(true);
+  };
+
+  const closeKeyboard = () => {
+    setKeyboardOpen(false);
+    setKeyboardMode("letters");
+    setShiftOn(false);
+    setKeyboardSaveStatus("");
+  };
+
+  const updateKeyboardText = (value) => {
+    setKeyboardSaveStatus("");
+    setKeyboardText(value);
+  };
+
+  const addKeyboardText = (value) => {
+    setKeyboardSaveStatus("");
+    setKeyboardText(prev => `${prev}${value}`);
+  };
+
+  const backspaceKeyboardText = () => {
+    setKeyboardSaveStatus("");
+    setKeyboardText(prev => Array.from(prev).slice(0, -1).join(""));
+  };
+
+  const clearKeyboardText = () => {
+    setKeyboardSaveStatus("");
+    setKeyboardText("");
+  };
+
+  const trackKeyboardVocabulary = (action) => {
+    const text = keyboardText.trim();
+    if (!text) return null;
+
+    return recordTypedVocabularyFromKeyboard(text, {
+      action,
+      profileId: profileTrackingId,
+      profileName: name,
+      source: "keyboard"
+    });
+  };
+
+  const speakKeyboardText = () => {
+    const text = keyboardText.trim();
+    if (!text) {
+      onSpeak?.();
+      return;
+    }
+
+    trackKeyboardVocabulary("speak");
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.92;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const addTypedToSentence = () => {
+    const text = keyboardText.trim();
+    if (!text) return;
+    trackKeyboardVocabulary("add-to-sentence");
+    if (onPhrase) onPhrase(text);
+    else addWordToSentence(text);
+    setKeyboardText("");
+    closeKeyboard();
+  };
+
+  const saveTypedVocabularyToCustomStore = () => {
+    const text = keyboardText.trim();
+    if (!text) return;
+
+    const tracked = trackKeyboardVocabulary("save-to-board");
+    const saved = saveCustomVocabularyItem(text, {
+      source: "keyboard",
+      profileId: profileTrackingId,
+      profileName: name,
+      topicPath: "custom/keyboard",
+      typedTrackerEventId: tracked?.event?.id || "",
+      alreadyInBuiltInTree: tracked?.primary?.alreadyInBuiltInTree ?? false
+    });
+
+    markTypedVocabularyCustomAdded(text, {
+      customVocabularyId: saved?.item?.id || "",
+      profileId: profileTrackingId,
+      profileName: name,
+      source: "keyboard"
+    });
+
+    setKeyboardSaveStatus("Saved outside the language tree.");
+  };
+
+  const renderKeyboardKey = (key, extraClass = "") => (
+    <button
+      key={key}
+      className={`aacKeyboardKey ${extraClass}`}
+      onClick={() => addKeyboardText(keyboardMode === "letters" && shiftOn ? key.toUpperCase() : key)}
+    >
+      {keyboardMode === "letters" && shiftOn ? key.toUpperCase() : key}
+    </button>
+  );
+
+  if (keyboardOpen) {
+    return (
+      <section className="aacKeyboardScreen">
+        <header className="aacKeyboardHeader">
+          <button className="aacKeyboardBack" onClick={closeKeyboard}>← Back to Board</button>
+
+          <textarea
+            className="aacKeyboardTextBox"
+            value={keyboardText}
+            onChange={(event) => updateKeyboardText(event.target.value)}
+            placeholder="Type anything Austin wants to say..."
+            autoFocus
+          />
+
+          <div className="aacKeyboardFunctionStack">
+            <button className="aacKeyboardFunction speak" onClick={speakKeyboardText}>🔊 Speak</button>
+            <button className="aacKeyboardFunction add" onClick={addTypedToSentence}>➕ Add</button>
+            <button className="aacKeyboardFunction add" onClick={saveTypedVocabularyToCustomStore}>💾 Save</button>
+            <button className="aacKeyboardFunction erase" onClick={backspaceKeyboardText}>⌫ Back</button>
+            <button className="aacKeyboardFunction clear" onClick={clearKeyboardText}>🗑 Clear</button>
+            {keyboardSaveStatus && (
+              <div className="aacKeyboardFunction" aria-live="polite">{keyboardSaveStatus}</div>
+            )}
+          </div>
+        </header>
+
+        <main className="aacKeyboardBody">
+          {keyboardMode === "letters" && (
+            <div className="aacKeyboardRows letters">
+              {LETTER_ROWS.map((row, index) => (
+                <div key={`letter-row-${index}`} className="aacKeyboardRow">
+                  {index === 2 && (
+                    <button
+                      className={`aacKeyboardKey aacKeyboardWide ${shiftOn ? "active" : ""}`}
+                      onClick={() => setShiftOn(prev => !prev)}
+                    >
+                      ⇧ Shift
+                    </button>
+                  )}
+                  {row.map(key => renderKeyboardKey(key))}
+                  {index === 2 && (
+                    <button className="aacKeyboardKey aacKeyboardWide" onClick={backspaceKeyboardText}>⌫</button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {keyboardMode === "symbols" && (
+            <div className="aacKeyboardRows symbols">
+              {SYMBOL_ROWS.map((row, index) => (
+                <div key={`symbol-row-${index}`} className="aacKeyboardRow">
+                  {row.map(key => renderKeyboardKey(key))}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {keyboardMode === "emoji" && (
+            <div className="aacKeyboardRows emoji">
+              {EMOJI_ROWS.map((row, index) => (
+                <div key={`emoji-row-${index}`} className="aacKeyboardRow">
+                  {row.map(key => renderKeyboardKey(key, "emojiKey"))}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="aacKeyboardBottomRow">
+            <button className="aacKeyboardKey aacKeyboardMode" onClick={() => {
+              setKeyboardMode(keyboardMode === "symbols" ? "letters" : "symbols");
+              setShiftOn(false);
+            }}>
+              {keyboardMode === "symbols" ? "ABC" : "?123"}
+            </button>
+
+            <button className="aacKeyboardKey aacKeyboardMode" onClick={() => {
+              setKeyboardMode(keyboardMode === "emoji" ? "letters" : "emoji");
+              setShiftOn(false);
+            }}>
+              {keyboardMode === "emoji" ? "ABC" : "😊 Emoji"}
+            </button>
+
+            <button className="aacKeyboardKey aacKeyboardSpace" onClick={() => addKeyboardText(" ")}>Space</button>
+            <button className="aacKeyboardKey aacKeyboardMode" onClick={() => addKeyboardText("\n")}>↵ Line</button>
+            <button className="aacKeyboardKey aacKeyboardDone" onClick={addTypedToSentence}>Add to Sentence</button>
+          </div>
+        </main>
+      </section>
+    );
+  }
 
   return (
     <div className="approvedAacShell">
@@ -212,8 +446,11 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       </aside>
 
       <nav className="approvedBottomNav">
-        <button onClick={() => selectTopic("Home")}>🏠 Home</button>
-        <button onClick={() => selectTopic("Keyboard")}>⌨ Keyboard</button>
+        <button onClick={() => {
+          setActiveTopic("");
+          setKeyboardOpen(false);
+        }}>🏠 Home</button>
+        <button onClick={openKeyboard}>⌨ Keyboard</button>
         <button onClick={() => selectTopic("Settings")}>⚙ Settings</button>
         <button onClick={onParent}>📈 Insights 👑</button>
       </nav>

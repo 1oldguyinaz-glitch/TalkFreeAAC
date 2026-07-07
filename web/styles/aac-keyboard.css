@@ -1,0 +1,198 @@
+.aacKeyboardScreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 14px;
+  display: grid;
+  grid-template-rows: 128px 1fr;
+  gap: 14px;
+  background:
+    radial-gradient(circle at top left, rgba(61, 133, 255, 0.35), transparent 32%),
+    linear-gradient(135deg, #07162d 0%, #0b1f45 55%, #081226 100%);
+  color: white;
+  overflow: hidden;
+}
+
+.aacKeyboardHeader {
+  display: grid;
+  grid-template-columns: 170px 1fr 168px;
+  gap: 12px;
+  min-height: 0;
+}
+
+.aacKeyboardBack,
+.aacKeyboardFunction,
+.aacKeyboardKey {
+  border: 0;
+  border-radius: 22px;
+  font-weight: 950;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.aacKeyboardBack {
+  background: linear-gradient(180deg, #7c3aed, #4c1d95);
+  font-size: clamp(18px, 2vw, 26px);
+  padding: 12px;
+}
+
+.aacKeyboardTextBox {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  resize: none;
+  border: 5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 26px;
+  padding: 16px 20px;
+  font-size: clamp(25px, 3vw, 44px);
+  line-height: 1.15;
+  font-weight: 900;
+  color: #08204a;
+  background: white;
+  outline: none;
+  box-shadow: inset 0 0 0 2px rgba(10, 52, 112, 0.12), 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.aacKeyboardTextBox::placeholder {
+  color: rgba(8, 32, 74, 0.45);
+}
+
+.aacKeyboardFunctionStack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.aacKeyboardFunction {
+  font-size: clamp(15px, 1.5vw, 21px);
+  padding: 8px;
+}
+
+.aacKeyboardFunction.speak {
+  background: linear-gradient(180deg, #22c55e, #15803d);
+}
+
+.aacKeyboardFunction.add {
+  background: linear-gradient(180deg, #38bdf8, #0369a1);
+}
+
+.aacKeyboardFunction.erase {
+  background: linear-gradient(180deg, #f59e0b, #b45309);
+}
+
+.aacKeyboardFunction.clear {
+  background: linear-gradient(180deg, #fb7185, #be123c);
+}
+
+.aacKeyboardBody {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr 82px;
+  gap: 12px;
+}
+
+.aacKeyboardRows {
+  min-height: 0;
+  display: grid;
+  gap: 10px;
+  align-content: stretch;
+}
+
+.aacKeyboardRows.letters {
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.aacKeyboardRows.symbols {
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.aacKeyboardRows.emoji {
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.aacKeyboardRow,
+.aacKeyboardBottomRow {
+  min-height: 0;
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+}
+
+.aacKeyboardKey {
+  flex: 1 1 0;
+  min-width: 0;
+  background: linear-gradient(180deg, #2563eb, #1d4ed8);
+  font-size: clamp(22px, 3vw, 42px);
+  padding: 6px;
+}
+
+.aacKeyboardKey:active,
+.aacKeyboardKey.active {
+  transform: translateY(2px) scale(0.98);
+  filter: brightness(1.18);
+}
+
+.aacKeyboardWide {
+  flex: 1.65 1 0;
+  background: linear-gradient(180deg, #f97316, #c2410c);
+  font-size: clamp(18px, 2.2vw, 30px);
+}
+
+.aacKeyboardMode {
+  flex: 1.35 1 0;
+  background: linear-gradient(180deg, #8b5cf6, #6d28d9);
+  font-size: clamp(17px, 2.2vw, 30px);
+}
+
+.aacKeyboardSpace {
+  flex: 4.5 1 0;
+  background: linear-gradient(180deg, #14b8a6, #0f766e);
+  font-size: clamp(20px, 2.6vw, 36px);
+}
+
+.aacKeyboardDone {
+  flex: 2.2 1 0;
+  background: linear-gradient(180deg, #22c55e, #15803d);
+  font-size: clamp(17px, 2.2vw, 30px);
+}
+
+.emojiKey {
+  font-size: clamp(25px, 3.5vw, 48px);
+}
+
+@media (max-width: 760px) {
+  .aacKeyboardScreen {
+    padding: 10px;
+    grid-template-rows: 148px 1fr;
+    gap: 10px;
+  }
+
+  .aacKeyboardHeader {
+    grid-template-columns: 118px 1fr 118px;
+    gap: 8px;
+  }
+
+  .aacKeyboardFunctionStack {
+    gap: 6px;
+  }
+
+  .aacKeyboardRow,
+  .aacKeyboardBottomRow {
+    gap: 6px;
+  }
+
+  .aacKeyboardKey {
+    border-radius: 16px;
+    font-size: clamp(20px, 5vw, 34px);
+  }
+
+  .aacKeyboardWide,
+  .aacKeyboardMode,
+  .aacKeyboardDone {
+    font-size: clamp(14px, 3.4vw, 22px);
+  }
+}
