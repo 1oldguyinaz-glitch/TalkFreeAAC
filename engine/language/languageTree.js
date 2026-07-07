@@ -1,4 +1,4 @@
-export const TREE_VERSION = "5.21";
+export const TREE_VERSION = "5.23";
 
 export const FIXED_CORE_LANGUAGE = [
   "I", "want", "need", "feel", "am", "can",
@@ -866,9 +866,7 @@ export const TOPIC_TREE = {
   "food-and-drink/cold-food/too-cold": {
     label: "Too Cold",
     children: ["too cold", "wait", "warm up", "hurt teeth", "stop", "all done", "water", "help me", "cold", "no more", "finished", "please"]
-  }
-};
-
+  },
 
   // V5.21 — Remaining sidebar topics expanded with the same drilldown structure.
   // Pattern: topic → branch → sub-branch → selectable word.
