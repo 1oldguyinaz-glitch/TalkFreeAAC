@@ -26,12 +26,12 @@ import "../styles/release.css";
 const ParentMenu = lazy(() => import("../parent/ParentMenu.jsx"));
 
 function AppContent() {
-  const [profile, setProfileState] = useState(ensureCommunicationProfile(loadProfile()));
+  const [profile, setProfileState] = useState(() => compactProfileForStorage(ensureCommunicationProfile(loadProfile())));
   const [screen, setScreen] = useState("child");
 
   function setProfile(next) {
     const safe = compactProfileForStorage(ensureCommunicationProfile(next));
-    setProfileState(saveProfile(safe));
+    setProfileState(saveProfile(safe, { defer: true }));
   }
 
   function tapWord(word) {

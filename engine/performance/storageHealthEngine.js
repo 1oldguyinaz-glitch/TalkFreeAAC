@@ -28,8 +28,9 @@ export function compactProfileForStorage(profile = {}) {
     recentWords: (profile.recentWords || []).slice(0, 80),
     recentPhrases: (profile.recentPhrases || []).slice(0, 80),
     recentConversationPatterns: (profile.recentConversationPatterns || []).slice(0, 80),
-    timeline: (profile.timeline || []).slice(-500),
-    careTeamMessages: (profile.careTeamMessages || []).slice(0, 200),
+    timeline: (profile.timeline || []).slice(-300),
+    tapHistory: (profile.tapHistory || []).slice(-300),
+    careTeamMessages: (profile.careTeamMessages || []).slice(0, 150),
     dailyNotes: (profile.dailyNotes || []).slice(0, 200)
   };
 }

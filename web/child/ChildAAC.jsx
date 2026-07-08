@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   currentPhrase,
   getFullBoard,
@@ -17,17 +17,12 @@ import {
   saveCustomVocabularyItem
 } from "../../engine/storage/customVocabularyStore.js";
 import {
-  getBucketedLanguageSliceV5_27Async
-} from "../../engine/language/languageDatabaseRouterV5_27.js";
-import {
-  getNextWordAssumptionSliceV5_31Async,
   getStaticNextWordCandidatesV5_31
 } from "../../engine/prediction/nextWordAssumptionEngine.js";
 import {
   getSemanticBucketByIdV5_32,
   getSemanticBucketByLabelV5_32,
   getSemanticBucketsForPhraseV5_32,
-  getSemanticBucketSliceV5_32Async,
   getStaticSemanticBucketWordsV5_32
 } from "../../engine/prediction/semanticBucketRouter.js";
 import {
@@ -230,9 +225,9 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const stageSettings = useMemo(() => normalizeStageSettings(profile), [profile]);
   const boardLimits = useMemo(() => getStageBoardLimits(profile), [profile]);
   const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, actualPhrase]);
-  const [routedSlice, setRoutedSlice] = useState(null);
-  const [nextWordSlice, setNextWordSlice] = useState(null);
-  const [semanticBucketSlice, setSemanticBucketSlice] = useState(null);
+  // V7.0.2 performance rule: the live child board must be static-first.
+  // Do not lazy-load or scan the 10k language database during tap/bucket navigation.
+  // Heavy vocabulary enrichment belongs behind Search/More/admin flows, not the active board.
 
   const immediateNextWords = useMemo(() => getStaticNextWordCandidatesV5_31(profile, {
     phrase: actualPhrase,
@@ -246,144 +241,19 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     bucketLimit: Math.min(boardLimits.activeLimit, boardLimits.topicLimit + 2)
   }), [profile, actualPhrase, stageSettings.communicationStage, boardLimits.activeLimit, boardLimits.topicLimit]);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    if (!activeTopic || stageSettings.expandedVocabularyEnabled !== true) {
-      setRoutedSlice(null);
-      return () => { cancelled = true; };
-    }
-
-    setRoutedSlice({
-      status: "loading_database",
-      visible: [],
-      hiddenCount: 0,
-      source: "v5_27_lazy_bucketed_router"
-    });
-
-    getBucketedLanguageSliceV5_27Async(boardProfile, {
-      stage: stageSettings.communicationStage,
-      limit: boardLimits.activeLimit,
-      topic: activeTopic,
-      activeContext: activeTopic,
-      phrase: actualPhrase
-    })
-      .then(slice => {
-        if (!cancelled) setRoutedSlice(slice);
-      })
-      .catch(error => {
-        if (!cancelled) {
-          setRoutedSlice({
-            status: "database_load_error",
-            visible: [],
-            hiddenCount: 0,
-            error: error?.message || "Vocabulary database failed to load",
-            source: "v5_27_lazy_bucketed_router"
-          });
-        }
-      });
-
-    return () => { cancelled = true; };
-  }, [activeTopic, boardProfile, boardLimits.activeLimit, actualPhrase, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    if (!semanticBucketId || stageSettings.expandedVocabularyEnabled !== true) {
-      setSemanticBucketSlice(null);
-      return () => { cancelled = true; };
-    }
-
-    const staticWords = getStaticSemanticBucketWordsV5_32(semanticBucketId, profile, {
-      phrase: actualPhrase,
-      stage: stageSettings.communicationStage,
-      limit: boardLimits.activeLimit
-    });
-
-    setSemanticBucketSlice({
-      status: "loading_semantic_bucket",
-      visible: staticWords,
-      hiddenCount: 0,
-      source: "v5_32_semantic_bucket_router"
-    });
-
-    getSemanticBucketSliceV5_32Async(profile, {
-      bucketId: semanticBucketId,
-      phrase: actualPhrase,
-      stage: stageSettings.communicationStage,
-      limit: boardLimits.activeLimit
-    })
-      .then(slice => {
-        if (!cancelled) setSemanticBucketSlice(slice);
-      })
-      .catch(error => {
-        if (!cancelled) {
-          setSemanticBucketSlice({
-            status: "semantic_bucket_error_static_fallback",
-            visible: staticWords,
-            hiddenCount: 0,
-            error: error?.message || "Semantic bucket failed",
-            source: "v5_32_semantic_bucket_router"
-          });
-        }
-      });
-
-    return () => { cancelled = true; };
-  }, [semanticBucketId, profile, actualPhrase, boardLimits.activeLimit, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    if (activeTopic || semanticBucketId || !actualPhrase || stageSettings.expandedVocabularyEnabled !== true) {
-      setNextWordSlice(null);
-      return () => { cancelled = true; };
-    }
-
-    setNextWordSlice({
-      status: "loading_next_words",
-      visible: immediateNextWords,
-      hiddenCount: 0,
-      source: "v5_31_local_language_graph"
-    });
-
-    getNextWordAssumptionSliceV5_31Async(profile, {
-      phrase: actualPhrase,
-      stage: stageSettings.communicationStage,
-      limit: boardLimits.activeLimit
-    })
-      .then(slice => {
-        if (!cancelled) setNextWordSlice(slice);
-      })
-      .catch(error => {
-        if (!cancelled) {
-          setNextWordSlice({
-            status: "next_word_load_error_static_fallback",
-            visible: immediateNextWords,
-            hiddenCount: 0,
-            error: error?.message || "Next-word assumptions failed",
-            source: "v5_31_local_language_graph"
-          });
-        }
-      });
-
-    return () => { cancelled = true; };
-  }, [activeTopic, semanticBucketId, actualPhrase, profile, boardLimits.activeLimit, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled, immediateNextWords]);
-
   const fixedCoreLanguage = STAGED_CORE_LANGUAGE.slice(0, boardLimits.coreLimit);
-  const routedWords = routedSlice?.status === "bucket_ready" ? entriesToLabels(routedSlice.visible) : [];
-  const nextWords = nextWordSlice?.visible?.length ? nextWordSlice.visible : immediateNextWords;
+  const routedWords = [];
+  const nextWords = immediateNextWords;
   const fallbackHome = homeBranchForStage(stageSettings.communicationStage);
   const sentenceHasWords = Boolean(actualPhrase);
   const semanticBucket = semanticBucketId ? getSemanticBucketByIdV5_32(semanticBucketId) : null;
   const semanticBucketLabels = semanticBuckets.map(bucket => bucket.label);
   const semanticBucketWords = semanticBucketId
-    ? (semanticBucketSlice?.visible?.length
-      ? semanticBucketSlice.visible
-      : getStaticSemanticBucketWordsV5_32(semanticBucketId, profile, {
-        phrase: actualPhrase,
-        stage: stageSettings.communicationStage,
-        limit: boardLimits.activeLimit
-      }))
+    ? getStaticSemanticBucketWordsV5_32(semanticBucketId, profile, {
+      phrase: actualPhrase,
+      stage: stageSettings.communicationStage,
+      limit: boardLimits.activeLimit
+    })
     : [];
   const predictedSentenceBranch = uniqueWords([
     ...nextWords,
@@ -411,22 +281,16 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   }
 
   const activeBranch = removeCoreDuplicates(activeBranchSource, fixedCoreLanguage).slice(0, boardLimits.activeLimit);
-  const activeSliceState = semanticBucketId
-    ? semanticBucketSlice
-    : activeTopic
-      ? routedSlice
-      : sentenceHasWords
-        ? nextWordSlice
-        : null;
+  const activeSliceState = null;
   const boardState = buildBoardStateV5_35({
     phrase: actualPhrase,
     activeTopic,
     semanticBucket,
     activeBranchMode,
     activeBranchCount: activeBranch.length,
-    loadingStatus: activeSliceState?.status || "",
-    error: activeSliceState?.error || "",
-    hiddenCount: activeSliceState?.hiddenCount || 0
+    loadingStatus: "",
+    error: "",
+    hiddenCount: 0
   });
   const boardVisualKey = `${boardState.mode}:${activeTopic}:${semanticBucketId}:${activeBranchMode}:${activeBranch.join("|")}`;
 
