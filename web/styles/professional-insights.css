@@ -28,3 +28,50 @@
 .sessionField { display: grid; gap: 5px; margin-bottom: 8px; }
 .sessionField span { font-weight: 950; text-transform: capitalize; }
 .sessionField input { border: 2px solid #d7e2f2; border-radius: 14px; padding: 10px; }
+
+/* V5.33 — Insights-only scroll fix
+   Keeps the locked AAC board untouched while allowing the professional
+   insights panel to scroll inside the parent dashboard viewport. */
+.professionalInsights {
+  max-height: calc(100dvh - 32px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.professionalInsights .insightsHeader,
+.professionalInsights .insightTabs {
+  flex: 0 0 auto;
+}
+
+.professionalInsights .insightContent {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+.professionalInsights .stackList {
+  padding-bottom: 12px;
+}
+
+.professionalInsights .insightContent textarea {
+  max-height: min(52dvh, 520px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 900px) {
+  .professionalInsights {
+    max-height: calc(100dvh - 16px);
+  }
+
+  .professionalInsights .insightsHeader {
+    align-items: stretch;
+  }
+}
