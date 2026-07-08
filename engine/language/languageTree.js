@@ -1,4 +1,4 @@
-export const TREE_VERSION = "5.23";
+export const TREE_VERSION = "5.30";
 
 export const FIXED_CORE_LANGUAGE = [
   "I", "want", "need", "feel", "am", "can",
@@ -23,7 +23,7 @@ export const TOPICS = [
 ];
 
 export const HOME_BRANCH = [
-  "more", "help", "food", "drink", "water", "snack", "outside", "inside", "break",
+  "I'm", "more", "help", "food", "drink", "water", "snack", "outside", "inside", "break",
   "and", "because", "but", "to", "with", "then", "when", "if", "so",
   "yes", "no", "finished", "please", "thank you", "mom", "dad", "you", "me"
 ];
@@ -2358,13 +2358,17 @@ export const FLAT_TOPIC_ATTRIBUTES = {
 };
 
 export const BRANCHES = {
-  "i": ["want", "need", "feel", "am", "can", "don't", "like", "love", "have", "see", "hear", "think", "go", "stop", "help", "get", "do", "more", "mom", "dad", "you", "me", "please", "yes", "no", "finished"],
+  "i": ["want", "need", "am", "feel", "can", "don't", "like", "love", "have", "see", "hear", "think", "go", "stop", "help", "get", "do", "more", "mom", "dad", "you", "me", "please", "yes", "no", "finished"],
   "i want": ["to", "more", "help", "food", "drink", "water", "outside", "play", "break", "a hug", "mom", "dad", "snack", "bathroom", "tablet", "toy", "music", "turn", "please", "because", "with", "and", "then", "after", "yes", "no", "finished"],
   "i want to": ["go", "play", "eat", "drink", "see", "watch", "read", "sit", "stand", "stop", "try", "talk", "help", "get", "do", "listen", "wait", "open", "outside", "inside", "home", "school", "bathroom", "mom", "dad", "please", "finished"],
   "i need": ["help", "a break", "bathroom", "water", "food", "quiet", "space", "medicine", "mom", "dad", "teacher", "doctor", "inside", "outside", "stop", "safe", "please", "now", "because", "and", "with", "then", "yes", "no", "finished", "hurt", "scared"],
   "i feel": ["happy", "sad", "mad", "scared", "tired", "sick", "hurt", "excited", "proud", "lonely", "safe", "frustrated", "okay", "hungry", "thirsty", "nervous", "calm", "upset", "because", "and", "but", "with", "please", "hug", "mom", "dad", "help"],
-  "i am": ["happy", "sad", "mad", "scared", "tired", "sick", "hurt", "ready", "not ready", "okay", "safe", "hungry", "thirsty", "cold", "hot", "done", "finished", "waiting", "because", "and", "but", "with", "please", "mom", "dad", "help", "hug"],
+  "i am": ["feeling", "happy", "sad", "mad", "scared", "tired", "sick", "hurt", "ready", "not ready", "okay", "safe", "hungry", "thirsty", "cold", "hot", "done", "finished", "waiting", "because", "and", "but", "with", "please", "mom", "dad", "help", "hug"],
+  "i am feeling": ["happy", "sad", "mad", "scared", "tired", "sick", "hurt", "excited", "proud", "lonely", "safe", "frustrated", "okay", "hungry", "thirsty", "nervous", "calm", "upset", "because", "and", "but", "with", "please", "hug", "mom", "dad", "help"],
+  "i'm": ["feeling", "happy", "sad", "mad", "scared", "tired", "sick", "hurt", "ready", "not ready", "okay", "safe", "hungry", "thirsty", "cold", "hot", "done", "finished", "waiting", "because", "and", "but", "with", "please", "mom", "dad", "help", "hug"],
+  "i'm feeling": ["happy", "sad", "mad", "scared", "tired", "sick", "hurt", "excited", "proud", "lonely", "safe", "frustrated", "okay", "hungry", "thirsty", "nervous", "calm", "upset", "because", "and", "but", "with", "please", "hug", "mom", "dad", "help"],
   "i am sad": ["because", "tired", "sick", "hurt", "scared", "lonely", "frustrated", "not ready", "okay", "safe", "with", "mom", "dad", "teacher", "please", "hug", "help", "I need help", "I need a break", "Can I have a hug", "I miss you", "thank you", "yes", "no", "finished", "outside", "inside"],
+  "i'm sad": ["because", "tired", "sick", "hurt", "scared", "lonely", "frustrated", "not ready", "okay", "safe", "with", "mom", "dad", "teacher", "please", "hug", "help", "I need help", "I need a break", "Can I have a hug", "I miss you", "thank you", "yes", "no", "finished", "outside", "inside"],
   "go": ["outside", "inside", "home", "school", "bathroom", "park", "car", "room", "table", "to", "with", "from", "after", "then", "now", "later", "please", "stop", "mom", "dad", "teacher", "friend", "yes", "no", "finished", "help", "more"],
   "stop": ["please", "that", "this", "now", "because", "I am scared", "I am hurt", "I need help", "too loud", "too much", "wait", "finished", "no", "yes", "mom", "dad", "teacher", "safe", "break", "quiet", "space", "inside", "outside", "help", "thank you", "with", "but"],
   "help": ["me", "please", "now", "with", "food", "drink", "water", "bathroom", "outside", "inside", "school", "tablet", "toy", "I am hurt", "I am scared", "mom", "dad", "teacher", "because", "and", "then", "yes", "no", "finished", "thank you", "more", "break"]

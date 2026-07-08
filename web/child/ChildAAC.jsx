@@ -18,6 +18,10 @@ import {
   getBucketedLanguageSliceV5_27Async
 } from "../../engine/language/languageDatabaseRouterV5_27.js";
 import {
+  getNextWordAssumptionSliceV5_30Async,
+  getStaticNextWordCandidatesV5_30
+} from "../../engine/prediction/nextWordAssumptionEngine.js";
+import {
   getStageBoardLimits,
   isAdultTone,
   normalizeStageSettings
@@ -61,26 +65,26 @@ const STAGED_CORE_LANGUAGE = [
 
 const HOME_BRANCH_BY_STAGE = {
   1: [
-    "food", "drink", "water", "snack", "outside", "inside",
-    "break", "bathroom", "hurt", "mom", "dad", "please"
+    "I'm", "food", "drink", "water", "snack", "outside",
+    "inside", "break", "bathroom", "hurt", "mom", "dad"
   ],
   2: [
-    "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
-    "happy", "sad", "mad", "scared", "teacher", "friend", "toy", "tablet"
+    "I'm", "feeling", "food", "drink", "water", "snack", "outside", "inside",
+    "break", "bathroom", "happy", "sad", "mad", "scared", "teacher", "friend"
   ],
   3: [
-    "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
+    "I'm", "feeling", "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
     "to", "with", "then", "when", "because", "but", "play", "go", "home", "school",
     "happy", "sad", "mad", "scared", "tired", "sick"
   ],
   4: [
-    "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
+    "I'm", "feeling", "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
     "to", "with", "then", "when", "because", "but", "if", "so", "privacy", "friends",
     "school", "work", "schedule", "phone", "money", "opinion", "question", "relationship",
     "pain", "medicine", "home", "transportation", "technology", "feelings", "choice", "wrong", "try again", "give me time"
   ],
   5: [
-    "pain", "doctor", "medicine", "family", "home", "bathroom", "water", "food",
+    "I'm", "feeling", "pain", "doctor", "medicine", "family", "home", "bathroom", "water", "food",
     "yes", "no", "wrong word", "try again", "give me time", "I know but can't say it",
     "call someone", "help", "stop", "tired", "sick", "where", "who", "what", "when", "why"
   ]
@@ -198,7 +202,8 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const [shiftOn, setShiftOn] = useState(false);
   const [keyboardSaveStatus, setKeyboardSaveStatus] = useState("");
 
-  const phrase = phraseFromProfile(profile) || "I want to go outside with you";
+  const actualPhrase = phraseFromProfile(profile);
+  const phrase = actualPhrase || "I want to go outside with you";
 
   const boardProfile = useMemo(() => ({
     ...(profile || {}),
@@ -209,8 +214,15 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
   const stageSettings = useMemo(() => normalizeStageSettings(profile), [profile]);
   const boardLimits = useMemo(() => getStageBoardLimits(profile), [profile]);
-  const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, phrase]);
+  const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, actualPhrase]);
   const [routedSlice, setRoutedSlice] = useState(null);
+  const [nextWordSlice, setNextWordSlice] = useState(null);
+
+  const immediateNextWords = useMemo(() => getStaticNextWordCandidatesV5_30(profile, {
+    phrase: actualPhrase,
+    stage: stageSettings.communicationStage,
+    limit: boardLimits.activeLimit
+  }), [profile, actualPhrase, stageSettings.communicationStage, boardLimits.activeLimit]);
 
   useEffect(() => {
     let cancelled = false;
@@ -232,7 +244,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       limit: boardLimits.activeLimit,
       topic: activeTopic,
       activeContext: activeTopic,
-      phrase
+      phrase: actualPhrase
     })
       .then(slice => {
         if (!cancelled) setRoutedSlice(slice);
@@ -250,14 +262,62 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       });
 
     return () => { cancelled = true; };
-  }, [activeTopic, boardProfile, boardLimits.activeLimit, phrase, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled]);
+  }, [activeTopic, boardProfile, boardLimits.activeLimit, actualPhrase, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (activeTopic || !actualPhrase || stageSettings.expandedVocabularyEnabled !== true) {
+      setNextWordSlice(null);
+      return () => { cancelled = true; };
+    }
+
+    setNextWordSlice({
+      status: "loading_next_words",
+      visible: immediateNextWords,
+      hiddenCount: 0,
+      source: "v5_30_next_word_assumption"
+    });
+
+    getNextWordAssumptionSliceV5_30Async(profile, {
+      phrase: actualPhrase,
+      stage: stageSettings.communicationStage,
+      limit: boardLimits.activeLimit
+    })
+      .then(slice => {
+        if (!cancelled) setNextWordSlice(slice);
+      })
+      .catch(error => {
+        if (!cancelled) {
+          setNextWordSlice({
+            status: "next_word_load_error_static_fallback",
+            visible: immediateNextWords,
+            hiddenCount: 0,
+            error: error?.message || "Next-word assumptions failed",
+            source: "v5_30_next_word_assumption"
+          });
+        }
+      });
+
+    return () => { cancelled = true; };
+  }, [activeTopic, actualPhrase, profile, boardLimits.activeLimit, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled, immediateNextWords]);
 
   const fixedCoreLanguage = STAGED_CORE_LANGUAGE.slice(0, boardLimits.coreLimit);
   const routedWords = routedSlice?.status === "bucket_ready" ? entriesToLabels(routedSlice.visible) : [];
+  const nextWords = nextWordSlice?.visible?.length ? nextWordSlice.visible : immediateNextWords;
   const fallbackHome = homeBranchForStage(stageSettings.communicationStage);
+  const sentenceHasWords = Boolean(actualPhrase);
+  const predictedSentenceBranch = uniqueWords([
+    ...nextWords,
+    ...(sentenceHasWords ? (board.contextWords || []) : [])
+  ]);
   const activeBranchSource = routedWords.length
     ? routedWords
-    : (activeTopic && board.contextWords?.length ? board.contextWords : fallbackHome);
+    : activeTopic && board.contextWords?.length
+      ? board.contextWords
+      : sentenceHasWords && predictedSentenceBranch.length
+        ? predictedSentenceBranch
+        : fallbackHome;
   const activeBranch = removeCoreDuplicates(activeBranchSource, fixedCoreLanguage).slice(0, boardLimits.activeLimit);
   const quickPhrases = quickPhrasesForProfile(profile, boardLimits.quickPhraseLimit);
   const visibleTopics = TOPICS.slice(0, boardLimits.topicLimit);
