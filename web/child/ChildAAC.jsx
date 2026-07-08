@@ -604,34 +604,44 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   }
 
   return (
-    <div className="approvedAacShell">
-      <main className="approvedMain">
-        <header className="approvedHeader">
-          <section className="approvedBrandCard">
-            <button className="approvedProfileButton" onClick={onParent} aria-label="Open profile">
-              {photo ? <img src={photo} alt="" /> : <span>{name.slice(0,1).toUpperCase()}</span>}
-            </button>
-            <div className="approvedBrandText">
-              <div className="approvedBrandName">Talk<span>Free</span>AAC</div>
-              <div className="approvedBrandTag">Free voice. <strong>Paid insight.</strong></div>
-              <div className="approvedStageTag">Stage {stageSettings.communicationStage} • {boardLimits.ageBandLabel} • {semanticBucket ? `${semanticBucket.label} bucket • ` : ""}{unifiedBoardWords.length} buttons</div>
-            </div>
+    <div className="approvedAacShell layoutSketchShell">
+      {stageSettings.keyboardEnabled && (
+        <button className="approvedKeyboardTab" onClick={openKeyboard} aria-label="Open keyboard">
+          <span aria-hidden="true">⌨</span>
+          <strong>Keyboard</strong>
+        </button>
+      )}
+
+      <main className="approvedMain layoutSketchMain">
+        <header className="approvedSketchTopBar">
+          <section className="approvedSketchBrand" aria-label="TalkFreeAAC logo">
+            <div className="approvedBrandName compact">Talk<span>Free</span>AAC</div>
+            <div className="approvedStageTag compact">Stage {stageSettings.communicationStage} • {boardLimits.ageBandLabel}</div>
           </section>
 
-          <section className="approvedSentenceCard">
-            <button className="approvedSentenceButton" onClick={speakAndResetTopic}>
-              <span>{phrase}</span>
-              <small>~ {Math.max(1, phrase.split(" ").length)} words</small>
-            </button>
-            <div className="approvedHeaderTools">
-              <button className="approvedTool speak" onClick={speakAndResetTopic}>🔊 Speak</button>
-              <button className="approvedTool back" onClick={handleBackAction}>← Back</button>
-              <button className="approvedTool clear" onClick={clearAll}>🗑 Clear</button>
-            </div>
-          </section>
+          <button className="approvedSketchProfile" onClick={onParent} aria-label="Open settings, profile, and insights">
+            <span className="approvedSketchSettingsDot" aria-hidden="true">⚙</span>
+            {photo ? <img src={photo} alt="" /> : <span>{name.slice(0,1).toUpperCase()}</span>}
+            <small>Settings</small>
+          </button>
         </header>
 
-        <section className="approvedQuickPhraseRow">
+        <section className="approvedSketchSentenceRow" aria-label="Sentence builder">
+          <button className="approvedSentenceButton sketchSentence" onClick={speakAndResetTopic}>
+            <span>{phrase}</span>
+            <small>{Math.max(1, phrase.split(" ").length)} words</small>
+          </button>
+
+          <div className="approvedSketchSpeechStack">
+            <button className="approvedSketchSpeak" onClick={speakAndResetTopic}>🔊 Speak</button>
+            <div className="approvedSketchMiniTools">
+              <button onClick={handleBackAction}>← Back</button>
+              <button onClick={clearAll}>Clear</button>
+            </div>
+          </div>
+        </section>
+
+        <section className="approvedQuickPhraseRow sketchQuickPhrases" aria-label="Saved quick-use phrases">
           {quickPhrases.map(item => (
             <button key={item} className="approvedQuickPhrase" onClick={() => {
               setActiveTopic("");
@@ -645,7 +655,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
         </section>
 
         <section
-          className="approvedBoard approvedUnifiedBoard"
+          className="approvedBoard approvedUnifiedBoard sketchBoardShell"
           aria-label={semanticBucket ? `${semanticBucket.label} semantic bucket board` : activeTopic ? `${titleFromContext(activeTopic)} board` : "Core and active communication board"}
         >
           <BoardStateBanner
@@ -654,49 +664,50 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             onBack={handleBackAction}
             onHome={navigateHome}
           />
-          <div key={boardVisualKey} className="approvedUnifiedBoardGrid boardGridTransition">
-            {unifiedBoardWords.map(({ word, boardArea, isBucket }, index) => (
-              <AACButton
-                key={`${boardArea}-${word}-${index}`}
-                word={word}
-                onSelect={selectWord}
-                isBucket={isBucket}
-              />
-            ))}
+
+          <div className="sketchBoardSections" key={boardVisualKey}>
+            <section className="sketchBoardBand sketchTopicBand" aria-label="Topics and buckets">
+              <div className="sketchBandLabel">Topics</div>
+              <div className="sketchTopicGrid">
+                {uniqueWords([...visibleTopics, ...visibleSecondary]).slice(0, 12).map(topic => (
+                  <button key={topic} className="approvedBoardTopicButton" onClick={() => selectTopic(topic)}>
+                    <SymbolImage word={topic} />
+                    <span>{topic}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <section className="sketchBoardBand sketchCoreBand" aria-label="Core words">
+              <div className="sketchBandLabel">Core Words</div>
+              <div className="sketchCoreGrid">
+                {fixedCoreLanguage.map((word, index) => (
+                  <AACButton
+                    key={`core-${word}-${index}`}
+                    word={word}
+                    onSelect={selectWord}
+                    isBucket={false}
+                  />
+                ))}
+              </div>
+            </section>
+
+            <section className="sketchBoardBand sketchActiveBand" aria-label="Active words">
+              <div className="sketchBandLabel">Active Words</div>
+              <div className="sketchActiveGrid boardGridTransition">
+                {activeBranch.map((word, index) => (
+                  <AACButton
+                    key={`active-${word}-${index}`}
+                    word={word}
+                    onSelect={selectWord}
+                    isBucket={isNavigationBucketWord(word)}
+                  />
+                ))}
+              </div>
+            </section>
           </div>
         </section>
       </main>
-
-      <aside className="approvedTopicRail">
-        <section className="approvedTopicBox">
-          {semanticBucket && (
-            <button className="approvedSecondaryButton" onClick={() => setSemanticBucketId("")}>← Back to Meanings</button>
-          )}
-          <div className="approvedTopicsHeader">TOPICS</div>
-          {visibleTopics.map(topic => (
-            <button key={topic} className="approvedTopicButton" onClick={() => selectTopic(topic)}>
-              <SymbolImage word={topic} />
-              <span>{topic}</span>
-            </button>
-          ))}
-        </section>
-
-        <section className="approvedSecondaryTopics">
-          {visibleSecondary.map(topic => (
-            <button key={topic} className="approvedSecondaryButton" onClick={() => selectTopic(topic)}>
-              <SymbolImage word={topic} />
-              <span>{topic}</span>
-            </button>
-          ))}
-        </section>
-      </aside>
-
-      <nav className="approvedBottomNav">
-        <button onClick={navigateHome}>🏠 Home</button>
-        {stageSettings.keyboardEnabled && <button onClick={openKeyboard}>⌨ Keyboard</button>}
-        <button onClick={onParent}>⚙ Settings</button>
-        <button onClick={onParent}>📈 Insights 👑</button>
-      </nav>
     </div>
   );
 }
