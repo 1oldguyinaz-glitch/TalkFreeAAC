@@ -1,5 +1,8 @@
 import { buildVoiceRuntimeSettings } from "../../engine/voice/voiceSettings.js";
 
+let cachedVoices = [];
+let voicesPrimed = false;
+
 function hasSpeech() {
   return typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
 }
@@ -8,9 +11,17 @@ function normalize(value = "") {
   return String(value || "").toLowerCase().trim();
 }
 
+function refreshVoiceCache() {
+  if (!hasSpeech()) return [];
+  cachedVoices = window.speechSynthesis.getVoices?.() || [];
+  voicesPrimed = true;
+  return cachedVoices;
+}
+
 function getVoices() {
   if (!hasSpeech()) return [];
-  return window.speechSynthesis.getVoices?.() || [];
+  if (!voicesPrimed || !cachedVoices.length) return refreshVoiceCache();
+  return cachedVoices;
 }
 
 function scoreVoice(voice, settings) {
@@ -70,6 +81,11 @@ export function speak(text, profileOrSettings = {}, overrides = {}) {
 
 export function warmSpeechVoices() {
   if (!hasSpeech()) return [];
-  const voices = getVoices();
+  const voices = refreshVoiceCache();
+  if (window.speechSynthesis?.addEventListener) {
+    window.speechSynthesis.addEventListener("voiceschanged", refreshVoiceCache, { once: false });
+  } else {
+    window.speechSynthesis.onvoiceschanged = refreshVoiceCache;
+  }
   return voices;
 }

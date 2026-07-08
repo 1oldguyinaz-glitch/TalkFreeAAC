@@ -15,6 +15,7 @@ import { recordConversationPattern } from "../../engine/prediction/conversationM
 import { recordPredictionOutcome } from "../../engine/prediction/adaptiveLearningEngine.js";
 import { ensureCommunicationProfile } from "../../engine/profile/userCommunicationProfile.js";
 import { compactProfileForStorage } from "../../engine/performance/storageHealthEngine.js";
+import { shouldSpeakEachWordOnTap } from "../../engine/voice/voiceSettings.js";
 import "../styles/parent.css";
 import "../styles/adaptive-ui.css";
 import "../styles/professional-insights.css";
@@ -50,7 +51,7 @@ function AppContent() {
       justCompletedSentence: false
     });
 
-    speak(word, profile);
+    if (shouldSpeakEachWordOnTap(profile)) speak(word, profile);
   }
 
   function tapPhrase(phrase) {
@@ -68,7 +69,7 @@ function AppContent() {
       justCompletedSentence: false
     });
 
-    speak(phrase, profile);
+    if (shouldSpeakEachWordOnTap(profile)) speak(phrase, profile);
   }
 
   function speakSentence() {

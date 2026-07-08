@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   VOICE_CADENCE_PRESETS,
   VOICE_PROFILES,
@@ -6,49 +6,16 @@ import {
   normalizeVoiceSettings,
   updateVoiceSettings
 } from "../../engine/voice/voiceSettings.js";
-import { getAvailableSpeechVoices, speak, warmSpeechVoices } from "../shared/speech.js";
+import { speak } from "../shared/speech.js";
 
-const PREVIEW_TEXT = "I like this. I need help with that.";
-
-function formatNumber(value) {
-  return Number(value).toFixed(2);
-}
+const PREVIEW_TEXT = "I am hungry. I need help with this.";
 
 export default function VoiceSettingsPanel({ profile, setProfile }) {
-  const [availableVoices, setAvailableVoices] = useState([]);
   const settings = normalizeVoiceSettings(profile);
   const runtime = useMemo(() => buildVoiceRuntimeSettings(profile), [profile]);
 
-  useEffect(() => {
-    const refresh = () => {
-      warmSpeechVoices();
-      setAvailableVoices(getAvailableSpeechVoices());
-    };
-
-    refresh();
-    if (typeof window !== "undefined" && window.speechSynthesis) {
-      window.speechSynthesis.addEventListener?.("voiceschanged", refresh);
-      window.speechSynthesis.onvoiceschanged = refresh;
-    }
-
-    return () => {
-      if (typeof window !== "undefined" && window.speechSynthesis) {
-        window.speechSynthesis.removeEventListener?.("voiceschanged", refresh);
-      }
-    };
-  }, []);
-
   function save(patch) {
     setProfile(updateVoiceSettings(profile, patch));
-  }
-
-  function clearManualRatePitch() {
-    save({ speechRate: null, speechPitch: null });
-  }
-
-  function selectVoiceURI(value) {
-    const voice = availableVoices.find(item => item.voiceURI === value);
-    save({ voiceURI: value, voiceName: voice?.name || "" });
   }
 
   return (
@@ -56,12 +23,12 @@ export default function VoiceSettingsPanel({ profile, setProfile }) {
       <div className="voiceSettingsHeader">
         <div>
           <h2>Voice Cadence</h2>
-          <p className="muted">Local device speech. Child voices are approximated with profile, pitch, and cadence because every phone/browser has different voices.</p>
+          <p className="muted">Performance-first voice setup. The board only speaks each word on tap when that accessibility option is enabled.</p>
         </div>
         <button type="button" onClick={() => speak(PREVIEW_TEXT, profile)}>🔊 Preview</button>
       </div>
 
-      <div className="voiceSettingsGrid">
+      <div className="voiceSettingsGrid compactVoiceSettingsGrid">
         <form className="parentForm voiceSettingsForm" onSubmit={event => event.preventDefault()}>
           <label>
             Voice Type
@@ -81,64 +48,30 @@ export default function VoiceSettingsPanel({ profile, setProfile }) {
             </select>
           </label>
 
-          <label>
-            Device Voice
-            <select value={settings.voiceURI} onChange={event => selectVoiceURI(event.target.value)}>
-              <option value="">Auto-pick best local voice</option>
-              {availableVoices.map(voice => (
-                <option key={voice.voiceURI} value={voice.voiceURI}>
-                  {voice.name} {voice.lang ? `(${voice.lang})` : ""}{voice.default ? " • default" : ""}
-                </option>
-              ))}
-            </select>
+          <label className="voiceToggleRow">
+            <input
+              type="checkbox"
+              checked={settings.speakEachWordOnTap === true}
+              onChange={event => save({ speakEachWordOnTap: event.target.checked })}
+            />
+            <span>
+              Speak each word on tap
+              <small>Off by default for faster bucket navigation. Use Speak to say the full sentence.</small>
+            </span>
           </label>
         </form>
 
-        <div className="voiceTuningPanel">
-          <label>
-            Rate <strong>{formatNumber(runtime.rate)}</strong>
-            <input
-              type="range"
-              min="0.5"
-              max="1.5"
-              step="0.01"
-              value={runtime.rate}
-              onChange={event => save({ speechRate: Number(event.target.value) })}
-            />
-          </label>
-
-          <label>
-            Pitch <strong>{formatNumber(runtime.pitch)}</strong>
-            <input
-              type="range"
-              min="0.5"
-              max="2"
-              step="0.01"
-              value={runtime.pitch}
-              onChange={event => save({ speechPitch: Number(event.target.value) })}
-            />
-          </label>
-
-          <label>
-            Volume <strong>{formatNumber(runtime.volume)}</strong>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={runtime.volume}
-              onChange={event => save({ speechVolume: Number(event.target.value) })}
-            />
-          </label>
-
+        <div className="voiceTuningPanel compactVoiceReadout">
           <div className="voiceReadoutGrid">
-            <span><b>{runtime.profileLabel}</b> profile</span>
+            <span><b>{runtime.profileLabel}</b> voice</span>
             <span><b>{runtime.cadenceLabel}</b> cadence</span>
-            <span><b>{availableVoices.length || 0}</b> local voices</span>
+            <span><b>{runtime.speakEachWordOnTap ? "On" : "Off"}</b> word tap speech</span>
           </div>
 
+          <p className="muted">Current output: rate {runtime.rate.toFixed(2)} • pitch {runtime.pitch.toFixed(2)} • volume {runtime.volume.toFixed(2)}</p>
+
           <div className="voiceButtonRow">
-            <button type="button" onClick={clearManualRatePitch}>Reset tuning</button>
+            <button type="button" onClick={() => save({ speechRate: null, speechPitch: null })}>Reset tuning</button>
             <button type="button" onClick={() => speak(PREVIEW_TEXT, profile)}>Preview voice</button>
           </div>
         </div>

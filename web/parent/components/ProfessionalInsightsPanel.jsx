@@ -55,7 +55,7 @@ export default function ProfessionalInsightsPanel({ profile }) {
 
           <div className="voiceInsightCard">
             <strong>Voice setup</strong>
-            <small>{voice.profileLabel} • {voice.cadenceLabel} • rate {voice.rate.toFixed(2)} • pitch {voice.pitch.toFixed(2)}</small>
+            <small>{voice.profileLabel} • {voice.cadenceLabel} • {voice.speakEachWordOnTap ? "word tap speech on" : "Speak button only"}</small>
           </div>
 
           <h3>Recommendations</h3>

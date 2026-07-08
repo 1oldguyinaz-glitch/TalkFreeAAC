@@ -474,3 +474,41 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* V7.0.1 — compact performance-first voice controls */
+.compactVoiceSettingsGrid {
+  align-items: stretch;
+}
+
+.voiceToggleRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.85rem;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.68);
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+.voiceToggleRow input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.1rem;
+}
+
+.voiceToggleRow span {
+  display: grid;
+  gap: 0.25rem;
+  font-weight: 800;
+}
+
+.voiceToggleRow small {
+  font-weight: 600;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.compactVoiceReadout {
+  justify-content: center;
+}
