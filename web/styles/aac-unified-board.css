@@ -481,17 +481,27 @@
   border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.035);
   padding: clamp(5px, .65vw, 8px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(76px, 8.5vw, 120px);
+  grid-template-rows: minmax(0, 1fr);
+  column-gap: clamp(6px, .65vw, 10px);
 }
 
 .sketchBandLabel {
-  position: absolute;
-  right: clamp(7px, .8vw, 11px);
-  top: clamp(4px, .55vw, 7px);
+  position: static;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  justify-self: end;
   z-index: 2;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   border-radius: 999px;
-  background: rgba(7,17,31,.62);
-  color: rgba(255,255,255,.86);
-  padding: 2px 7px;
+  background: rgba(7,17,31,.72);
+  color: rgba(255,255,255,.90);
+  padding: 3px 8px;
   font-size: clamp(8px, .75vw, 10px);
   line-height: 1.1;
   font-weight: 1000;
@@ -503,6 +513,8 @@
 .sketchTopicGrid,
 .sketchCoreGrid,
 .sketchActiveGrid {
+  grid-column: 1;
+  grid-row: 1;
   min-width: 0;
   min-height: 0;
   height: 100%;
@@ -603,6 +615,10 @@
 
   .sketchQuickPhrases {
     grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .sketchBoardBand {
+    grid-template-columns: minmax(0, 1fr) clamp(58px, 16vw, 88px);
   }
 
   .sketchTopicGrid,

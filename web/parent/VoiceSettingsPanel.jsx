@@ -48,6 +48,19 @@ export default function VoiceSettingsPanel({ profile, setProfile }) {
             </select>
           </label>
 
+          <label className="voiceVolumeControl">
+            <span>Voice volume <b>{Math.round((settings.speechVolume ?? 1) * 100)}%</b></span>
+            <input
+              type="range"
+              min="0.25"
+              max="1"
+              step="0.05"
+              value={settings.speechVolume ?? 1}
+              onChange={event => save({ speechVolume: Number(event.target.value) })}
+            />
+            <small>Default is max volume. Device volume still controls the final loudness.</small>
+          </label>
+
           <label className="voiceToggleRow">
             <input
               type="checkbox"
@@ -68,10 +81,10 @@ export default function VoiceSettingsPanel({ profile, setProfile }) {
             <span><b>{runtime.speakEachWordOnTap ? "On" : "Off"}</b> word tap speech</span>
           </div>
 
-          <p className="muted">Current output: rate {runtime.rate.toFixed(2)} • pitch {runtime.pitch.toFixed(2)} • volume {runtime.volume.toFixed(2)}</p>
+          <p className="muted">Current output: rate {runtime.rate.toFixed(2)} • pitch {runtime.pitch.toFixed(2)} • volume {Math.round(runtime.volume * 100)}%</p>
 
           <div className="voiceButtonRow">
-            <button type="button" onClick={() => save({ speechRate: null, speechPitch: null })}>Reset tuning</button>
+            <button type="button" onClick={() => save({ speechRate: null, speechPitch: null, speechVolume: 1 })}>Reset tuning</button>
             <button type="button" onClick={() => speak(PREVIEW_TEXT, profile)}>Preview voice</button>
           </div>
         </div>

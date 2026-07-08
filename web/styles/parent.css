@@ -480,6 +480,39 @@
   align-items: stretch;
 }
 
+
+.voiceVolumeControl {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.85rem;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+.voiceVolumeControl span {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-weight: 900;
+}
+
+.voiceVolumeControl b {
+  color: #ff477e;
+  font-weight: 1000;
+}
+
+.voiceVolumeControl input[type="range"] {
+  width: 100%;
+  accent-color: #ff6f91;
+}
+
+.voiceVolumeControl small {
+  font-weight: 600;
+  color: #64748b;
+  line-height: 1.35;
+}
+
 .voiceToggleRow {
   display: grid;
   grid-template-columns: auto 1fr;
