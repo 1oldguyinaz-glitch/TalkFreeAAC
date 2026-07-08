@@ -50,7 +50,7 @@ function AppContent() {
       justCompletedSentence: false
     });
 
-    speak(word);
+    speak(word, profile);
   }
 
   function tapPhrase(phrase) {
@@ -68,7 +68,7 @@ function AppContent() {
       justCompletedSentence: false
     });
 
-    speak(phrase);
+    speak(phrase, profile);
   }
 
   function speakSentence() {
@@ -76,7 +76,7 @@ function AppContent() {
     if (!phrase) return;
 
     const record = buildSentenceRecord(profile);
-    speak(phrase);
+    speak(phrase, profile);
 
     const withPhrase = recordPhraseUse(profile, phrase);
     const withPattern = recordConversationPattern(withPhrase, phrase);

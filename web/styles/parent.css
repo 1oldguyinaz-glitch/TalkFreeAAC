@@ -348,3 +348,129 @@
 .parentShellV4 > .parentGrid:last-child {
   padding-bottom: clamp(24px, 6vh, 72px);
 }
+
+/* V5.36 — Voice cadence settings */
+.settingsColumnV4 {
+  align-items: stretch;
+}
+
+.voiceSettingsPanel {
+  border: 3px solid rgba(255, 111, 145, .24);
+}
+
+.voiceSettingsHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.voiceSettingsHeader h2 {
+  margin-bottom: 4px;
+}
+
+.voiceSettingsHeader button,
+.voiceButtonRow button {
+  border: 0;
+  border-radius: 18px;
+  background: #ff6f91;
+  color: white;
+  padding: 12px 16px;
+  min-height: 48px;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.voiceSettingsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, .95fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.voiceSettingsForm label,
+.voiceTuningPanel label {
+  display: grid;
+  gap: 6px;
+  font-weight: 950;
+}
+
+.voiceTuningPanel {
+  display: grid;
+  gap: 12px;
+  background: #fff4f7;
+  border-radius: 22px;
+  padding: 14px;
+}
+
+.voiceTuningPanel input[type="range"] {
+  width: 100%;
+  accent-color: #ff6f91;
+}
+
+.voiceTuningPanel label strong {
+  color: #ff477e;
+  font-size: 20px;
+}
+
+.voiceReadoutGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.voiceReadoutGrid span,
+.voiceInsightCard {
+  background: white;
+  border-radius: 16px;
+  padding: 10px;
+  font-weight: 850;
+}
+
+.voiceReadoutGrid b,
+.voiceInsightCard strong {
+  display: block;
+  color: #0b1f3a;
+  font-weight: 950;
+}
+
+.voiceInsightCard {
+  margin: 12px 0 16px;
+  background: #fff4f7;
+  border: 2px solid rgba(255, 111, 145, .25);
+}
+
+.voiceInsightCard small {
+  color: #5b6b83;
+  font-weight: 850;
+}
+
+.voiceButtonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.voiceButtonRow button:first-child {
+  background: #0b1f3a;
+}
+
+@media (max-width: 900px) {
+  .settingsColumnV4,
+  .voiceSettingsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .voiceSettingsHeader {
+    flex-direction: column;
+  }
+
+  .voiceSettingsHeader button {
+    width: 100%;
+  }
+
+  .voiceReadoutGrid {
+    grid-template-columns: 1fr;
+  }
+}

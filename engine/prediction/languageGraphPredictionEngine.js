@@ -24,13 +24,15 @@ const FEELING_WORDS = [
 ];
 
 const BODY_NEED_WORDS = [
-  "help", "bathroom", "water", "food", "break", "quiet", "space", "medicine", "mom", "dad",
-  "teacher", "doctor", "safe", "now", "please", "hurt", "sick", "scared"
+  "help", "with", "this", "that", "it", "my", "me", "bathroom", "water", "food", "break",
+  "quiet", "space", "medicine", "mom", "dad", "teacher", "doctor", "safe", "now",
+  "please", "hurt", "sick", "scared"
 ];
 
 const WANT_WORDS = [
-  "to", "more", "help", "food", "drink", "water", "outside", "play", "break", "a hug",
-  "mom", "dad", "snack", "bathroom", "tablet", "toy", "music", "turn", "please"
+  "this", "that", "it", "to", "with", "my", "more", "help", "food", "drink", "water",
+  "outside", "play", "break", "a hug", "mom", "dad", "snack", "bathroom", "tablet",
+  "toy", "music", "turn", "please"
 ];
 
 const ACTION_WORDS = [
@@ -48,6 +50,15 @@ const QUESTION_WORDS = [
 
 const REPAIR_WORDS = [
   "wrong word", "try again", "give me time", "I know but can't say it", "please wait", "not that", "yes", "no", "help"
+];
+
+const EMERGING_GRAMMAR_GLUE_WORDS = [
+  "this", "that", "it", "you", "me", "my", "to", "with", "for"
+];
+
+const OWNERSHIP_WORDS = [
+  "turn", "toy", "food", "drink", "water", "cup", "book", "tablet", "mom", "dad",
+  "body", "hand", "foot", "room", "seat", "bag", "clothes", "shoes", "blanket"
 ];
 
 export const LANGUAGE_GRAPH_OVERLAY_ENTRIES_V5_31 = [
@@ -99,7 +110,8 @@ const WORD_MIN_STAGE = {
   because: 3,
   then: 3,
   when: 3,
-  with: 2,
+  with: 1,
+  for: 1,
   without: 4,
   if: 4,
   privacy: 4,
@@ -122,7 +134,7 @@ function route(words, bucketHints = [], extra = {}) {
 
 export const LOCAL_GRAMMAR_GRAPH_V5_31 = {
   "i": route(
-    ["want", "need", "am", "I'm", "feel", "can", "don't", "like", "love", "have", "go", "help", "more"],
+    ["want", "need", "am", "I'm", "feel", "like", "have", "can", "don't", "love", ...EMERGING_GRAMMAR_GLUE_WORDS, "go", "help", "more"],
     ["grammar_language", "actions", "feelings", "communication_repair", "food_drink", "people"]
   ),
   "i want": route(WANT_WORDS, ["food_drink", "actions", "places", "people", "play", "communication_repair"]),
@@ -145,7 +157,13 @@ export const LOCAL_GRAMMAR_GRAPH_V5_31 = {
   "feeling": route(FEELING_WORDS, ["feelings", "regulation", "body_pain", "states_conditions", "sensory"]),
   "can": route(["I", "you", "we", "go", "have", "help", "play", "eat", "drink", "watch", "stop", "try"], ["grammar_language", "actions", "communication_repair"]),
   "don't": route(["want", "like", "know", "feel", "need", "touch", "stop", "go"], ["grammar_language", "choice_preference", "actions", "communication_repair"]),
-  "like": route(["this", "that", "it", "food", "music", "play", "you", "more", "because"], ["choice_preference", "food_drink", "play", "social", "grammar_language"]),
+  "i like": route(["this", "that", "it", "you", "my", "with", "food", "drink", "music", "play", "more", "because"], ["choice_preference", "food_drink", "play", "social", "grammar_language", "people"]),
+  "like": route(["this", "that", "it", "you", "my", "with", "food", "music", "play", "more", "because"], ["choice_preference", "food_drink", "play", "social", "grammar_language"]),
+  "my": route(OWNERSHIP_WORDS, ["things", "people", "body_pain", "places", "food_drink"]),
+  "you": route(["help", "me", "stop", "go", "come", "look", "wait", "like", "want", "need", "with", "this", "that"], ["people", "actions", "communication_repair", "grammar_language"]),
+  "this": route(["one", "is", "that", "hurts", "feels", "looks", "with", "please", "help"], ["grammar_language", "things", "sensory", "communication_repair"]),
+  "that": route(["one", "is", "this", "hurts", "feels", "looks", "with", "please", "help"], ["grammar_language", "things", "sensory", "communication_repair"]),
+  "with": route(["me", "you", "this", "that", "mom", "dad", "teacher", "friend", "help"], ["grammar_language", "people", "communication_repair"]),
   "go": route(["outside", "inside", "home", "school", "bathroom", "park", "car", "room", "to", "with", "now", "later", "please"], ["places", "transportation", "school", "community", "actions"]),
   "help": route(["me", "please", "now", "with", "food", "drink", "water", "bathroom", "outside", "inside", "school", "tablet", "toy", ...PEOPLE_WORDS], ["communication_repair", "people", "school", "food_drink", "places"]),
   "stop": route(["please", "that", "this", "now", "because", "I am scared", "I am hurt", "I need help", "too loud", "too much", "wait", "finished", "no", "safe", "break", "quiet", "space"], ["communication_repair", "regulation", "sensory", "emergency", "social_boundaries"]),

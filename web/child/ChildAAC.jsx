@@ -8,6 +8,7 @@ import {
 import AACButton from "./components/AACButton.jsx";
 import BoardStateBanner from "./components/BoardStateBanner.jsx";
 import SymbolImage from "./components/SymbolImage.jsx";
+import { speak as speakText } from "../shared/speech.js";
 import {
   recordTypedVocabularyFromKeyboard,
   markTypedVocabularyCustomAdded
@@ -71,15 +72,15 @@ const ADULT_QUICK_PHRASES = [
 // Stable motor plan order. Higher stages reveal more cells; lower stages never get flooded.
 const STAGED_CORE_LANGUAGE = [
   "I", "want", "need", "help", "stop", "yes",
-  "no", "more", "finished", "feel", "am", "can",
-  "don't", "like", "love", "have", "see", "hear",
-  "think", "go", "get", "do", "you", "me"
+  "no", "more", "like", "you", "me", "my",
+  "finished", "feel", "am", "can", "don't", "love",
+  "have", "see", "hear", "think", "go", "get", "do"
 ];
 
 const HOME_BRANCH_BY_STAGE = {
   1: [
-    "I'm", "food", "drink", "water", "snack", "outside",
-    "inside", "break", "bathroom", "hurt", "mom", "dad"
+    "I'm", "this", "that", "it", "with", "to",
+    "food", "drink", "water", "break", "bathroom", "hurt"
   ],
   2: [
     "I'm", "feeling", "food", "drink", "water", "snack", "outside", "inside",
@@ -599,13 +600,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
     trackKeyboardVocabulary("speak");
 
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.92;
-      utterance.pitch = 1;
-      window.speechSynthesis.speak(utterance);
-    }
+    speakText(text, profile);
   };
 
   const addTypedToSentence = () => {

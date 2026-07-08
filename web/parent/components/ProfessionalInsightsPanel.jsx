@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { generateInsightReport, generateIEPReadySummary, exportReportJSON } from "../../../engine/insights/professionalInsightsEngine.js";
 import { buildClassroomSnapshot, buildSessionNoteTemplate } from "../../../engine/insights/classroomInsightsEngine.js";
+import { buildVoiceRuntimeSettings } from "../../../engine/voice/voiceSettings.js";
 
 export default function ProfessionalInsightsPanel({ profile }) {
   const [view, setView] = useState("summary");
@@ -8,6 +9,7 @@ export default function ProfessionalInsightsPanel({ profile }) {
   const iep = useMemo(() => generateIEPReadySummary(profile), [profile]);
   const classroom = useMemo(() => buildClassroomSnapshot(profile), [profile]);
   const session = useMemo(() => buildSessionNoteTemplate(profile), [profile]);
+  const voice = useMemo(() => buildVoiceRuntimeSettings(profile), [profile]);
 
   function copyText(text) {
     navigator.clipboard?.writeText(text);
@@ -49,6 +51,11 @@ export default function ProfessionalInsightsPanel({ profile }) {
             <span><b>{report.summary.completeSentenceRate}%</b> Sentences</span>
             <span><b>{report.summary.feelingsExpressed}</b> Feelings</span>
             <span><b>{report.summary.questionsAsked}</b> Questions</span>
+          </div>
+
+          <div className="voiceInsightCard">
+            <strong>Voice setup</strong>
+            <small>{voice.profileLabel} • {voice.cadenceLabel} • rate {voice.rate.toFixed(2)} • pitch {voice.pitch.toFixed(2)}</small>
           </div>
 
           <h3>Recommendations</h3>

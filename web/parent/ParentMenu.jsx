@@ -10,6 +10,7 @@ import ReportsPanel from "./components/ReportsPanel.jsx";
 import CareTeamPanel from "./components/CareTeamPanel.jsx";
 import ReleaseChecklistPanel from "./components/ReleaseChecklistPanel.jsx";
 import StageSettingsPanel from "./StageSettingsPanel.jsx";
+import VoiceSettingsPanel from "./VoiceSettingsPanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
   const [goalForm, setGoalForm] = useState({ title: "", targetWords: "", level: "Emerging", notes: "" });
@@ -53,8 +54,9 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
         <button className="parentBackButton" onClick={onBack}>Back to AAC</button>
       </header>
 
-      <section className="parentGrid">
+      <section className="parentGrid twoColumnV4 settingsColumnV4">
         <StageSettingsPanel profile={profile} setProfile={setProfile} />
+        <VoiceSettingsPanel profile={profile} setProfile={setProfile} />
       </section>
 
       <section className="parentGrid metricsGridV4">
