@@ -55,3 +55,49 @@
   font-size: clamp(10px, 1vw, 13px);
   font-weight: 900;
 }
+
+/* V5.34 — bucket navigation tiles
+   A bucket is navigation, not speech output. Make bucket tiles visually different
+   so users know tapping opens the next layer instead of saying the label. */
+.aacApprovedTile.tile-bucketNav {
+  background: rgba(255, 255, 255, .10) !important;
+  color: #ffffff !important;
+  border: 2px dashed rgba(255, 255, 255, .68) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 4px 10px rgba(0, 0, 0, .24) !important;
+  backdrop-filter: blur(4px);
+}
+
+.aacApprovedTile.tile-bucketNav::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: clamp(7px, .8vw, 10px);
+  border: 1px solid rgba(255, 255, 255, .16);
+  pointer-events: none;
+}
+
+.aacApprovedTile.tile-bucketNav .symbolImage,
+.aacApprovedTile.tile-bucketNav .fallbackSymbol {
+  opacity: .72;
+}
+
+.aacApprovedTile.tile-bucketNav .approvedTileLabel {
+  text-transform: none;
+  letter-spacing: .01em;
+}
+
+.approvedBucketCue {
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  z-index: 2;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .20);
+  border: 1px solid rgba(255, 255, 255, .28);
+  color: #ffffff;
+  padding: 2px 6px;
+  font-size: clamp(8px, .75vw, 10px);
+  line-height: 1;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
