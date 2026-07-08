@@ -226,3 +226,108 @@
     align-items: stretch;
   }
 }
+
+/* V5.28 — Stage settings / board staging */
+.stageSettingsPanel {
+  border: 3px solid rgba(22, 136, 255, .25);
+}
+
+.stageSettingsHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.stageSettingsHeader h2 {
+  margin-bottom: 4px;
+}
+
+.stageSettingsPill {
+  background: #0b1f3a;
+  color: white;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.stageSettingsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.stageSettingsForm label {
+  display: grid;
+  gap: 6px;
+  font-weight: 950;
+}
+
+.stageSettingsReadoutGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stageSettingsReadout {
+  background: #eef7ff;
+  border-radius: 18px;
+  padding: 12px;
+}
+
+.stageSettingsReadout span {
+  display: block;
+  color: #5b6b83;
+  font-weight: 850;
+  font-size: 13px;
+}
+
+.stageSettingsReadout strong {
+  display: block;
+  color: #0b1f3a;
+  font-size: 24px;
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+.stageToggleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.stageToggleGrid button {
+  border: 0;
+  border-radius: 18px;
+  background: #e8edf5;
+  color: #0b1f3a;
+  padding: 12px;
+  min-height: 52px;
+  font-weight: 950;
+}
+
+.stageToggleGrid button.enabled {
+  background: #1688ff;
+  color: white;
+}
+
+.stageToggleGrid button.danger.enabled {
+  background: #d00000;
+}
+
+@media (max-width: 900px) {
+  .stageSettingsHeader,
+  .stageSettingsGrid {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .stageSettingsPill {
+    width: 100%;
+    text-align: center;
+  }
+}

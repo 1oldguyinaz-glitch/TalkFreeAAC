@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   currentPhrase,
   getFullBoard,
@@ -14,10 +14,18 @@ import {
 import {
   saveCustomVocabularyItem
 } from "../../engine/storage/customVocabularyStore.js";
+import {
+  getBucketedLanguageSliceV5_27Async
+} from "../../engine/language/languageDatabaseRouterV5_27.js";
+import {
+  getStageBoardLimits,
+  isAdultTone,
+  normalizeStageSettings
+} from "../../engine/display/stageSettings.js";
 import "../styles/aac-keyboard.css";
 import "../styles/aac-unified-board.css";
 
-const QUICK_PHRASES = [
+const CHILD_QUICK_PHRASES = [
   "I love you",
   "Have a hug",
   "Thank you",
@@ -30,17 +38,53 @@ const QUICK_PHRASES = [
   "Good night"
 ];
 
-const FIXED_CORE_LANGUAGE = [
-  "I", "want", "need", "feel", "am", "can",
-  "don't", "like", "love", "have", "see", "hear",
-  "think", "go", "stop", "help", "get", "do"
+const ADULT_QUICK_PHRASES = [
+  "I need help",
+  "Please wait",
+  "Yes",
+  "No",
+  "Stop",
+  "I need a break",
+  "I know but can't say it",
+  "Wrong word",
+  "Try again",
+  "Thank you"
 ];
 
-const HOME_BRANCH = [
-  "more", "help", "food", "drink", "water", "snack", "outside", "inside", "break",
-  "and", "because", "but", "to", "with", "then", "when", "if", "so",
-  "yes", "no", "finished", "please", "thank you", "mom", "dad", "you", "me"
+// Stable motor plan order. Higher stages reveal more cells; lower stages never get flooded.
+const STAGED_CORE_LANGUAGE = [
+  "I", "want", "need", "help", "stop", "yes",
+  "no", "more", "finished", "feel", "am", "can",
+  "don't", "like", "love", "have", "see", "hear",
+  "think", "go", "get", "do", "you", "me"
 ];
+
+const HOME_BRANCH_BY_STAGE = {
+  1: [
+    "food", "drink", "water", "snack", "outside", "inside",
+    "break", "bathroom", "hurt", "mom", "dad", "please"
+  ],
+  2: [
+    "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
+    "happy", "sad", "mad", "scared", "teacher", "friend", "toy", "tablet"
+  ],
+  3: [
+    "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
+    "to", "with", "then", "when", "because", "but", "play", "go", "home", "school",
+    "happy", "sad", "mad", "scared", "tired", "sick"
+  ],
+  4: [
+    "food", "drink", "water", "snack", "outside", "inside", "break", "bathroom",
+    "to", "with", "then", "when", "because", "but", "if", "so", "privacy", "friends",
+    "school", "work", "schedule", "phone", "money", "opinion", "question", "relationship",
+    "pain", "medicine", "home", "transportation", "technology", "feelings", "choice", "wrong", "try again", "give me time"
+  ],
+  5: [
+    "pain", "doctor", "medicine", "family", "home", "bathroom", "water", "food",
+    "yes", "no", "wrong word", "try again", "give me time", "I know but can't say it",
+    "call someone", "help", "stop", "tired", "sick", "where", "who", "what", "when", "why"
+  ]
+};
 
 const TOPICS = [
   "Relationships",
@@ -60,6 +104,23 @@ const SECONDARY = [
   "Search",
   "Emergency"
 ];
+
+function quickPhrasesForProfile(profile, limit) {
+  const source = isAdultTone(profile) ? ADULT_QUICK_PHRASES : CHILD_QUICK_PHRASES;
+  return source.slice(0, limit);
+}
+
+function homeBranchForStage(stage) {
+  return HOME_BRANCH_BY_STAGE[stage] || HOME_BRANCH_BY_STAGE[1];
+}
+
+function secondaryTopicsForSettings(settings) {
+  return SECONDARY.filter(topic => {
+    if (topic === "Search") return settings.searchEnabled === true;
+    if (topic === "Emergency") return settings.emergencyMode !== false;
+    return true;
+  });
+}
 
 const LETTER_ROWS = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -107,7 +168,7 @@ function uniqueWords(items = []) {
   });
 }
 
-function removeCoreDuplicates(items = [], coreItems = FIXED_CORE_LANGUAGE) {
+function removeCoreDuplicates(items = [], coreItems = STAGED_CORE_LANGUAGE) {
   const coreKeys = new Set(coreItems.map(normalizeBoardWord));
   return uniqueWords(items).filter(item => !coreKeys.has(normalizeBoardWord(item)));
 }
@@ -119,6 +180,14 @@ function titleFromContext(context = "") {
     .split("-")
     .map(part => part ? part.slice(0, 1).toUpperCase() + part.slice(1) : "")
     .join(" ");
+}
+
+function labelFromEntry(entry) {
+  return entry?.display_label || entry?.label || "";
+}
+
+function entriesToLabels(entries = []) {
+  return entries.map(labelFromEntry).filter(Boolean);
 }
 
 export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
@@ -138,11 +207,63 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     topic: activeTopic
   }), [profile, activeTopic]);
 
+  const stageSettings = useMemo(() => normalizeStageSettings(profile), [profile]);
+  const boardLimits = useMemo(() => getStageBoardLimits(profile), [profile]);
   const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, phrase]);
-  const activeBranchSource = board.contextWords?.length ? board.contextWords : HOME_BRANCH;
-  const activeBranch = removeCoreDuplicates(activeBranchSource).slice(0, 27);
+  const [routedSlice, setRoutedSlice] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (!activeTopic || stageSettings.expandedVocabularyEnabled !== true) {
+      setRoutedSlice(null);
+      return () => { cancelled = true; };
+    }
+
+    setRoutedSlice({
+      status: "loading_database",
+      visible: [],
+      hiddenCount: 0,
+      source: "v5_27_lazy_bucketed_router"
+    });
+
+    getBucketedLanguageSliceV5_27Async(boardProfile, {
+      stage: stageSettings.communicationStage,
+      limit: boardLimits.activeLimit,
+      topic: activeTopic,
+      activeContext: activeTopic,
+      phrase
+    })
+      .then(slice => {
+        if (!cancelled) setRoutedSlice(slice);
+      })
+      .catch(error => {
+        if (!cancelled) {
+          setRoutedSlice({
+            status: "database_load_error",
+            visible: [],
+            hiddenCount: 0,
+            error: error?.message || "Vocabulary database failed to load",
+            source: "v5_27_lazy_bucketed_router"
+          });
+        }
+      });
+
+    return () => { cancelled = true; };
+  }, [activeTopic, boardProfile, boardLimits.activeLimit, phrase, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled]);
+
+  const fixedCoreLanguage = STAGED_CORE_LANGUAGE.slice(0, boardLimits.coreLimit);
+  const routedWords = routedSlice?.status === "bucket_ready" ? entriesToLabels(routedSlice.visible) : [];
+  const fallbackHome = homeBranchForStage(stageSettings.communicationStage);
+  const activeBranchSource = routedWords.length
+    ? routedWords
+    : (activeTopic && board.contextWords?.length ? board.contextWords : fallbackHome);
+  const activeBranch = removeCoreDuplicates(activeBranchSource, fixedCoreLanguage).slice(0, boardLimits.activeLimit);
+  const quickPhrases = quickPhrasesForProfile(profile, boardLimits.quickPhraseLimit);
+  const visibleTopics = TOPICS.slice(0, boardLimits.topicLimit);
+  const visibleSecondary = secondaryTopicsForSettings(stageSettings);
   const unifiedBoardWords = [
-    ...FIXED_CORE_LANGUAGE.map(word => ({ word, boardArea: "core" })),
+    ...fixedCoreLanguage.map(word => ({ word, boardArea: "core" })),
     ...activeBranch.map(word => ({ word, boardArea: "active" }))
   ];
   const name = profile?.userProfile?.name || profile?.name || "Austin";
@@ -296,7 +417,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             className="aacKeyboardTextBox"
             value={keyboardText}
             onChange={(event) => updateKeyboardText(event.target.value)}
-            placeholder="Type anything Austin wants to say..."
+            placeholder={`Type anything ${name} wants to say...`}
             autoFocus
           />
 
@@ -389,6 +510,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             <div className="approvedBrandText">
               <div className="approvedBrandName">Talk<span>Free</span>AAC</div>
               <div className="approvedBrandTag">Free voice. <strong>Paid insight.</strong></div>
+              <div className="approvedStageTag">Stage {stageSettings.communicationStage} • {boardLimits.ageBandLabel} • {unifiedBoardWords.length} buttons</div>
             </div>
           </section>
 
@@ -406,7 +528,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
         </header>
 
         <section className="approvedQuickPhraseRow">
-          {QUICK_PHRASES.map(item => (
+          {quickPhrases.map(item => (
             <button key={item} className="approvedQuickPhrase" onClick={() => {
               setActiveTopic("");
               onPhrase ? onPhrase(item) : addWordToSentence(item);
@@ -436,7 +558,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       <aside className="approvedTopicRail">
         <section className="approvedTopicBox">
           <div className="approvedTopicsHeader">TOPICS</div>
-          {TOPICS.map(topic => (
+          {visibleTopics.map(topic => (
             <button key={topic} className="approvedTopicButton" onClick={() => selectTopic(topic)}>
               <SymbolImage word={topic} />
               <span>{topic}</span>
@@ -445,7 +567,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
         </section>
 
         <section className="approvedSecondaryTopics">
-          {SECONDARY.map(topic => (
+          {visibleSecondary.map(topic => (
             <button key={topic} className="approvedSecondaryButton" onClick={() => selectTopic(topic)}>
               <SymbolImage word={topic} />
               <span>{topic}</span>
@@ -459,8 +581,8 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           setActiveTopic("");
           setKeyboardOpen(false);
         }}>🏠 Home</button>
-        <button onClick={openKeyboard}>⌨ Keyboard</button>
-        <button onClick={() => selectTopic("Settings")}>⚙ Settings</button>
+        {stageSettings.keyboardEnabled && <button onClick={openKeyboard}>⌨ Keyboard</button>}
+        <button onClick={onParent}>⚙ Settings</button>
         <button onClick={onParent}>📈 Insights 👑</button>
       </nav>
     </div>

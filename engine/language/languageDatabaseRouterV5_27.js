@@ -1,13 +1,82 @@
 // TalkFreeAAC V5.27 SAFE — Bucketed 10,000 Entry Language Router
 // Hidden database. Bucket-gated slices only. No automatic board flooding.
 
-import languageDatabase from "./languageDatabaseV5_27_10000.json";
 import { DEEP_BUCKET_MAP_V5_27 } from "./deepBucketMapV5_27.js";
 
 export const V5_27_ROUTER_VERSION = "5.27-safe-bucketed";
 export const MIN_ACTIVE_OPTIONS = 12;
 export const DEFAULT_ACTIVE_OPTIONS = 24;
 export const MAX_ACTIVE_OPTIONS = 40;
+
+export const LANGUAGE_DATABASE_PUBLIC_PATH = "data/languageDatabaseV5_27_10000.json";
+export const LANGUAGE_DATABASE_LOADING_MODE = "lazy-dynamic-import";
+
+const EMPTY_LANGUAGE_DATABASE = { entries: [] };
+let languageDatabaseCache = null;
+let languageDatabaseLoadPromise = null;
+
+function normalizeLanguageDatabasePayload(payload) {
+  const database = payload?.default || payload;
+  return Array.isArray(database?.entries) ? database : EMPTY_LANGUAGE_DATABASE;
+}
+
+function cachedLanguageDatabase() {
+  return languageDatabaseCache || EMPTY_LANGUAGE_DATABASE;
+}
+
+async function loadBundledLanguageDatabaseV5_27() {
+  // Dynamic import keeps the 10,000-entry database out of the initial app chunk.
+  // Vite turns this into a separate lazy-loaded asset/chunk.
+  const module = await import("./languageDatabaseV5_27_10000.json");
+  return normalizeLanguageDatabasePayload(module);
+}
+
+async function loadPublicLanguageDatabaseFallbackV5_27() {
+  // Fallback only. Useful if a later wrapper chooses to place the database in /public/data.
+  if (typeof window === "undefined" || typeof fetch !== "function") {
+    throw new Error("Vocabulary database lazy-load requires Vite dynamic import or browser fetch().");
+  }
+
+  const baseUrl = import.meta.env?.BASE_URL || "/";
+  const assetBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+  const response = await fetch(`${assetBase}${LANGUAGE_DATABASE_PUBLIC_PATH}`, { cache: "force-cache" });
+
+  if (!response.ok) {
+    throw new Error(`Vocabulary database failed to load: ${response.status}`);
+  }
+
+  return normalizeLanguageDatabasePayload(await response.json());
+}
+
+export function isLanguageDatabaseLoadedV5_27() {
+  return Array.isArray(languageDatabaseCache?.entries);
+}
+
+export async function loadLanguageDatabaseV5_27() {
+  if (isLanguageDatabaseLoadedV5_27()) return languageDatabaseCache;
+
+  if (!languageDatabaseLoadPromise) {
+    languageDatabaseLoadPromise = (async () => {
+      try {
+        languageDatabaseCache = await loadBundledLanguageDatabaseV5_27();
+      } catch (dynamicImportError) {
+        try {
+          languageDatabaseCache = await loadPublicLanguageDatabaseFallbackV5_27();
+        } catch (fallbackError) {
+          fallbackError.cause = dynamicImportError;
+          throw fallbackError;
+        }
+      }
+
+      return languageDatabaseCache;
+    })().catch(error => {
+      languageDatabaseLoadPromise = null;
+      throw error;
+    });
+  }
+
+  return languageDatabaseLoadPromise;
+}
 
 const TOPIC_TO_BUCKETS = {
   relationships: ["people", "social", "social_boundaries"],
@@ -146,12 +215,16 @@ function emergencyAllowed(profile = {}, bucket = "") {
 }
 
 export function getLanguageDatabaseV5_27() {
-  return languageDatabase;
+  return cachedLanguageDatabase();
 }
 
-export function getAvailableBucketsV5_27() {
+export async function getLanguageDatabaseV5_27Async() {
+  return loadLanguageDatabaseV5_27();
+}
+
+export function getAvailableBucketsV5_27(database = cachedLanguageDatabase()) {
   const counts = {};
-  for (const entry of languageDatabase.entries || []) {
+  for (const entry of database.entries || []) {
     const branch = entry.primary_branch || "unknown";
     counts[branch] = (counts[branch] || 0) + 1;
   }
@@ -165,11 +238,16 @@ export function getAvailableBucketsV5_27() {
     .sort((a, b) => b.count - a.count);
 }
 
-function availableBucketSet() {
-  return new Set(getAvailableBucketsV5_27().map(row => row.bucket));
+export async function getAvailableBucketsV5_27Async() {
+  const database = await loadLanguageDatabaseV5_27();
+  return getAvailableBucketsV5_27(database);
 }
 
-export function resolveBucketPathV5_27(input = {}) {
+function availableBucketSet(database = cachedLanguageDatabase()) {
+  return new Set(getAvailableBucketsV5_27(database).map(row => row.bucket));
+}
+
+export function resolveBucketPathV5_27(input = {}, database = cachedLanguageDatabase()) {
   const parts = [];
 
   if (Array.isArray(input.bucketPath)) {
@@ -192,7 +270,7 @@ export function resolveBucketPathV5_27(input = {}) {
       bucket: normalizeBucket(part)
     }));
 
-  const buckets = availableBucketSet();
+  const buckets = availableBucketSet(database);
   const explicitBucket = [...normalizedParts].reverse()
     .map(part => part.bucket)
     .find(bucket => buckets.has(bucket));
@@ -312,27 +390,40 @@ function rankEntries(entries = [], profile = {}, bucketPath = {}) {
   });
 }
 
-function filterByBucketGroup(bucketGroup = [], profile = {}, bucket = "", stage = 1, allowStageExpansion = false) {
-  return languageDatabase.entries
+function filterByBucketGroup(bucketGroup = [], profile = {}, bucket = "", stage = 1, allowStageExpansion = false, database = cachedLanguageDatabase()) {
+  return database.entries
     .filter(entry => bucketGroup.includes(entry.primary_branch))
     .filter(entry => allowStageExpansion ? hasAnyStage(entry) : hasStage(entry, stage))
     .filter(entry => filterEntriesBySafetyV5_27([entry], profile, bucket).length === 1);
 }
 
-function fillCongruent(entries = [], profile = {}, bucketPath = {}, limit = DEFAULT_ACTIVE_OPTIONS, stage = 1) {
+function fillCongruent(entries = [], profile = {}, bucketPath = {}, limit = DEFAULT_ACTIVE_OPTIONS, stage = 1, database = cachedLanguageDatabase()) {
   if (entries.length >= Math.min(MIN_ACTIVE_OPTIONS, limit)) return entries;
 
   const group = bucketPath.bucketGroup || [];
   if (!group.length) return entries;
 
   const existing = new Set(entries.map(entry => key(entry.label)));
-  const fallback = filterByBucketGroup(group, profile, bucketPath.bucket, stage, true)
+  const fallback = filterByBucketGroup(group, profile, bucketPath.bucket, stage, true, database)
     .filter(entry => !existing.has(key(entry.label)));
 
   return uniqueEntries([...entries, ...rankEntries(fallback, profile, bucketPath)]).slice(0, limit);
 }
 
-export function getBucketedLanguageSliceV5_27(profile = {}, options = {}) {
+function databaseNotLoadedSlice(stage, limit, bucketPath) {
+  return {
+    version: V5_27_ROUTER_VERSION,
+    stage,
+    limit,
+    visible: [],
+    hiddenCount: 0,
+    bucketPath,
+    status: "database_not_loaded",
+    source: "v5_27_lazy_bucketed_router"
+  };
+}
+
+export function getBucketedLanguageSliceV5_27(profile = {}, options = {}, database = cachedLanguageDatabase()) {
   const stage = options.stage || profile.stage || 1;
   const limit = clampLimit(options.limit);
   const bucketPath = resolveBucketPathV5_27({
@@ -342,7 +433,11 @@ export function getBucketedLanguageSliceV5_27(profile = {}, options = {}) {
     activeContext: options.activeContext || profile.activeContext,
     topic: options.topic || profile.activeTopic,
     phrase: options.phrase || (Array.isArray(profile.sentence) ? profile.sentence.join(" ") : profile.sentence || "")
-  });
+  }, database);
+
+  if (!Array.isArray(database.entries) || database.entries.length === 0) {
+    return databaseNotLoadedSlice(stage, limit, bucketPath);
+  }
 
   if (!bucketPath.bucketGroup.length) {
     return {
@@ -350,17 +445,17 @@ export function getBucketedLanguageSliceV5_27(profile = {}, options = {}) {
       stage,
       limit,
       visible: [],
-      hiddenCount: languageDatabase.entries.length,
+      hiddenCount: database.entries.length,
       bucketPath,
       status: "waiting_for_bucket",
-      source: "v5_27_safe_bucketed_router"
+      source: "v5_27_lazy_bucketed_router"
     };
   }
 
-  let entries = filterByBucketGroup(bucketPath.bucketGroup, profile, bucketPath.bucket, stage, false);
+  let entries = filterByBucketGroup(bucketPath.bucketGroup, profile, bucketPath.bucket, stage, false, database);
   entries = uniqueEntries(entries);
   entries = rankEntries(entries, profile, bucketPath);
-  entries = fillCongruent(entries, profile, bucketPath, limit, stage);
+  entries = fillCongruent(entries, profile, bucketPath, limit, stage, database);
 
   return {
     version: V5_27_ROUTER_VERSION,
@@ -371,7 +466,7 @@ export function getBucketedLanguageSliceV5_27(profile = {}, options = {}) {
     totalMatchedBeforeLimit: entries.length,
     bucketPath,
     status: "bucket_ready",
-    source: "v5_27_safe_bucketed_router"
+    source: "v5_27_lazy_bucketed_router"
   };
 }
 
@@ -380,9 +475,18 @@ export function getActiveLanguageSlice(profile = {}, options = {}) {
   return getBucketedLanguageSliceV5_27(profile, options);
 }
 
-export function searchLanguageDatabaseV5_27(query = "", profile = {}, options = {}) {
+export async function getBucketedLanguageSliceV5_27Async(profile = {}, options = {}) {
+  const database = await loadLanguageDatabaseV5_27();
+  return getBucketedLanguageSliceV5_27(profile, options, database);
+}
+
+export async function getActiveLanguageSliceAsync(profile = {}, options = {}) {
+  return getBucketedLanguageSliceV5_27Async(profile, options);
+}
+
+export function searchLanguageDatabaseV5_27(query = "", profile = {}, options = {}, database = cachedLanguageDatabase()) {
   const q = key(query);
-  if (!q) return [];
+  if (!q || !Array.isArray(database.entries) || database.entries.length === 0) return [];
 
   const limit = Math.min(MAX_ACTIVE_OPTIONS, Math.max(1, Number(options.limit || MAX_ACTIVE_OPTIONS)));
   const stage = options.stage || profile.stage || 1;
@@ -393,9 +497,9 @@ export function searchLanguageDatabaseV5_27(query = "", profile = {}, options = 
     activeContext: options.activeContext,
     topic: options.topic,
     query
-  });
+  }, database);
 
-  let entries = languageDatabase.entries
+  let entries = database.entries
     .filter(entry => key(entry.label).includes(q))
     .filter(entry => hasStage(entry, stage) || options.allowStageExpansion === true);
 
@@ -407,16 +511,30 @@ export function searchLanguageDatabaseV5_27(query = "", profile = {}, options = 
   return rankEntries(uniqueEntries(entries), profile, bucketPath).slice(0, limit);
 }
 
+export async function searchLanguageDatabaseV5_27Async(query = "", profile = {}, options = {}) {
+  const database = await loadLanguageDatabaseV5_27();
+  return searchLanguageDatabaseV5_27(query, profile, options, database);
+}
+
 export default {
   V5_27_ROUTER_VERSION,
+  LANGUAGE_DATABASE_PUBLIC_PATH,
+  LANGUAGE_DATABASE_LOADING_MODE,
   MIN_ACTIVE_OPTIONS,
   DEFAULT_ACTIVE_OPTIONS,
   MAX_ACTIVE_OPTIONS,
+  isLanguageDatabaseLoadedV5_27,
+  loadLanguageDatabaseV5_27,
   getLanguageDatabaseV5_27,
+  getLanguageDatabaseV5_27Async,
   getAvailableBucketsV5_27,
+  getAvailableBucketsV5_27Async,
   resolveBucketPathV5_27,
   getBucketedLanguageSliceV5_27,
+  getBucketedLanguageSliceV5_27Async,
   getActiveLanguageSlice,
+  getActiveLanguageSliceAsync,
   searchLanguageDatabaseV5_27,
+  searchLanguageDatabaseV5_27Async,
   filterEntriesBySafetyV5_27
 };

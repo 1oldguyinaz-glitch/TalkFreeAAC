@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import ChildAAC from "../child/ChildAAC.jsx";
-import ParentMenu from "../parent/ParentMenu.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
 import { loadProfile, saveProfile } from "../shared/profile.js";
 import { speak } from "../shared/speech.js";
@@ -22,6 +21,8 @@ import "../styles/professional-insights.css";
 import "../styles/prediction-ui.css";
 import "../styles/reports.css";
 import "../styles/release.css";
+
+const ParentMenu = lazy(() => import("../parent/ParentMenu.jsx"));
 
 function AppContent() {
   const [profile, setProfileState] = useState(ensureCommunicationProfile(loadProfile()));
@@ -111,7 +112,9 @@ function AppContent() {
           onParent={() => setScreen("parent")}
         />
       ) : (
-        <ParentMenu profile={profile} setProfile={setProfile} onBack={() => setScreen("child")} />
+        <Suspense fallback={<div className="parentShellV4"><p>Loading parent settings...</p></div>}>
+          <ParentMenu profile={profile} setProfile={setProfile} onBack={() => setScreen("child")} />
+        </Suspense>
       )}
     </div>
   );

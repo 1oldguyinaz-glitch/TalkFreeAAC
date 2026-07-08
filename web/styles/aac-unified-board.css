@@ -41,3 +41,17 @@
     grid-template-rows: repeat(9, minmax(0, 1fr));
   }
 }
+
+/* V5.28 — child-facing stage visibility tag */
+.approvedStageTag {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .14);
+  color: rgba(255, 255, 255, .92);
+  padding: 4px 8px;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 900;
+}
