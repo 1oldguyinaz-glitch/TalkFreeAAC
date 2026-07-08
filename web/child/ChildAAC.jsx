@@ -6,6 +6,7 @@ import {
   topicWordHasChildren
 } from "../../engine/prediction/predictionEngine.js";
 import AACButton from "./components/AACButton.jsx";
+import BoardStateBanner from "./components/BoardStateBanner.jsx";
 import SymbolImage from "./components/SymbolImage.jsx";
 import {
   recordTypedVocabularyFromKeyboard,
@@ -33,6 +34,11 @@ import {
   isAdultTone,
   normalizeStageSettings
 } from "../../engine/display/stageSettings.js";
+import {
+  buildBoardStateV5_35,
+  parentTopicFromPath,
+  topicPathAtIndex
+} from "../../engine/navigation/boardStateEngine.js";
 import "../styles/aac-keyboard.css";
 import "../styles/aac-unified-board.css";
 
@@ -404,6 +410,24 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   }
 
   const activeBranch = removeCoreDuplicates(activeBranchSource, fixedCoreLanguage).slice(0, boardLimits.activeLimit);
+  const activeSliceState = semanticBucketId
+    ? semanticBucketSlice
+    : activeTopic
+      ? routedSlice
+      : sentenceHasWords
+        ? nextWordSlice
+        : null;
+  const boardState = buildBoardStateV5_35({
+    phrase: actualPhrase,
+    activeTopic,
+    semanticBucket,
+    activeBranchMode,
+    activeBranchCount: activeBranch.length,
+    loadingStatus: activeSliceState?.status || "",
+    error: activeSliceState?.error || "",
+    hiddenCount: activeSliceState?.hiddenCount || 0
+  });
+  const boardVisualKey = `${boardState.mode}:${activeTopic}:${semanticBucketId}:${activeBranchMode}:${activeBranch.join("|")}`;
 
   const isSemanticBucketNavigationWord = (word) => {
     return activeBranchMode === "semanticBucketChoices" && Boolean(getSemanticBucketByLabelV5_32(word));
@@ -460,6 +484,53 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     setSemanticBucketId("");
     setActiveTopic(topic);
     onContext?.(topic);
+  };
+
+  const navigateHome = () => {
+    setActiveTopic("");
+    setSemanticBucketId("");
+    setKeyboardOpen(false);
+    onContext?.("home");
+  };
+
+  const handleBackAction = () => {
+    if (semanticBucketId) {
+      setSemanticBucketId("");
+      onContext?.("semantic");
+      return;
+    }
+
+    if (activeTopic) {
+      const parentTopic = parentTopicFromPath(activeTopic);
+      setActiveTopic(parentTopic);
+      onContext?.(parentTopic || "home");
+      return;
+    }
+
+    onBack?.();
+  };
+
+  const handleBreadcrumbNavigation = (item) => {
+    if (!item) return;
+
+    if (item.type === "home") {
+      navigateHome();
+      return;
+    }
+
+    if (item.type === "phrase") {
+      setActiveTopic("");
+      setSemanticBucketId("");
+      onContext?.("prediction");
+      return;
+    }
+
+    if (item.type === "topic") {
+      const nextTopic = topicPathAtIndex(activeTopic, item.index);
+      setActiveTopic(nextTopic);
+      setSemanticBucketId("");
+      onContext?.(nextTopic || "home");
+    }
   };
 
   const clearAll = () => {
@@ -695,7 +766,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             </button>
             <div className="approvedHeaderTools">
               <button className="approvedTool speak" onClick={speakAndResetTopic}>🔊 Speak</button>
-              <button className="approvedTool back" onClick={onBack}>← Back</button>
+              <button className="approvedTool back" onClick={handleBackAction}>← Back</button>
               <button className="approvedTool clear" onClick={clearAll}>🗑 Clear</button>
             </div>
           </section>
@@ -718,7 +789,13 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           className="approvedBoard approvedUnifiedBoard"
           aria-label={semanticBucket ? `${semanticBucket.label} semantic bucket board` : activeTopic ? `${titleFromContext(activeTopic)} board` : "Core and active communication board"}
         >
-          <div className="approvedUnifiedBoardGrid">
+          <BoardStateBanner
+            boardState={boardState}
+            onNavigate={handleBreadcrumbNavigation}
+            onBack={handleBackAction}
+            onHome={navigateHome}
+          />
+          <div key={boardVisualKey} className="approvedUnifiedBoardGrid boardGridTransition">
             {unifiedBoardWords.map(({ word, boardArea, isBucket }, index) => (
               <AACButton
                 key={`${boardArea}-${word}-${index}`}
@@ -756,11 +833,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       </aside>
 
       <nav className="approvedBottomNav">
-        <button onClick={() => {
-          setActiveTopic("");
-          setSemanticBucketId("");
-          setKeyboardOpen(false);
-        }}>🏠 Home</button>
+        <button onClick={navigateHome}>🏠 Home</button>
         {stageSettings.keyboardEnabled && <button onClick={openKeyboard}>⌨ Keyboard</button>}
         <button onClick={onParent}>⚙ Settings</button>
         <button onClick={onParent}>📈 Insights 👑</button>
