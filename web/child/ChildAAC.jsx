@@ -22,6 +22,13 @@ import {
   getStaticNextWordCandidatesV5_31
 } from "../../engine/prediction/nextWordAssumptionEngine.js";
 import {
+  getSemanticBucketByIdV5_32,
+  getSemanticBucketByLabelV5_32,
+  getSemanticBucketsForPhraseV5_32,
+  getSemanticBucketSliceV5_32Async,
+  getStaticSemanticBucketWordsV5_32
+} from "../../engine/prediction/semanticBucketRouter.js";
+import {
   getStageBoardLimits,
   isAdultTone,
   normalizeStageSettings
@@ -196,6 +203,7 @@ function entriesToLabels(entries = []) {
 
 export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, onClear, onContext, onParent }) {
   const [activeTopic, setActiveTopic] = useState("");
+  const [semanticBucketId, setSemanticBucketId] = useState("");
   const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [keyboardText, setKeyboardText] = useState("");
   const [keyboardMode, setKeyboardMode] = useState("letters");
@@ -217,12 +225,19 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const board = useMemo(() => getFullBoard(boardProfile), [boardProfile, actualPhrase]);
   const [routedSlice, setRoutedSlice] = useState(null);
   const [nextWordSlice, setNextWordSlice] = useState(null);
+  const [semanticBucketSlice, setSemanticBucketSlice] = useState(null);
 
   const immediateNextWords = useMemo(() => getStaticNextWordCandidatesV5_31(profile, {
     phrase: actualPhrase,
     stage: stageSettings.communicationStage,
     limit: boardLimits.activeLimit
   }), [profile, actualPhrase, stageSettings.communicationStage, boardLimits.activeLimit]);
+
+  const semanticBuckets = useMemo(() => getSemanticBucketsForPhraseV5_32(profile, {
+    phrase: actualPhrase,
+    stage: stageSettings.communicationStage,
+    bucketLimit: Math.min(boardLimits.activeLimit, boardLimits.topicLimit + 2)
+  }), [profile, actualPhrase, stageSettings.communicationStage, boardLimits.activeLimit, boardLimits.topicLimit]);
 
   useEffect(() => {
     let cancelled = false;
@@ -267,7 +282,52 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   useEffect(() => {
     let cancelled = false;
 
-    if (activeTopic || !actualPhrase || stageSettings.expandedVocabularyEnabled !== true) {
+    if (!semanticBucketId || stageSettings.expandedVocabularyEnabled !== true) {
+      setSemanticBucketSlice(null);
+      return () => { cancelled = true; };
+    }
+
+    const staticWords = getStaticSemanticBucketWordsV5_32(semanticBucketId, profile, {
+      phrase: actualPhrase,
+      stage: stageSettings.communicationStage,
+      limit: boardLimits.activeLimit
+    });
+
+    setSemanticBucketSlice({
+      status: "loading_semantic_bucket",
+      visible: staticWords,
+      hiddenCount: 0,
+      source: "v5_32_semantic_bucket_router"
+    });
+
+    getSemanticBucketSliceV5_32Async(profile, {
+      bucketId: semanticBucketId,
+      phrase: actualPhrase,
+      stage: stageSettings.communicationStage,
+      limit: boardLimits.activeLimit
+    })
+      .then(slice => {
+        if (!cancelled) setSemanticBucketSlice(slice);
+      })
+      .catch(error => {
+        if (!cancelled) {
+          setSemanticBucketSlice({
+            status: "semantic_bucket_error_static_fallback",
+            visible: staticWords,
+            hiddenCount: 0,
+            error: error?.message || "Semantic bucket failed",
+            source: "v5_32_semantic_bucket_router"
+          });
+        }
+      });
+
+    return () => { cancelled = true; };
+  }, [semanticBucketId, profile, actualPhrase, boardLimits.activeLimit, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (activeTopic || semanticBucketId || !actualPhrase || stageSettings.expandedVocabularyEnabled !== true) {
       setNextWordSlice(null);
       return () => { cancelled = true; };
     }
@@ -300,45 +360,95 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       });
 
     return () => { cancelled = true; };
-  }, [activeTopic, actualPhrase, profile, boardLimits.activeLimit, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled, immediateNextWords]);
+  }, [activeTopic, semanticBucketId, actualPhrase, profile, boardLimits.activeLimit, stageSettings.communicationStage, stageSettings.expandedVocabularyEnabled, immediateNextWords]);
 
   const fixedCoreLanguage = STAGED_CORE_LANGUAGE.slice(0, boardLimits.coreLimit);
   const routedWords = routedSlice?.status === "bucket_ready" ? entriesToLabels(routedSlice.visible) : [];
   const nextWords = nextWordSlice?.visible?.length ? nextWordSlice.visible : immediateNextWords;
   const fallbackHome = homeBranchForStage(stageSettings.communicationStage);
   const sentenceHasWords = Boolean(actualPhrase);
+  const semanticBucket = semanticBucketId ? getSemanticBucketByIdV5_32(semanticBucketId) : null;
+  const semanticBucketLabels = semanticBuckets.map(bucket => bucket.label);
+  const semanticBucketWords = semanticBucketId
+    ? (semanticBucketSlice?.visible?.length
+      ? semanticBucketSlice.visible
+      : getStaticSemanticBucketWordsV5_32(semanticBucketId, profile, {
+        phrase: actualPhrase,
+        stage: stageSettings.communicationStage,
+        limit: boardLimits.activeLimit
+      }))
+    : [];
   const predictedSentenceBranch = uniqueWords([
     ...nextWords,
     ...(sentenceHasWords ? (board.contextWords || []) : [])
   ]);
-  const activeBranchSource = routedWords.length
-    ? routedWords
-    : activeTopic && board.contextWords?.length
-      ? board.contextWords
-      : sentenceHasWords && predictedSentenceBranch.length
-        ? predictedSentenceBranch
-        : fallbackHome;
+
+  let activeBranchSource = fallbackHome;
+  let activeBranchMode = "home";
+
+  if (semanticBucketWords.length) {
+    activeBranchSource = semanticBucketWords;
+    activeBranchMode = "semanticLeafWords";
+  } else if (routedWords.length) {
+    activeBranchSource = routedWords;
+    activeBranchMode = "topicWords";
+  } else if (activeTopic && board.contextWords?.length) {
+    activeBranchSource = board.contextWords;
+    activeBranchMode = "topicWords";
+  } else if (sentenceHasWords && semanticBucketLabels.length) {
+    activeBranchSource = semanticBucketLabels;
+    activeBranchMode = "semanticBucketChoices";
+  } else if (sentenceHasWords && predictedSentenceBranch.length) {
+    activeBranchSource = predictedSentenceBranch;
+    activeBranchMode = "predictionWords";
+  }
+
   const activeBranch = removeCoreDuplicates(activeBranchSource, fixedCoreLanguage).slice(0, boardLimits.activeLimit);
+
+  const isSemanticBucketNavigationWord = (word) => {
+    return activeBranchMode === "semanticBucketChoices" && Boolean(getSemanticBucketByLabelV5_32(word));
+  };
+
+  const isTopicBucketNavigationWord = (word) => {
+    return Boolean(activeTopic && topicWordHasChildren(activeTopic, word));
+  };
+
+  const isNavigationBucketWord = (word) => {
+    return isSemanticBucketNavigationWord(word) || isTopicBucketNavigationWord(word);
+  };
   const quickPhrases = quickPhrasesForProfile(profile, boardLimits.quickPhraseLimit);
   const visibleTopics = TOPICS.slice(0, boardLimits.topicLimit);
   const visibleSecondary = secondaryTopicsForSettings(stageSettings);
   const unifiedBoardWords = [
-    ...fixedCoreLanguage.map(word => ({ word, boardArea: "core" })),
-    ...activeBranch.map(word => ({ word, boardArea: "active" }))
+    ...fixedCoreLanguage.map(word => ({ word, boardArea: "core", isBucket: false })),
+    ...activeBranch.map(word => ({ word, boardArea: "active", isBucket: isNavigationBucketWord(word) }))
   ];
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const profileTrackingId = profile?.userProfile?.id || profile?.id || profile?.userProfile?.name || profile?.name || "default";
   const photo = profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
 
   const addWordToSentence = (word) => {
+    setSemanticBucketId("");
     if (word.includes(" ") && onPhrase) return onPhrase(word);
     onTap?.(word);
   };
 
   const selectWord = (word) => {
-    if (activeTopic && topicWordHasChildren(activeTopic, word)) {
+    if (isSemanticBucketNavigationWord(word)) {
+      const nextBucket = getSemanticBucketByLabelV5_32(word);
+      if (nextBucket) {
+        setSemanticBucketId(nextBucket.id);
+        setActiveTopic("");
+        onContext?.(`semantic/${nextBucket.id}`);
+        return;
+      }
+    }
+
+    if (isTopicBucketNavigationWord(word)) {
       const nextTopic = getNextTopicNode(activeTopic, word);
       setActiveTopic(nextTopic);
+      setSemanticBucketId("");
+      onContext?.(nextTopic);
       return;
     }
 
@@ -347,22 +457,26 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   };
 
   const selectTopic = (topic) => {
+    setSemanticBucketId("");
     setActiveTopic(topic);
     onContext?.(topic);
   };
 
   const clearAll = () => {
     setActiveTopic("");
+    setSemanticBucketId("");
     onClear?.();
   };
 
   const speakAndResetTopic = () => {
     setActiveTopic("");
+    setSemanticBucketId("");
     onSpeak?.();
   };
 
   const openKeyboard = () => {
     setActiveTopic("");
+    setSemanticBucketId("");
     setKeyboardOpen(true);
   };
 
@@ -570,7 +684,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             <div className="approvedBrandText">
               <div className="approvedBrandName">Talk<span>Free</span>AAC</div>
               <div className="approvedBrandTag">Free voice. <strong>Paid insight.</strong></div>
-              <div className="approvedStageTag">Stage {stageSettings.communicationStage} • {boardLimits.ageBandLabel} • {unifiedBoardWords.length} buttons</div>
+              <div className="approvedStageTag">Stage {stageSettings.communicationStage} • {boardLimits.ageBandLabel} • {semanticBucket ? `${semanticBucket.label} bucket • ` : ""}{unifiedBoardWords.length} buttons</div>
             </div>
           </section>
 
@@ -591,6 +705,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
           {quickPhrases.map(item => (
             <button key={item} className="approvedQuickPhrase" onClick={() => {
               setActiveTopic("");
+              setSemanticBucketId("");
               onPhrase ? onPhrase(item) : addWordToSentence(item);
             }}>
               <SymbolImage word={item} />
@@ -601,14 +716,15 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
         <section
           className="approvedBoard approvedUnifiedBoard"
-          aria-label={activeTopic ? `${titleFromContext(activeTopic)} board` : "Core and active communication board"}
+          aria-label={semanticBucket ? `${semanticBucket.label} semantic bucket board` : activeTopic ? `${titleFromContext(activeTopic)} board` : "Core and active communication board"}
         >
           <div className="approvedUnifiedBoardGrid">
-            {unifiedBoardWords.map(({ word, boardArea }, index) => (
+            {unifiedBoardWords.map(({ word, boardArea, isBucket }, index) => (
               <AACButton
                 key={`${boardArea}-${word}-${index}`}
                 word={word}
                 onSelect={selectWord}
+                isBucket={isBucket}
               />
             ))}
           </div>
@@ -617,6 +733,9 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
       <aside className="approvedTopicRail">
         <section className="approvedTopicBox">
+          {semanticBucket && (
+            <button className="approvedSecondaryButton" onClick={() => setSemanticBucketId("")}>← Back to Meanings</button>
+          )}
           <div className="approvedTopicsHeader">TOPICS</div>
           {visibleTopics.map(topic => (
             <button key={topic} className="approvedTopicButton" onClick={() => selectTopic(topic)}>
@@ -639,6 +758,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
       <nav className="approvedBottomNav">
         <button onClick={() => {
           setActiveTopic("");
+          setSemanticBucketId("");
           setKeyboardOpen(false);
         }}>🏠 Home</button>
         {stageSettings.keyboardEnabled && <button onClick={openKeyboard}>⌨ Keyboard</button>}

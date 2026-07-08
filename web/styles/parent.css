@@ -331,3 +331,20 @@
     text-align: center;
   }
 }
+
+/* V5.34.1 — parent/dashboard scroll repair
+   The main AAC board remains locked by app.css. Parent/dashboard screens get their own
+   viewport scroll container so Insights can move on mobile/tablet. */
+.parentShellV4 {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+}
+
+.parentShellV4 > .parentGrid:last-child {
+  padding-bottom: clamp(24px, 6vh, 72px);
+}

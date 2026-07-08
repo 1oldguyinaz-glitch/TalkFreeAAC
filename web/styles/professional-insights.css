@@ -75,3 +75,58 @@
     align-items: stretch;
   }
 }
+
+/* V5.34.1 — hardened Professional Insights scrolling
+   Previous scroll fix only constrained the panel. This one works inside the locked app shell:
+   parentShellV4 handles page scroll, and the active insight pane scrolls internally when needed. */
+.professionalInsights {
+  max-height: none;
+  overflow: visible;
+}
+
+.professionalInsights .insightsHeader {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #ffffff;
+  padding-bottom: 10px;
+}
+
+.professionalInsights .insightTabs {
+  position: sticky;
+  top: clamp(76px, 11vh, 128px);
+  z-index: 2;
+  background: #ffffff;
+  padding: 8px 0 10px;
+}
+
+.professionalInsights .insightContent {
+  display: block;
+  max-height: min(62dvh, 680px);
+  min-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  padding-bottom: 18px;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+.professionalInsights .insightContent textarea {
+  max-height: min(48dvh, 520px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+@media (max-width: 900px) {
+  .professionalInsights .insightsHeader,
+  .professionalInsights .insightTabs {
+    position: static;
+  }
+
+  .professionalInsights .insightContent {
+    max-height: 58dvh;
+  }
+}
