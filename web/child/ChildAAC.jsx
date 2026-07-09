@@ -605,13 +605,6 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
   return (
     <div className="approvedAacShell layoutSketchShell">
-      {stageSettings.keyboardEnabled && (
-        <button className="approvedKeyboardTab" onClick={openKeyboard} aria-label="Open keyboard">
-          <span aria-hidden="true">⌨</span>
-          <strong>Keyboard</strong>
-        </button>
-      )}
-
       <main className="approvedMain layoutSketchMain">
         <header className="approvedSketchTopBar">
           <section className="approvedSketchBrand" aria-label="TalkFreeAAC logo">
@@ -655,9 +648,17 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
         </section>
 
         <section
-          className="approvedBoard approvedUnifiedBoard sketchBoardShell"
+          className={`approvedBoard approvedUnifiedBoard sketchBoardShell ${stageSettings.keyboardEnabled ? "hasKeyboardRail" : "noKeyboardRail"}`}
           aria-label={semanticBucket ? `${semanticBucket.label} semantic bucket board` : activeTopic ? `${titleFromContext(activeTopic)} board` : "Core and active communication board"}
         >
+          {stageSettings.keyboardEnabled && (
+            <button className="sketchKeyboardRail" onClick={openKeyboard} aria-label="Open keyboard">
+              <span className="sketchKeyboardArrow" aria-hidden="true">›</span>
+              <span className="sketchKeyboardIcon" aria-hidden="true">⌨</span>
+              <strong>Keyboard</strong>
+            </button>
+          )}
+
           <BoardStateBanner
             boardState={boardState}
             onNavigate={handleBreadcrumbNavigation}
