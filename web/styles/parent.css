@@ -940,3 +940,14 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* V7.5.0 — automatic board fit replaces manual tile-size controls. */
+.boardAutomaticFitNote {
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(126, 226, 85, .28);
+  background: rgba(126, 226, 85, .08);
+  color: rgba(255,255,255,.9);
+  font-weight: 800;
+}

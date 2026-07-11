@@ -46,9 +46,7 @@ export default function AccessibilityPanel({ profile, setProfile }) {
         {Object.entries(DISPLAY_SCHEMES).map(([key, scheme]) => <option key={key} value={key}>{scheme.name}</option>)}
       </select>
 
-      <h3>Size Controls</h3>
-      <input className="search" type="number" min="80" max="200" value={display.buttonScale || 100} onChange={e => setProfile(updateDisplaySettings(profile, { buttonScale: Number(e.target.value) }))} placeholder="Button scale %" />
-      <input className="search" type="number" min="80" max="200" value={display.textScale || 100} onChange={e => setProfile(updateDisplaySettings(profile, { textScale: Number(e.target.value) }))} placeholder="Text scale %" />
+      <p><strong>Automatic fit:</strong> TalkFreeAAC scales buttons, symbols, and labels to the available screen without overlap.</p>
     </div>
   );
 }

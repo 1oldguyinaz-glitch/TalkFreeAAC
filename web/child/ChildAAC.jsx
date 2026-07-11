@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   currentPhrase,
   getFullBoard,
@@ -29,6 +29,7 @@ import {
   getStageBoardLimits,
   normalizeStageSettings
 } from "../../engine/display/stageSettings.js";
+import { getViewportFitLayoutV7_5 } from "../../engine/display/viewportFit.js";
 import { getQuickPhrases } from "../../engine/display/quickPhraseSettings.js";
 import {
   buildBoardStateV5_35,
@@ -180,6 +181,46 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const [keyboardMode, setKeyboardMode] = useState("letters");
   const [shiftOn, setShiftOn] = useState(false);
   const [keyboardSaveStatus, setKeyboardSaveStatus] = useState("");
+  const layoutMainRef = useRef(null);
+  const boardSectionsRef = useRef(null);
+  const [fitViewport, setFitViewport] = useState({ width: 1024, height: 768, boardWidth: 900 });
+
+  useEffect(() => {
+    const main = layoutMainRef.current;
+    const boardSections = boardSectionsRef.current;
+    if (!main || !boardSections) return undefined;
+
+    let frame = 0;
+    const measure = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const mainRect = main.getBoundingClientRect();
+        const boardRect = boardSections.getBoundingClientRect();
+        const next = {
+          width: Math.max(260, Math.round(mainRect.width)),
+          height: Math.max(320, Math.round(mainRect.height)),
+          boardWidth: Math.max(220, Math.round(boardRect.width))
+        };
+        setFitViewport(previous => (
+          Math.abs(previous.width - next.width) < 2 &&
+          Math.abs(previous.height - next.height) < 2 &&
+          Math.abs(previous.boardWidth - next.boardWidth) < 2
+        ) ? previous : next);
+      });
+    };
+
+    const observer = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    observer?.observe(main);
+    observer?.observe(boardSections);
+    window.addEventListener("resize", measure, { passive: true });
+    measure();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
 
   const actualPhrase = phraseFromProfile(profile);
   const phrase = actualPhrase || "I want to go outside with you";
@@ -289,6 +330,25 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const quickPhrases = getQuickPhrases(profile, boardLimits.quickPhraseLimit);
   const visibleTopics = TOPICS.slice(0, boardLimits.topicLimit);
   const visibleSecondary = secondaryTopicsForSettings(stageSettings);
+  const boardTopics = uniqueWords([...visibleTopics, ...visibleSecondary]).slice(0, 12);
+  const fitLayout = getViewportFitLayoutV7_5({
+    width: fitViewport.width,
+    height: fitViewport.height,
+    boardWidth: fitViewport.boardWidth,
+    topicCount: boardTopics.length,
+    coreCount: fixedCoreLanguage.length,
+    activeCount: activeBranch.length,
+    quickCount: quickPhrases.length
+  });
+  const {
+    boardColumns,
+    quickColumns,
+    topicRows,
+    coreRows,
+    activeRows,
+    quickRows,
+    quickTrack
+  } = fitLayout;
   const unifiedBoardWords = [
     ...fixedCoreLanguage.map(word => ({ word, boardArea: "core", isBucket: false })),
     ...activeBranch.map(word => ({ word, boardArea: "active", isBucket: isNavigationBucketWord(word) }))
@@ -296,17 +356,17 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const profileTrackingId = profile?.userProfile?.id || profile?.id || profile?.userProfile?.name || profile?.name || "default";
   const photo = profile?.userProfile?.photoUrl || profile?.userProfile?.photo || profile?.userProfile?.avatar || profile?.photoUrl || profile?.photo || profile?.avatarUrl || profile?.avatar || "";
-  const buttonScale = Math.max(0.8, Math.min(1.35, Number(profile?.displaySettings?.buttonScale || 100) / 100));
-  const textScale = Math.max(0.8, Math.min(1.4, Number(profile?.displaySettings?.textScale || 100) / 100));
   const boardDisplayStyle = {
-    "--aac-user-tile-min": `${Math.round(72 * buttonScale)}px`,
-    "--aac-user-tile-max": `${Math.round(150 * buttonScale)}px`,
-    "--aac-user-tile-height-min": `${Math.round(70 * buttonScale)}px`,
-    "--aac-user-tile-height-max": `${Math.round(126 * buttonScale)}px`,
-    "--aac-user-symbol-min": `${Math.round(42 * buttonScale)}px`,
-    "--aac-user-symbol-max": `${Math.round(76 * buttonScale)}px`,
-    "--aac-user-text-fluid": `${(1.05 * textScale).toFixed(2)}vw`,
-    "--aac-user-text-max": `${Math.round(17 * textScale)}px`
+    "--aac-board-columns": boardColumns,
+    "--aac-topic-rows": topicRows,
+    "--aac-core-rows": coreRows,
+    "--aac-active-rows": activeRows,
+    "--aac-topic-track": `${topicRows}fr`,
+    "--aac-core-track": `${coreRows}fr`,
+    "--aac-active-track": `${activeRows}fr`,
+    "--aac-quick-columns": quickColumns,
+    "--aac-quick-rows": quickRows,
+    "--aac-quick-track": `${quickTrack}px`
   };
 
   const addWordToSentence = (word) => {
@@ -598,7 +658,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
 
   return (
     <div className="approvedAacShell layoutSketchShell" style={boardDisplayStyle}>
-      <main className="approvedMain layoutSketchMain">
+      <main ref={layoutMainRef} className="approvedMain layoutSketchMain">
         <header className="approvedSketchTopBar">
           <section className="approvedSketchBrand" aria-label="TalkFreeAAC logo">
             <div className="approvedBrandName compact">Talk<span>Free</span>AAC</div>
@@ -662,11 +722,11 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             />
           )}
 
-          <div className="sketchBoardSections" key={boardVisualKey}>
+          <div ref={boardSectionsRef} className="sketchBoardSections" data-board-visual-key={boardVisualKey}>
             <section className="sketchBoardBand sketchTopicBand" aria-label="Topics and buckets">
               <div className="sketchBandLabel">Topics</div>
               <div className="sketchTopicGrid">
-                {uniqueWords([...visibleTopics, ...visibleSecondary]).slice(0, 12).map(topic => (
+                {boardTopics.map(topic => (
                   <button key={topic} className="approvedBoardTopicButton" onClick={() => selectTopic(topic)}>
                     <SymbolImage word={topic} profile={profile} />
                     <span>{topic}</span>

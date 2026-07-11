@@ -1876,3 +1876,453 @@
     max-height: 82px;
   }
 }
+
+/* V7.5.0 — automatic viewport-fit board
+   One layout engine owns sizing. The user never has to resize tiles manually.
+   Every visible topic, core word, active word, and quick phrase remains inside
+   the current viewport without overlap or a board scrollbar. */
+:root {
+  --aac-board-columns: 6;
+  --aac-topic-rows: 2;
+  --aac-core-rows: 3;
+  --aac-active-rows: 4;
+  --aac-topic-track: 2fr;
+  --aac-core-track: 3fr;
+  --aac-active-track: 4fr;
+  --aac-quick-columns: 5;
+  --aac-quick-rows: 2;
+  --aac-quick-track: 104px;
+  --aac-fit-gap: clamp(3px, .55vmin, 8px);
+  --aac-fit-radius: clamp(7px, 1vmin, 15px);
+  --aac-section-label-height: clamp(12px, 1.7dvh, 20px);
+}
+
+.approvedAacShell.layoutSketchShell {
+  width: 100%;
+  max-width: 100vw;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(3px, .65vmin, 10px) !important;
+  overflow: hidden !important;
+}
+
+.layoutSketchMain {
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  grid-template-rows:
+    clamp(42px, 6.6dvh, 64px)
+    clamp(72px, 12.2dvh, 112px)
+    var(--aac-quick-track)
+    minmax(0, 1fr) !important;
+  gap: var(--aac-fit-gap) !important;
+  overflow: hidden !important;
+}
+
+.approvedSketchTopBar,
+.approvedSketchSentenceRow,
+.approvedSketchSpeechStack,
+.approvedSketchMiniTools,
+.sketchBoardSections,
+.sketchTopicGrid,
+.sketchCoreGrid,
+.sketchActiveGrid,
+.sketchQuickPhrases {
+  gap: var(--aac-fit-gap) !important;
+}
+
+.approvedSketchTopBar,
+.approvedSketchSentenceRow,
+.approvedQuickPhraseRow,
+.approvedBoard.approvedUnifiedBoard.sketchBoardShell {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.approvedSketchBrand,
+.approvedSketchProfile,
+.approvedSentenceButton.sketchSentence,
+.approvedSketchSpeak,
+.approvedSketchMiniTools button,
+.sketchQuickPhrases .approvedQuickPhrase,
+.approvedBoard.approvedUnifiedBoard.sketchBoardShell,
+.sketchBoardBand,
+.approvedBoardTopicButton,
+.sketchBoardSections .aacApprovedTile {
+  border-radius: var(--aac-fit-radius) !important;
+}
+
+.approvedSketchBrand {
+  min-width: 0;
+  gap: clamp(4px, .7vw, 12px) !important;
+  padding-inline: clamp(7px, 1vw, 16px) !important;
+}
+
+.approvedBrandName.compact {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: clamp(20px, min(3vw, 5.2dvh), 40px) !important;
+  white-space: nowrap;
+}
+
+.approvedStageTag.compact {
+  flex: 0 1 auto;
+  max-width: 45%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: clamp(8px, min(.95vw, 1.65dvh), 12px) !important;
+}
+
+.approvedSketchTopBar {
+  grid-template-columns: minmax(0, 1fr) minmax(104px, clamp(126px, 16vw, 220px)) !important;
+}
+
+.approvedSketchProfile {
+  min-width: 0;
+  height: 100%;
+  grid-template-columns: clamp(32px, min(4vw, 5.5dvh), 50px) minmax(0, 1fr) !important;
+  padding: clamp(3px, .55vmin, 8px) !important;
+}
+
+.approvedSketchProfile img,
+.approvedSketchProfile > span:not(.approvedSketchProfileCopy) {
+  width: clamp(32px, min(4vw, 5.5dvh), 50px) !important;
+  height: clamp(32px, min(4vw, 5.5dvh), 50px) !important;
+}
+
+.approvedSketchProfileCopy strong {
+  font-size: clamp(9px, min(1.1vw, 2dvh), 15px) !important;
+}
+
+.approvedSketchSentenceRow {
+  grid-template-columns: minmax(0, 1fr) clamp(92px, 14vw, 150px) !important;
+}
+
+.approvedSentenceButton.sketchSentence {
+  min-height: 0 !important;
+  padding: clamp(7px, 1vmin, 16px) !important;
+}
+
+.approvedSentenceButton.sketchSentence span {
+  min-height: 0;
+  font-size: clamp(17px, min(3vw, 4.3dvh), 38px) !important;
+  line-height: 1.06 !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.approvedSentenceButton.sketchSentence small {
+  font-size: clamp(8px, min(1vw, 1.7dvh), 14px) !important;
+}
+
+.approvedSketchSpeechStack {
+  grid-template-rows: minmax(0, 1fr) clamp(24px, 4.1dvh, 36px) !important;
+}
+
+.approvedSketchSpeak {
+  font-size: clamp(13px, min(1.7vw, 2.7dvh), 22px) !important;
+}
+
+.approvedSketchMiniTools button {
+  min-width: 0;
+  padding: 0 clamp(3px, .5vw, 8px) !important;
+  font-size: clamp(9px, min(1vw, 1.7dvh), 13px) !important;
+}
+
+/* Quick phrases use the same automatic fit contract as the main board. */
+.sketchQuickPhrases {
+  width: 100%;
+  height: 100%;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(var(--aac-quick-columns), minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(var(--aac-quick-rows), minmax(0, 1fr)) !important;
+  grid-auto-flow: row !important;
+  grid-auto-columns: auto !important;
+  grid-auto-rows: minmax(0, 1fr) !important;
+  overflow: hidden !important;
+  max-height: none !important;
+}
+
+.sketchQuickPhrases .approvedQuickPhrase {
+  container-type: size;
+  width: 100%;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: clamp(2px, .45vmin, 8px) !important;
+  gap: clamp(1px, .3vmin, 5px) !important;
+  overflow: hidden;
+}
+
+.sketchQuickPhrases .approvedQuickPhrase .approvedSymbol {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.sketchQuickPhrases .approvedQuickPhrase > span {
+  width: 100%;
+  font-size: clamp(7px, min(1.05vw, 1.8dvh), 16px) !important;
+  line-height: .98 !important;
+  -webkit-line-clamp: 2;
+}
+
+/* Board sections divide the remaining height by their actual row counts. */
+.approvedBoard.approvedUnifiedBoard.sketchBoardShell {
+  width: 100%;
+  height: 100%;
+  min-height: 0 !important;
+  padding: clamp(3px, .55vmin, 8px) !important;
+  gap: var(--aac-fit-gap) !important;
+  overflow: hidden !important;
+}
+
+.approvedBoard.approvedUnifiedBoard.sketchBoardShell.hasKeyboardRail {
+  grid-template-columns: clamp(28px, 4vw, 58px) minmax(0, 1fr) !important;
+}
+
+.sketchKeyboardRail {
+  min-width: 0;
+  min-height: 0;
+  border-radius: var(--aac-fit-radius) 0 0 var(--aac-fit-radius) !important;
+}
+
+.sketchKeyboardArrow {
+  width: clamp(16px, 2.2vw, 30px);
+  height: clamp(38px, 7dvh, 70px);
+}
+
+.sketchKeyboardIcon {
+  font-size: clamp(12px, min(1.8vw, 3dvh), 25px);
+}
+
+.sketchKeyboardRail strong {
+  font-size: clamp(6px, min(.72vw, 1.25dvh), 10px);
+}
+
+.sketchBoardSections {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: grid !important;
+  grid-template-rows: var(--aac-topic-track) var(--aac-core-track) var(--aac-active-track) !important;
+  grid-auto-rows: minmax(0, 1fr) !important;
+  align-content: stretch !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  scrollbar-gutter: auto !important;
+  overscroll-behavior: none !important;
+}
+
+.sketchBoardSections::-webkit-scrollbar {
+  display: none !important;
+}
+
+.sketchBoardBand {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: var(--aac-section-label-height) minmax(0, 1fr) !important;
+  padding: clamp(2px, .42vmin, 7px) !important;
+  row-gap: clamp(1px, .3vmin, 5px) !important;
+  overflow: hidden !important;
+}
+
+.sketchBandLabel {
+  min-height: 0;
+  align-self: center !important;
+  justify-self: start !important;
+  max-width: 55%;
+  padding: 1px clamp(5px, .65vw, 9px) !important;
+  font-size: clamp(7px, min(.72vw, 1.3dvh), 10px) !important;
+  line-height: 1 !important;
+}
+
+.sketchTopicGrid,
+.sketchCoreGrid,
+.sketchActiveGrid {
+  width: 100%;
+  height: 100% !important;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: repeat(var(--aac-board-columns), minmax(0, 1fr)) !important;
+  grid-auto-columns: minmax(0, 1fr) !important;
+  grid-auto-rows: minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+  gap: clamp(2px, .45vmin, 7px) !important;
+}
+
+.sketchTopicGrid {
+  grid-template-rows: repeat(var(--aac-topic-rows), minmax(0, 1fr)) !important;
+}
+
+.sketchCoreGrid {
+  grid-template-rows: repeat(var(--aac-core-rows), minmax(0, 1fr)) !important;
+}
+
+.sketchActiveGrid {
+  grid-template-rows: repeat(var(--aac-active-rows), minmax(0, 1fr)) !important;
+}
+
+.approvedBoardTopicButton,
+.sketchBoardSections .aacApprovedTile {
+  container-type: size;
+  width: 100%;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: clamp(1px, .35vmin, 6px) !important;
+  grid-template-rows: minmax(0, 1fr) auto !important;
+  overflow: hidden !important;
+}
+
+.approvedBoardTopicButton .approvedSymbol,
+.sketchBoardSections .aacApprovedTile .approvedSymbol {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.approvedBoardTopicButton .symbolImage,
+.approvedBoardTopicButton .fallbackSymbol,
+.sketchBoardSections .aacApprovedTile .symbolImage,
+.sketchBoardSections .aacApprovedTile .fallbackSymbol,
+.sketchQuickPhrases .approvedQuickPhrase .symbolImage,
+.sketchQuickPhrases .approvedQuickPhrase .fallbackSymbol {
+  width: clamp(15px, 52%, 76px) !important;
+  height: clamp(15px, 52%, 76px) !important;
+  max-width: 76px;
+  max-height: 76px;
+  object-fit: contain;
+}
+
+.approvedBoardTopicButton .fallbackSymbol,
+.sketchBoardSections .aacApprovedTile .fallbackSymbol,
+.sketchQuickPhrases .approvedQuickPhrase .fallbackSymbol {
+  font-size: clamp(14px, min(3.8vw, 5.5dvh), 58px) !important;
+}
+
+.approvedBoardTopicButton span,
+.sketchBoardSections .approvedTileLabel {
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: clip;
+  font-size: clamp(7px, min(.96vw, 1.65dvh), 16px) !important;
+  line-height: .96 !important;
+}
+
+.approvedBucketCue,
+.approvedSignCue {
+  transform: scale(.82);
+  transform-origin: top right;
+}
+
+@supports (width: 1cqw) {
+  .approvedBoardTopicButton .symbolImage,
+  .approvedBoardTopicButton .fallbackSymbol,
+  .sketchBoardSections .aacApprovedTile .symbolImage,
+  .sketchBoardSections .aacApprovedTile .fallbackSymbol {
+    width: min(58cqw, 58cqh, 76px) !important;
+    height: min(58cqw, 58cqh, 76px) !important;
+  }
+
+  .sketchQuickPhrases .approvedQuickPhrase .symbolImage,
+  .sketchQuickPhrases .approvedQuickPhrase .fallbackSymbol {
+    width: min(52cqw, 52cqh, 66px) !important;
+    height: min(52cqw, 52cqh, 66px) !important;
+  }
+
+  .approvedBoardTopicButton .fallbackSymbol,
+  .sketchBoardSections .aacApprovedTile .fallbackSymbol {
+    font-size: min(46cqw, 46cqh, 58px) !important;
+  }
+
+  .sketchQuickPhrases .approvedQuickPhrase .fallbackSymbol {
+    font-size: min(42cqw, 42cqh, 52px) !important;
+  }
+
+  .approvedBoardTopicButton span,
+  .sketchBoardSections .approvedTileLabel {
+    font-size: clamp(7px, 15cqh, 16px) !important;
+  }
+
+  .sketchQuickPhrases .approvedQuickPhrase > span {
+    font-size: clamp(7px, 13cqh, 16px) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .approvedAacShell.layoutSketchShell {
+    padding: 3px !important;
+  }
+
+  .layoutSketchMain {
+    grid-template-rows:
+      clamp(40px, 7dvh, 52px)
+      clamp(68px, 12.5dvh, 92px)
+      var(--aac-quick-track)
+      minmax(0, 1fr) !important;
+  }
+
+  .approvedSketchTopBar {
+    grid-template-columns: minmax(0, 1fr) minmax(94px, 30vw) !important;
+  }
+
+  .approvedSketchSentenceRow {
+    grid-template-columns: minmax(0, 1fr) clamp(84px, 25vw, 112px) !important;
+  }
+
+  .approvedBoard.approvedUnifiedBoard.sketchBoardShell.hasKeyboardRail {
+    grid-template-columns: 28px minmax(0, 1fr) !important;
+  }
+
+  .approvedBrandName.compact {
+    font-size: clamp(18px, 6vw, 25px) !important;
+  }
+
+  .approvedStageTag.compact {
+    max-width: 43%;
+    font-size: 8px !important;
+  }
+
+  .approvedSentenceButton.sketchSentence span {
+    font-size: clamp(15px, 5vw, 22px) !important;
+  }
+}
+
+@media (max-height: 560px) {
+  .layoutSketchMain {
+    grid-template-rows:
+      clamp(38px, 8dvh, 48px)
+      clamp(62px, 16dvh, 86px)
+      var(--aac-quick-track)
+      minmax(0, 1fr) !important;
+  }
+
+  .approvedSketchSpeechStack {
+    grid-template-rows: minmax(0, 1fr) 24px !important;
+  }
+
+  .approvedSentenceButton.sketchSentence span {
+    -webkit-line-clamp: 2 !important;
+  }
+}

@@ -72,8 +72,6 @@ export default function BoardPersonalizationPanel({ profile, setProfile }) {
   const currentName = profileName(profile);
   const currentPhoto = profilePhoto(profile);
   const currentSymbolMode = profile.displaySettings?.symbolMode || "auto";
-  const currentButtonScale = Number(profile.displaySettings?.buttonScale || 100);
-  const currentTextScale = Number(profile.displaySettings?.textScale || 100);
   const defaultPhrases = useMemo(() => getDefaultQuickPhrases(profile), [profile?.settings?.ageBand, profile?.ageBand]);
   const [name, setName] = useState(currentName);
   const [draftPhrases, setDraftPhrases] = useState(() => normalizeQuickPhrases(getQuickPhrases(profile), { keepEmpty: true }));
@@ -207,30 +205,7 @@ export default function BoardPersonalizationPanel({ profile, setProfile }) {
             </p>
           )}
 
-          <div className="boardScaleControls" aria-label="Board size controls">
-            <label>
-              Button size <strong>{currentButtonScale}%</strong>
-              <input
-                type="range"
-                min="80"
-                max="135"
-                step="5"
-                value={currentButtonScale}
-                onChange={event => setProfile(updateDisplaySettings(profile, { buttonScale: Number(event.target.value) }))}
-              />
-            </label>
-            <label>
-              Word size <strong>{currentTextScale}%</strong>
-              <input
-                type="range"
-                min="80"
-                max="140"
-                step="5"
-                value={currentTextScale}
-                onChange={event => setProfile(updateDisplaySettings(profile, { textScale: Number(event.target.value) }))}
-              />
-            </label>
-          </div>
+          <p className="boardAutomaticFitNote">Button, symbol, and word sizes adjust automatically to the current screen.</p>
         </section>
 
         <section className="quickPhraseEditor" aria-label="Quick phrase bar settings">

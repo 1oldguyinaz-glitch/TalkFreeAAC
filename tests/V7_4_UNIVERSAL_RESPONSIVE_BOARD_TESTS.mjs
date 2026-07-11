@@ -24,7 +24,8 @@ assert.match(childSource, /profile=\{profile\}/);
 
 const css = fs.readFileSync(new URL("../web/styles/aac-unified-board.css", import.meta.url), "utf8");
 assert.match(css, /width:\s*100%\s*!important/);
-assert.match(css, /repeat\(\s*auto-fit/);
-assert.match(css, /overflow-y:\s*auto\s*!important/);
+assert.match(css, /V7\.5\.0 — automatic viewport-fit board/);
+assert.match(css, /repeat\(var\(--aac-board-columns\)/);
+assert.match(css, /overflow:\s*hidden\s*!important/);
 
-console.log("V7.4 universal responsive board tests passed.");
+console.log("V7.4 symbol and semantic compatibility tests passed under V7.5 layout.");
