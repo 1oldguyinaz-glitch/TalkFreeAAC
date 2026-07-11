@@ -3,6 +3,7 @@ import {
   AGE_BANDS,
   BOARD_DENSITIES,
   COMMUNICATION_STAGES,
+  MAX_VISIBLE_OPTIONS,
   getStageBoardLimits,
   normalizeStageSettings,
   updateStageSettings
@@ -76,6 +77,27 @@ export default function StageSettingsPanel({ profile, setProfile }) {
               ))}
             </select>
           </label>
+
+          {limits.maxVisibleAdjustable ? (
+            <label>
+              Maximum visible communication buttons
+              <select
+                value={limits.requestedVisibleLimit}
+                onChange={event => save({ maxVisibleButtons: Number(event.target.value) })}
+              >
+                {MAX_VISIBLE_OPTIONS
+                  .filter(value => value >= limits.coreLimit + 6)
+                  .map(value => (
+                    <option key={value} value={value}>{value} buttons</option>
+                  ))}
+              </select>
+              <small className="stageSettingsHelp">Vocabulary stays available through prediction and buckets; this only controls how much appears at once.</small>
+            </label>
+          ) : (
+            <div className="stageSettingsProtectedNotice">
+              Stages 1–2 use protected automatic limits so early communicators do not lose essential visibility.
+            </div>
+          )}
         </form>
 
         <div className="stageSettingsReadoutGrid">

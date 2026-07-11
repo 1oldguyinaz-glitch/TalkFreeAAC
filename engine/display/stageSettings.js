@@ -85,7 +85,8 @@ export const DEFAULT_STAGE_SETTINGS = {
   schoolMode: false,
   emergencyMode: true,
   showSensitiveVocabulary: false,
-  parentVocabularyUnlocked: false
+  parentVocabularyUnlocked: false,
+  maxVisibleButtons: null
 };
 
 function numberStage(value) {
@@ -97,6 +98,17 @@ function numberStage(value) {
 function booleanValue(value, fallback) {
   if (typeof value === "boolean") return value;
   return fallback;
+}
+
+export const MAX_VISIBLE_OPTIONS = [24, 30, 36, 42, 45];
+
+function normalizeMaxVisibleButtons(value, stagePreset, communicationStage) {
+  if (communicationStage < 3) return null;
+  const numeric = Number(value);
+  const defaultTotal = Math.min(45, stagePreset.coreLimit + stagePreset.activeLimit);
+  if (!Number.isFinite(numeric)) return defaultTotal;
+  const minimum = Math.min(defaultTotal, stagePreset.coreLimit + 6);
+  return Math.max(minimum, Math.min(45, Math.round(numeric)));
 }
 
 export function normalizeStageSettings(profile = {}) {
@@ -126,7 +138,8 @@ export function normalizeStageSettings(profile = {}) {
     schoolMode: booleanValue(source.schoolMode, DEFAULT_STAGE_SETTINGS.schoolMode),
     emergencyMode: booleanValue(source.emergencyMode, DEFAULT_STAGE_SETTINGS.emergencyMode),
     showSensitiveVocabulary: booleanValue(source.showSensitiveVocabulary, DEFAULT_STAGE_SETTINGS.showSensitiveVocabulary),
-    parentVocabularyUnlocked: booleanValue(source.parentVocabularyUnlocked, DEFAULT_STAGE_SETTINGS.parentVocabularyUnlocked)
+    parentVocabularyUnlocked: booleanValue(source.parentVocabularyUnlocked, DEFAULT_STAGE_SETTINGS.parentVocabularyUnlocked),
+    maxVisibleButtons: normalizeMaxVisibleButtons(source.maxVisibleButtons, stagePreset, communicationStage)
   };
 }
 
@@ -136,8 +149,12 @@ export function getStageBoardLimits(profile = {}) {
   const density = BOARD_DENSITIES[settings.boardDensity] || BOARD_DENSITIES[stagePreset.defaultBoardDensity];
 
   const rawActiveLimit = Math.max(8, Math.min(40, Math.round(stagePreset.activeLimit * density.activeMultiplier)));
-  const visibleBoardCeiling = 45; // current approved board is a 45-cell no-scroll shell.
-  const activeLimit = Math.max(8, Math.min(rawActiveLimit, visibleBoardCeiling - stagePreset.coreLimit));
+  const visibleBoardCeiling = 45;
+  const requestedVisibleLimit = settings.communicationStage >= 3
+    ? (settings.maxVisibleButtons || Math.min(visibleBoardCeiling, stagePreset.coreLimit + rawActiveLimit))
+    : Math.min(visibleBoardCeiling, stagePreset.coreLimit + rawActiveLimit);
+  const safeVisibleLimit = Math.max(stagePreset.coreLimit + 6, Math.min(visibleBoardCeiling, requestedVisibleLimit));
+  const activeLimit = Math.max(6, Math.min(rawActiveLimit, safeVisibleLimit - stagePreset.coreLimit));
 
   return {
     coreLimit: stagePreset.coreLimit,
@@ -145,6 +162,8 @@ export function getStageBoardLimits(profile = {}) {
     quickPhraseLimit: Math.max(4, Math.min(10, Math.round(stagePreset.quickPhraseLimit * density.quickMultiplier))),
     topicLimit: stagePreset.topicLimit,
     totalVisibleLimit: stagePreset.coreLimit + activeLimit,
+    requestedVisibleLimit: safeVisibleLimit,
+    maxVisibleAdjustable: settings.communicationStage >= 3,
     stageLabel: stagePreset.label,
     ageBandLabel: AGE_BANDS[settings.ageBand] || AGE_BANDS.young_child,
     densityLabel: density.label
