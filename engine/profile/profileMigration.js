@@ -3,7 +3,7 @@ import {
   normalizeStageSettings
 } from "../display/stageSettings.js";
 
-export const CURRENT_PROFILE_VERSION = "4.9-stage-settings";
+export const CURRENT_PROFILE_VERSION = "4.10-board-personalization";
 
 export function migrateProfile(profile = {}) {
   const stageSettings = normalizeStageSettings({
@@ -55,7 +55,8 @@ export function migrateProfile(profile = {}) {
       communicatorLevel: profile.userProfile?.communicatorLevel || profile.communicatorLevel || "Level 1 Communicator",
       communicationStage: stageSettings.communicationStage,
       ageBand: stageSettings.ageBand,
-      avatar: profile.userProfile?.avatar || profile.avatar || ""
+      avatar: profile.userProfile?.avatar || profile.avatar || "",
+      photoUrl: profile.userProfile?.photoUrl || profile.userProfile?.photo || profile.userProfile?.avatar || profile.photoUrl || profile.photo || profile.avatarUrl || profile.avatar || ""
     }
   };
 

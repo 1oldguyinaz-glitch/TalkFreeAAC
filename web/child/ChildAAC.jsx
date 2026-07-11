@@ -27,9 +27,9 @@ import {
 } from "../../engine/prediction/semanticBucketRouter.js";
 import {
   getStageBoardLimits,
-  isAdultTone,
   normalizeStageSettings
 } from "../../engine/display/stageSettings.js";
+import { getQuickPhrases } from "../../engine/display/quickPhraseSettings.js";
 import {
   buildBoardStateV5_35,
   parentTopicFromPath,
@@ -37,32 +37,6 @@ import {
 } from "../../engine/navigation/boardStateEngine.js";
 import "../styles/aac-keyboard.css";
 import "../styles/aac-unified-board.css";
-
-const CHILD_QUICK_PHRASES = [
-  "I love you",
-  "Have a hug",
-  "Thank you",
-  "Hi",
-  "Bye",
-  "I'm sorry",
-  "I miss you",
-  "Good job",
-  "Good morning",
-  "Good night"
-];
-
-const ADULT_QUICK_PHRASES = [
-  "I need help",
-  "Please wait",
-  "Yes",
-  "No",
-  "Stop",
-  "I need a break",
-  "I know but can't say it",
-  "Wrong word",
-  "Try again",
-  "Thank you"
-];
 
 // Stable motor plan order. Higher stages reveal more cells; lower stages never get flooded.
 const STAGED_CORE_LANGUAGE = [
@@ -117,11 +91,6 @@ const SECONDARY = [
   "Search",
   "Emergency"
 ];
-
-function quickPhrasesForProfile(profile, limit) {
-  const source = isAdultTone(profile) ? ADULT_QUICK_PHRASES : CHILD_QUICK_PHRASES;
-  return source.slice(0, limit);
-}
 
 function homeBranchForStage(stage) {
   return HOME_BRANCH_BY_STAGE[stage] || HOME_BRANCH_BY_STAGE[1];
@@ -317,7 +286,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const isNavigationBucketWord = (word) => {
     return isSemanticBucketNavigationWord(word) || isTopicBucketNavigationWord(word);
   };
-  const quickPhrases = quickPhrasesForProfile(profile, boardLimits.quickPhraseLimit);
+  const quickPhrases = getQuickPhrases(profile, boardLimits.quickPhraseLimit);
   const visibleTopics = TOPICS.slice(0, boardLimits.topicLimit);
   const visibleSecondary = secondaryTopicsForSettings(stageSettings);
   const unifiedBoardWords = [
@@ -326,7 +295,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   ];
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const profileTrackingId = profile?.userProfile?.id || profile?.id || profile?.userProfile?.name || profile?.name || "default";
-  const photo = profile?.userProfile?.photoUrl || profile?.photoUrl || profile?.avatarUrl || "";
+  const photo = profile?.userProfile?.photoUrl || profile?.userProfile?.photo || profile?.userProfile?.avatar || profile?.photoUrl || profile?.photo || profile?.avatarUrl || profile?.avatar || "";
 
   const addWordToSentence = (word) => {
     setSemanticBucketId("");
@@ -624,10 +593,13 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             <div className="approvedStageTag compact">Stage {stageSettings.communicationStage} • {boardLimits.ageBandLabel}</div>
           </section>
 
-          <button className="approvedSketchProfile" onClick={onParent} aria-label="Open settings, profile, and insights">
+          <button className="approvedSketchProfile" onClick={onParent} aria-label={`Open ${name} profile, settings, and insights`}>
             <span className="approvedSketchSettingsDot" aria-hidden="true">⚙</span>
             {photo ? <img src={photo} alt="" /> : <span>{name.slice(0,1).toUpperCase()}</span>}
-            <small>Settings</small>
+            <span className="approvedSketchProfileCopy">
+              <strong>{name}</strong>
+              <small>Profile & settings</small>
+            </span>
           </button>
         </header>
 
@@ -660,7 +632,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
         </section>
 
         <section
-          className={`approvedBoard approvedUnifiedBoard sketchBoardShell ${stageSettings.keyboardEnabled ? "hasKeyboardRail" : "noKeyboardRail"}`}
+          className={`approvedBoard approvedUnifiedBoard sketchBoardShell ${stageSettings.keyboardEnabled ? "hasKeyboardRail" : "noKeyboardRail"} ${boardState.mode === "home" ? "homeBoardState" : "hasBoardState"}`}
           aria-label={semanticBucket ? `${semanticBucket.label} semantic bucket board` : activeTopic ? `${titleFromContext(activeTopic)} board` : "Core and active communication board"}
         >
           {stageSettings.keyboardEnabled && (
@@ -671,12 +643,14 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             </button>
           )}
 
-          <BoardStateBanner
-            boardState={boardState}
-            onNavigate={handleBreadcrumbNavigation}
-            onBack={handleBackAction}
-            onHome={navigateHome}
-          />
+          {boardState.mode !== "home" && (
+            <BoardStateBanner
+              boardState={boardState}
+              onNavigate={handleBreadcrumbNavigation}
+              onBack={handleBackAction}
+              onHome={navigateHome}
+            />
+          )}
 
           <div className="sketchBoardSections" key={boardVisualKey}>
             <section className="sketchBoardBand sketchTopicBand" aria-label="Topics and buckets">

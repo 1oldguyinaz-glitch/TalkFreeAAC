@@ -11,6 +11,7 @@ import CareTeamPanel from "./components/CareTeamPanel.jsx";
 import ReleaseChecklistPanel from "./components/ReleaseChecklistPanel.jsx";
 import StageSettingsPanel from "./StageSettingsPanel.jsx";
 import VoiceSettingsPanel from "./VoiceSettingsPanel.jsx";
+import BoardPersonalizationPanel from "./BoardPersonalizationPanel.jsx";
 
 export default function ParentMenu({ profile, setProfile, onBack }) {
   const [goalForm, setGoalForm] = useState({ title: "", targetWords: "", level: "Emerging", notes: "" });
@@ -57,6 +58,10 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
       <section className="parentGrid twoColumnV4 settingsColumnV4">
         <StageSettingsPanel profile={profile} setProfile={setProfile} />
         <VoiceSettingsPanel profile={profile} setProfile={setProfile} />
+      </section>
+
+      <section className="parentGrid">
+        <BoardPersonalizationPanel profile={profile} setProfile={setProfile} />
       </section>
 
       <section className="parentGrid metricsGridV4">
