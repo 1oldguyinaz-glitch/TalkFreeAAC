@@ -879,3 +879,64 @@
     width: 100%;
   }
 }
+
+/* V7.4.0 profile picture-mode and responsive size controls */
+.boardPictureStyleField,
+.boardScaleControls label {
+  display: grid;
+  gap: 7px;
+  font-weight: 900;
+}
+
+.boardPictureStyleField {
+  margin-top: 16px;
+}
+
+.boardPictureStyleField select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid #c9d4e4;
+  border-radius: 14px;
+  background: #fff;
+  color: #0b1f3a;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.boardPictureStyleField small {
+  color: #5b6b83;
+  font-weight: 750;
+}
+
+.boardSymbolSafetyNote {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #fff8dd;
+  border: 1px solid #f2d56b;
+  color: #5c4700;
+  font-weight: 800;
+}
+
+.boardScaleControls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.boardScaleControls label {
+  padding: 12px;
+  border-radius: 16px;
+  background: #eef5ff;
+}
+
+.boardScaleControls input[type="range"] {
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .boardScaleControls {
+    grid-template-columns: 1fr;
+  }
+}

@@ -41,7 +41,7 @@ import "../styles/aac-unified-board.css";
 // Stable motor plan order. Higher stages reveal more cells; lower stages never get flooded.
 const STAGED_CORE_LANGUAGE = [
   "I", "want", "need", "help", "stop", "yes",
-  "no", "more", "like", "you", "me", "my",
+  "no", "more", "like", "you", "me", "to", "my",
   "finished", "feel", "am", "can", "don't", "love",
   "have", "see", "hear", "think", "go", "get", "do"
 ];
@@ -296,6 +296,18 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const name = profile?.userProfile?.name || profile?.name || "Austin";
   const profileTrackingId = profile?.userProfile?.id || profile?.id || profile?.userProfile?.name || profile?.name || "default";
   const photo = profile?.userProfile?.photoUrl || profile?.userProfile?.photo || profile?.userProfile?.avatar || profile?.photoUrl || profile?.photo || profile?.avatarUrl || profile?.avatar || "";
+  const buttonScale = Math.max(0.8, Math.min(1.35, Number(profile?.displaySettings?.buttonScale || 100) / 100));
+  const textScale = Math.max(0.8, Math.min(1.4, Number(profile?.displaySettings?.textScale || 100) / 100));
+  const boardDisplayStyle = {
+    "--aac-user-tile-min": `${Math.round(72 * buttonScale)}px`,
+    "--aac-user-tile-max": `${Math.round(150 * buttonScale)}px`,
+    "--aac-user-tile-height-min": `${Math.round(70 * buttonScale)}px`,
+    "--aac-user-tile-height-max": `${Math.round(126 * buttonScale)}px`,
+    "--aac-user-symbol-min": `${Math.round(42 * buttonScale)}px`,
+    "--aac-user-symbol-max": `${Math.round(76 * buttonScale)}px`,
+    "--aac-user-text-fluid": `${(1.05 * textScale).toFixed(2)}vw`,
+    "--aac-user-text-max": `${Math.round(17 * textScale)}px`
+  };
 
   const addWordToSentence = (word) => {
     setSemanticBucketId("");
@@ -585,7 +597,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   }
 
   return (
-    <div className="approvedAacShell layoutSketchShell">
+    <div className="approvedAacShell layoutSketchShell" style={boardDisplayStyle}>
       <main className="approvedMain layoutSketchMain">
         <header className="approvedSketchTopBar">
           <section className="approvedSketchBrand" aria-label="TalkFreeAAC logo">
@@ -593,12 +605,10 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
             <div className="approvedStageTag compact">Stage {stageSettings.communicationStage} • {boardLimits.ageBandLabel}</div>
           </section>
 
-          <button className="approvedSketchProfile" onClick={onParent} aria-label={`Open ${name} profile, settings, and insights`}>
-            <span className="approvedSketchSettingsDot" aria-hidden="true">⚙</span>
+          <button className="approvedSketchProfile" onClick={onParent} aria-label={`Open ${name}'s profile and settings`}>
             {photo ? <img src={photo} alt="" /> : <span>{name.slice(0,1).toUpperCase()}</span>}
             <span className="approvedSketchProfileCopy">
               <strong>{name}</strong>
-              <small>Profile & settings</small>
             </span>
           </button>
         </header>
@@ -625,7 +635,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
               setSemanticBucketId("");
               onPhrase ? onPhrase(item) : addWordToSentence(item);
             }}>
-              <SymbolImage word={item} />
+              <SymbolImage word={item} profile={profile} />
               <span>{item}</span>
             </button>
           ))}
@@ -658,7 +668,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
               <div className="sketchTopicGrid">
                 {uniqueWords([...visibleTopics, ...visibleSecondary]).slice(0, 12).map(topic => (
                   <button key={topic} className="approvedBoardTopicButton" onClick={() => selectTopic(topic)}>
-                    <SymbolImage word={topic} />
+                    <SymbolImage word={topic} profile={profile} />
                     <span>{topic}</span>
                   </button>
                 ))}
@@ -674,6 +684,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
                     word={word}
                     onSelect={selectWord}
                     isBucket={false}
+                    profile={profile}
                   />
                 ))}
               </div>
@@ -688,6 +699,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
                     word={word}
                     onSelect={selectWord}
                     isBucket={isNavigationBucketWord(word)}
+                    profile={profile}
                   />
                 ))}
               </div>

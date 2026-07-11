@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { getSymbolDisplayMode } from "../../../engine/display/displaySettings.js";
 
 const SYMBOLS = {
   "relationships": "👨‍👩‍👧", "people": "👥", "love care": "💖", "greeting": "👋", "social words": "💬", "family": "👨‍👩‍👧", "friends": "🧑‍🤝‍🧑", "help comfort": "🤗", "feelings together": "❤️", "school people": "🧑‍🏫",
@@ -1783,16 +1784,68 @@ function normalize(word = "") {
     .trim();
 }
 
-function emojiFor(word = "") {
+const AGE_RESPECTFUL_SYMBOLS = {
+  "relationships": "👥", "people": "👥", "family": "👪", "friends": "🤝",
+  "feelings": "🙂", "happy": "🙂", "sad": "☹️", "mad": "😠", "scared": "😟",
+  "things": "🧰", "toy": "🎯", "play": "🎮", "school": "🎓", "work": "💼",
+  "body and health": "⚕️", "doctor": "⚕️", "medicine": "💊", "pain": "⚡",
+  "food and drink": "🍽️", "food": "🍽️", "drink": "🥤", "places": "📍",
+  "privacy": "🔒", "relationship": "🤝", "opinion": "💬", "question": "❓",
+  "communication repair": "🛠️", "wrong word": "🛠️", "give me time": "⏳",
+  "i know but can't say it": "💭", "technology": "💻", "transportation": "🚙"
+};
+
+// This is a sign-supported visual cue set, not a clinical ASL dictionary.
+// The text label remains authoritative and unavailable signs fall back safely.
+const SIGN_LANGUAGE_HAND_SYMBOLS = {
+  "i": "☝️", "me": "👈", "my": "👈", "you": "👉", "we": "🤝",
+  "want": "🤲", "need": "🤲", "help": "🫶", "stop": "✋",
+  "yes": "👍", "no": "👎", "more": "🤲", "like": "👍", "love": "🤟",
+  "finished": "🙌", "all done": "🙌", "please": "🙏", "thank you": "🙏",
+  "hello": "👋", "hi": "👋", "bye": "👋", "wait": "✋", "go": "👉",
+  "come": "🫴", "get": "🫴", "have": "🤲", "give": "🫴", "take": "🤲",
+  "look": "👀", "see": "👀", "hear": "👂", "think": "🤔", "feel": "🫶",
+  "eat": "🤌", "drink": "🤲", "bathroom": "🤟", "break": "✋",
+  "mom": "👩", "dad": "👨", "teacher": "🧑‍🏫", "friend": "🤝",
+  "this": "👇", "that": "👉", "where": "🤷", "what": "🤷", "who": "🤷",
+  "why": "🤷", "how": "🤷", "to": "👉", "with": "🤝", "again": "🔁"
+};
+
+function emojiFor(word = "", mode = "classic") {
   const key = normalize(word);
+  if (mode === "sign_language") return SIGN_LANGUAGE_HAND_SYMBOLS[key] || "🤟";
+  if (mode === "age_respectful") return AGE_RESPECTFUL_SYMBOLS[key] || SYMBOLS[key] || "◆";
   return SYMBOLS[key] || "⭐";
 }
 
-export default function SymbolImage({ word }) {
-  const symbol = emojiFor(word);
+function symbolSlug(word = "") {
+  return normalize(word)
+    .replace(/'/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export default function SymbolImage({ word, profile }) {
+  const mode = getSymbolDisplayMode(profile);
+  const [assetFailed, setAssetFailed] = useState(false);
+  const slug = symbolSlug(word);
+  const useClassicAsset = mode === "classic" && slug && !assetFailed;
+  const symbol = emojiFor(word, mode);
+
   return (
-    <div className="approvedSymbol" aria-hidden="true">
-      <span style={{ fontSize: "2rem", lineHeight: 1 }}>{symbol}</span>
+    <div className={`approvedSymbol approvedSymbol-${mode}`} data-symbol-mode={mode} aria-hidden="true">
+      {useClassicAsset ? (
+        <img
+          className="symbolImage"
+          src={`/symbols/aac/${slug}.svg`}
+          alt=""
+          onError={() => setAssetFailed(true)}
+        />
+      ) : (
+        <span className="fallbackSymbol" style={{ fontSize: "2rem", lineHeight: 1 }}>{symbol}</span>
+      )}
+      {mode === "sign_language" && <small className="approvedSignCue">SIGN</small>}
     </div>
   );
 }

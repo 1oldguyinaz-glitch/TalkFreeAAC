@@ -22,6 +22,7 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
   const topWords = getTopWords(profile);
   const topPhrases = getTopPhrases(profile);
   const insight = buildInsightSummary(profile);
+  const communicatorName = profile?.userProfile?.name || profile?.name || "AAC User";
 
   function submitGoal(event) {
     event.preventDefault();
@@ -49,8 +50,8 @@ export default function ParentMenu({ profile, setProfile, onBack }) {
     <div className="parentShellV4">
       <header className="parentHeaderV4">
         <div>
-          <h1>Parent Dashboard</h1>
-          <p>Local-first communication profile, progress reports, and care team workspace.</p>
+          <h1>{communicatorName}'s Profile &amp; Settings</h1>
+          <p>One profile for board settings, communication preferences, reports, and care-team support.</p>
         </div>
         <button className="parentBackButton" onClick={onBack}>Back to AAC</button>
       </header>

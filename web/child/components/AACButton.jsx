@@ -77,7 +77,7 @@ function colorClassFor(word = "") {
   return "brown";
 }
 
-export default function AACButton({ word, onSelect, isBucket = false }) {
+export default function AACButton({ word, onSelect, isBucket = false, profile }) {
   const colorClass = colorClassFor(word);
   const bucketClass = isBucket ? " tile-bucketNav" : "";
 
@@ -90,7 +90,7 @@ export default function AACButton({ word, onSelect, isBucket = false }) {
       data-bucket-nav={isBucket ? "true" : "false"}
     >
       {isBucket && <span className="approvedBucketCue" aria-hidden="true">open</span>}
-      <SymbolImage word={word} />
+      <SymbolImage word={word} profile={profile} />
       <span className="approvedTileLabel">{word}</span>
     </button>
   );

@@ -7,6 +7,7 @@ import {
   resetQuickPhrases,
   updateQuickPhrases
 } from "../../engine/display/quickPhraseSettings.js";
+import { SYMBOL_DISPLAY_MODES, updateDisplaySettings } from "../../engine/display/displaySettings.js";
 
 function profileName(profile = {}) {
   return profile?.userProfile?.name || profile?.name || "Austin";
@@ -70,6 +71,9 @@ async function compressProfilePhoto(file) {
 export default function BoardPersonalizationPanel({ profile, setProfile }) {
   const currentName = profileName(profile);
   const currentPhoto = profilePhoto(profile);
+  const currentSymbolMode = profile.displaySettings?.symbolMode || "auto";
+  const currentButtonScale = Number(profile.displaySettings?.buttonScale || 100);
+  const currentTextScale = Number(profile.displaySettings?.textScale || 100);
   const defaultPhrases = useMemo(() => getDefaultQuickPhrases(profile), [profile?.settings?.ageBand, profile?.ageBand]);
   const [name, setName] = useState(currentName);
   const [draftPhrases, setDraftPhrases] = useState(() => normalizeQuickPhrases(getQuickPhrases(profile), { keepEmpty: true }));
@@ -157,8 +161,8 @@ export default function BoardPersonalizationPanel({ profile, setProfile }) {
     <article className="parentPanelV4 boardPersonalizationPanel">
       <div className="boardPersonalizationHeader">
         <div>
-          <h2>Board Profile &amp; Quick Phrases</h2>
-          <p className="muted">Controls the communicator photo, name, and the editable phrase buttons directly below the talk bar.</p>
+          <h2>{currentName}'s Profile &amp; Board</h2>
+          <p className="muted">Controls the communicator identity, picture style, and editable phrase buttons directly below the talk bar.</p>
         </div>
         <div className="boardProfilePreview" aria-label={`${currentName} board profile preview`}>
           <span className="boardProfilePreviewAvatar">
@@ -183,6 +187,50 @@ export default function BoardPersonalizationPanel({ profile, setProfile }) {
             {currentPhoto && <button type="button" className="secondary" onClick={removePhoto}>Remove photo</button>}
           </div>
           {photoStatus && <small className="boardPersonalizationStatus" role="status">{photoStatus}</small>}
+
+          <label className="boardPictureStyleField">
+            Board picture style
+            <select
+              value={currentSymbolMode}
+              onChange={event => setProfile(updateDisplaySettings(profile, { symbolMode: event.target.value }))}
+            >
+              {Object.entries(SYMBOL_DISPLAY_MODES).map(([value, option]) => (
+                <option key={value} value={value}>{option.name}</option>
+              ))}
+            </select>
+            <small>{SYMBOL_DISPLAY_MODES[currentSymbolMode]?.description || SYMBOL_DISPLAY_MODES.auto.description}</small>
+          </label>
+
+          {currentSymbolMode === "sign_language" && (
+            <p className="boardSymbolSafetyNote">
+              Sign mode uses available hand-gesture visuals and keeps the written word visible. It is not a certified ASL dictionary; unavailable signs use a safe fallback.
+            </p>
+          )}
+
+          <div className="boardScaleControls" aria-label="Board size controls">
+            <label>
+              Button size <strong>{currentButtonScale}%</strong>
+              <input
+                type="range"
+                min="80"
+                max="135"
+                step="5"
+                value={currentButtonScale}
+                onChange={event => setProfile(updateDisplaySettings(profile, { buttonScale: Number(event.target.value) }))}
+              />
+            </label>
+            <label>
+              Word size <strong>{currentTextScale}%</strong>
+              <input
+                type="range"
+                min="80"
+                max="140"
+                step="5"
+                value={currentTextScale}
+                onChange={event => setProfile(updateDisplaySettings(profile, { textScale: Number(event.target.value) }))}
+              />
+            </label>
+          </div>
         </section>
 
         <section className="quickPhraseEditor" aria-label="Quick phrase bar settings">

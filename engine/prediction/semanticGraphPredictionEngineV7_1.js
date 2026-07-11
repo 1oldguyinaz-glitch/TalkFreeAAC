@@ -42,6 +42,22 @@ export const SEMANTIC_CONTEXT_ROUTES_V7_1 = Object.freeze({
     direct: ["go", "play", "eat", "drink", "see", "watch", "read", "talk", "stop", "try", "help", "leave", "rest"],
     buckets: ["activity", "place", "person", "help_support", "break_regulation"]
   },
+  "i want to have": {
+    direct: ["this", "that", "it", "food", "drink", "help", "a break", "my turn", "time", "fun", "you", "something different"],
+    buckets: ["object", "food_drink", "activity", "place", "person", "social_connection", "help_support", "break_regulation"]
+  },
+  "want to have": {
+    direct: ["this", "that", "it", "food", "drink", "help", "a break", "my turn", "time", "fun", "you", "something different"],
+    buckets: ["object", "food_drink", "activity", "place", "person", "social_connection", "help_support", "break_regulation"]
+  },
+  "i have": {
+    direct: ["this", "that", "it", "food", "drink", "help", "time", "a question", "an idea", "pain", "my turn", "something to say"],
+    buckets: ["object", "food_drink", "activity", "place", "person", "body_state", "pain", "story_comment", "social_connection"]
+  },
+  "have": {
+    direct: ["this", "that", "it", "food", "drink", "help", "time", "a question", "an idea", "pain", "my turn", "something to say"],
+    buckets: ["object", "food_drink", "activity", "place", "person", "body_state", "pain", "story_comment", "social_connection"]
+  },
   "i need": {
     direct: ["help", "water", "food", "bathroom", "break", "quiet", "space", "medicine", "you", "this", "different", "now"],
     buckets: ["help_support", "bathroom_care", "food_drink", "body_state", "sick_health", "break_regulation", "person", "safety"]

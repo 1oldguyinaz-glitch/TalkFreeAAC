@@ -34,6 +34,33 @@ export const DISPLAY_SCHEMES = {
   }
 };
 
+export const SYMBOL_DISPLAY_MODES = {
+  auto: {
+    name: "Automatic by age",
+    description: "Uses child-friendly or age-respectful symbols from the communicator profile."
+  },
+  classic: {
+    name: "Classic AAC symbols",
+    description: "Uses the standard TalkFree picture set."
+  },
+  age_respectful: {
+    name: "Teen / adult symbols",
+    description: "Uses more neutral, age-respectful visuals."
+  },
+  sign_language: {
+    name: "Sign language visuals",
+    description: "Uses available hand-gesture visuals and falls back safely when a sign asset is unavailable."
+  }
+};
+
+export function getSymbolDisplayMode(profile = {}) {
+  const requested = profile.displaySettings?.symbolMode || "auto";
+  if (requested !== "auto" && SYMBOL_DISPLAY_MODES[requested]) return requested;
+
+  const ageBand = profile.settings?.ageBand || profile.ageBand || profile.userProfile?.ageBand || "young_child";
+  return ["teen", "adult", "aphasia_recovery"].includes(ageBand) ? "age_respectful" : "classic";
+}
+
 export function updateDisplaySettings(profile, settings) {
   return {
     ...profile,
