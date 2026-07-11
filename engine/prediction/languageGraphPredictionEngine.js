@@ -12,8 +12,13 @@ import {
   getLanguageDatabaseV5_27Async,
   MAX_ACTIVE_OPTIONS
 } from "../language/languageDatabaseRouterV5_27.js";
+import {
+  getSemanticGraphCandidateWordsV7_1,
+  getSemanticGraphPredictionDebugV7_1
+} from "./semanticGraphPredictionEngineV7_1.js";
+import { getStaticSemanticConceptV7_1 } from "../language/semanticConceptGraphV7_1.js";
 
-export const LANGUAGE_GRAPH_PREDICTION_VERSION = "5.31-local-language-graph";
+export const LANGUAGE_GRAPH_PREDICTION_VERSION = "7.1-semantic-language-graph";
 
 const DEFAULT_LIMIT = 24;
 const MAX_PHRASE_TAIL = 6;
@@ -221,6 +226,8 @@ function wordMinStage(word = "") {
 }
 
 function wordAllowedByStage(word = "", stage = 1) {
+  const concept = getStaticSemanticConceptV7_1(word);
+  if (concept?.stage_access?.length) return concept.stage_access.includes(stage);
   return stage >= wordMinStage(word);
 }
 
@@ -432,6 +439,18 @@ function labelAllowedByDatabase(label = "", index, profile = {}, stage = 1, buck
   return { allowed: safe.length > 0, entries: safe };
 }
 
+function addSemanticGraphCandidates(candidateMap, profile = {}, options = {}, stage = 1) {
+  const semanticWords = getSemanticGraphCandidateWordsV7_1(profile, {
+    ...options,
+    stage,
+    directLimit: Math.min(MAX_ACTIVE_OPTIONS, Number(options.limit || DEFAULT_LIMIT) + 8)
+  });
+  semanticWords.forEach((word, index) => {
+    if (!wordAllowedByStage(word, stage)) return;
+    addScore(candidateMap, word, 920 - index * 9, "v7.1-semantic-graph");
+  });
+}
+
 function addGrammarCandidates(candidateMap, routeMatch = {}, profile = {}, stage = 1) {
   const routeWords = routeMatch.route?.words || [];
   routeWords.forEach((word, index) => {
@@ -543,6 +562,15 @@ export function getStaticLanguageGraphCandidatesV5_31(profile = {}, options = {}
   const routeMatch = routeForPhrase(phrase);
   const candidates = [];
 
+  // V7.1 meaning-first lane: direct semantic relations and high-value context words.
+  candidates.push(...getSemanticGraphCandidateWordsV7_1(profile, {
+    ...options,
+    phrase,
+    stage,
+    directLimit: Math.min(MAX_ACTIVE_OPTIONS, limit + 8)
+  }));
+
+  // Preserve the proven V5.31 grammar route and legacy tree as fallbacks.
   if (routeMatch.route?.words?.length) candidates.push(...routeMatch.route.words);
 
   const sentence = options.sentence || profile.sentence || phrase.split(" ");
@@ -561,6 +589,7 @@ export function getLanguageGraphRouteDebugV5_31(profile = {}, options = {}) {
     phrase,
     routeKey: routeMatch.key,
     variants: routeMatch.variants,
+    semantic: getSemanticGraphPredictionDebugV7_1(profile, { ...options, phrase }),
     staticWords: getStaticLanguageGraphCandidatesV5_31(profile, options)
   };
 }
@@ -585,6 +614,7 @@ export async function getLanguageGraphPredictionSliceV5_31Async(profile = {}, op
   const routeMatch = routeForPhrase(phrase);
   const candidateMap = new Map();
 
+  addSemanticGraphCandidates(candidateMap, profile, { ...options, phrase }, stage);
   addGrammarCandidates(candidateMap, routeMatch, profile, stage);
   addTreeFallbackCandidates(candidateMap, profile, { ...options, phrase }, stage);
 

@@ -1,0 +1,1097 @@
+{
+  "version": "7.1.0-semantic-concept-graph",
+  "sourceEntries": 10000,
+  "concepts": 10000,
+  "staticConcepts": 379,
+  "validationFailures": [],
+  "primaryCounts": {
+    "core": 1100,
+    "safety_emergency": 185,
+    "descriptors": 439,
+    "time_routines": 180,
+    "places": 258,
+    "social": 57,
+    "actions": 404,
+    "food_drink": 2422,
+    "needs_help": 191,
+    "objects": 838,
+    "school_work": 1419,
+    "people": 157,
+    "body_health": 351,
+    "feelings_states": 263,
+    "technology_media": 173,
+    "play_leisure": 582,
+    "questions": 101,
+    "communication_repair": 880
+  },
+  "bucketCounts": {
+    "core_words": 1107,
+    "refusal_advocacy": 131,
+    "safety": 201,
+    "color_size": 1415,
+    "story_comment": 820,
+    "time_routine": 219,
+    "place": 437,
+    "social_connection": 95,
+    "activity": 1231,
+    "food_drink": 2537,
+    "body_state": 27,
+    "help_support": 231,
+    "bathroom_care": 58,
+    "object": 1493,
+    "break_regulation": 147,
+    "communication_repair": 885,
+    "device_media": 254,
+    "school_work": 1573,
+    "person": 226,
+    "sick_health": 388,
+    "emotion": 265,
+    "mental_care": 50,
+    "texture_sensory": 864,
+    "pain": 182,
+    "recovery_support": 869,
+    "temperature": 456,
+    "question": 102,
+    "weather": 60
+  },
+  "priorityCounts": {
+    "core": 141,
+    "common": 511,
+    "specialized": 9197,
+    "rare": 151
+  },
+  "stageCounts": {
+    "1": 3042,
+    "2": 6406,
+    "3": 8759,
+    "4": 10000,
+    "5": 5049
+  },
+  "correctedPrimaryCount": 4306,
+  "expandedStageCount": 1674,
+  "recoveryAppropriateCount": 5045,
+  "criticalExamples": {
+    "apple": {
+      "id": "concept:v5_25_w_0575_apple",
+      "source_id": "v5_25_w_0575_apple",
+      "label": "apple",
+      "normalized_label": "apple",
+      "entry_type": "word",
+      "primary_category": "food_drink",
+      "secondary_categories": [
+        "fruit",
+        "snack",
+        "grocery",
+        "food_object",
+        "red_food",
+        "green_food"
+      ],
+      "bucket_paths": [
+        "food_drink",
+        "object",
+        "color_size"
+      ],
+      "intents": [
+        "request",
+        "choice",
+        "describe",
+        "comment"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "common",
+      "sentence_frames": [
+        "I want apple",
+        "I like apple",
+        "I don't like apple",
+        "Eat apple",
+        "I want ___",
+        "I like ___"
+      ],
+      "relations": {
+        "actions": [
+          "eat",
+          "want",
+          "like",
+          "cut",
+          "buy",
+          "drink"
+        ],
+        "descriptors": [
+          "red",
+          "green",
+          "sweet",
+          "crunchy",
+          "more",
+          "hot",
+          "cold"
+        ],
+        "people": [
+          "me",
+          "you"
+        ],
+        "places": [
+          "kitchen",
+          "school",
+          "store"
+        ],
+        "emotions": [
+          "like",
+          "don't like"
+        ],
+        "related_concepts": [
+          "food",
+          "eat",
+          "snack",
+          "drink",
+          "shopping"
+        ]
+      },
+      "prediction_weight": 0.89,
+      "utility_score": 111,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "technology_media",
+        "branches": [
+          "technology_media",
+          "grocery"
+        ],
+        "stage_access": [
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    "banana": {
+      "id": "concept:v5_25_w_0576_banana",
+      "source_id": "v5_25_w_0576_banana",
+      "label": "banana",
+      "normalized_label": "banana",
+      "entry_type": "word",
+      "primary_category": "food_drink",
+      "secondary_categories": [
+        "fruit",
+        "snack",
+        "grocery",
+        "food_object",
+        "yellow_food"
+      ],
+      "bucket_paths": [
+        "food_drink",
+        "object",
+        "color_size"
+      ],
+      "intents": [
+        "request",
+        "choice",
+        "describe"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "common",
+      "sentence_frames": [
+        "I want ___",
+        "I like ___",
+        "I don't like ___",
+        "More ___"
+      ],
+      "relations": {
+        "actions": [
+          "eat",
+          "peel",
+          "want",
+          "like",
+          "drink"
+        ],
+        "descriptors": [
+          "yellow",
+          "soft",
+          "sweet",
+          "more",
+          "hot",
+          "cold"
+        ],
+        "people": [
+          "me",
+          "you"
+        ],
+        "places": [
+          "kitchen",
+          "school",
+          "store"
+        ],
+        "emotions": [
+          "like",
+          "don't like"
+        ],
+        "related_concepts": [
+          "food",
+          "eat",
+          "snack",
+          "drink",
+          "shopping"
+        ]
+      },
+      "prediction_weight": 0.78,
+      "utility_score": 97,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "grocery",
+        "branches": [
+          "grocery"
+        ],
+        "stage_access": [
+          3,
+          4
+        ]
+      }
+    },
+    "red": {
+      "id": "concept:v5_25_w_0943_red",
+      "source_id": "v5_25_w_0943_red",
+      "label": "red",
+      "normalized_label": "red",
+      "entry_type": "word",
+      "primary_category": "descriptors",
+      "secondary_categories": [
+        "color",
+        "visual_descriptor"
+      ],
+      "bucket_paths": [
+        "color_size",
+        "food_drink",
+        "object"
+      ],
+      "intents": [
+        "describe",
+        "choice",
+        "comment"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "common",
+      "sentence_frames": [
+        "It is ___",
+        "I feel ___",
+        "I want the ___ one"
+      ],
+      "relations": {
+        "actions": [
+          "look",
+          "choose",
+          "want",
+          "feel",
+          "compare"
+        ],
+        "descriptors": [
+          "color",
+          "bright",
+          "dark",
+          "same",
+          "different",
+          "more",
+          "less"
+        ],
+        "people": [
+          "me",
+          "you"
+        ],
+        "places": [
+          "here",
+          "there"
+        ],
+        "emotions": [
+          "like",
+          "don't like"
+        ],
+        "related_concepts": [
+          "apple",
+          "ball",
+          "shirt",
+          "car",
+          "stop"
+        ]
+      },
+      "prediction_weight": 0.76,
+      "utility_score": 95,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "descriptors",
+        "branches": [
+          "descriptors"
+        ],
+        "stage_access": [
+          3,
+          4
+        ]
+      },
+      "related_concepts": [
+        "apple",
+        "ball",
+        "shirt",
+        "car",
+        "stop"
+      ]
+    },
+    "green": {
+      "id": "concept:v5_25_w_0945_green",
+      "source_id": "v5_25_w_0945_green",
+      "label": "green",
+      "normalized_label": "green",
+      "entry_type": "word",
+      "primary_category": "descriptors",
+      "secondary_categories": [
+        "color",
+        "visual_descriptor"
+      ],
+      "bucket_paths": [
+        "color_size",
+        "food_drink",
+        "object"
+      ],
+      "intents": [
+        "describe",
+        "choice",
+        "comment"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "common",
+      "sentence_frames": [
+        "It is ___",
+        "I feel ___",
+        "I want the ___ one"
+      ],
+      "relations": {
+        "actions": [
+          "look",
+          "feel",
+          "choose",
+          "compare"
+        ],
+        "descriptors": [
+          "same",
+          "different",
+          "more",
+          "less"
+        ],
+        "people": [
+          "me",
+          "you"
+        ],
+        "places": [
+          "here",
+          "there"
+        ],
+        "emotions": [
+          "like",
+          "don't like"
+        ],
+        "related_concepts": [
+          "apple",
+          "grass",
+          "shirt",
+          "car"
+        ]
+      },
+      "prediction_weight": 0.76,
+      "utility_score": 95,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "descriptors",
+        "branches": [
+          "descriptors"
+        ],
+        "stage_access": [
+          3,
+          4
+        ]
+      },
+      "related_concepts": [
+        "apple",
+        "grass",
+        "shirt",
+        "car"
+      ]
+    },
+    "help": {
+      "id": "concept:v5_25_w_0144_help",
+      "source_id": "v5_25_w_0144_help",
+      "label": "help",
+      "normalized_label": "help",
+      "entry_type": "word",
+      "primary_category": "needs_help",
+      "secondary_categories": [
+        "help",
+        "support",
+        "communication_repair",
+        "self_advocacy"
+      ],
+      "bucket_paths": [
+        "help_support",
+        "communication_repair",
+        "safety"
+      ],
+      "intents": [
+        "action",
+        "request",
+        "comment",
+        "choice"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "core",
+      "sentence_frames": [
+        "Help me",
+        "Please help",
+        "Help with this",
+        "I need help",
+        "I want to ___",
+        "Can I ___?"
+      ],
+      "relations": {
+        "actions": [
+          "open",
+          "find",
+          "fix",
+          "understand",
+          "stop",
+          "go",
+          "help",
+          "try"
+        ],
+        "descriptors": [
+          "this",
+          "that",
+          "now",
+          "please",
+          "fast",
+          "slow",
+          "again"
+        ],
+        "people": [
+          "me",
+          "you",
+          "teacher",
+          "doctor"
+        ],
+        "places": [
+          "bathroom",
+          "school",
+          "home",
+          "outside"
+        ],
+        "emotions": [
+          "scared",
+          "frustrated",
+          "confused",
+          "happy"
+        ],
+        "related_concepts": []
+      },
+      "prediction_weight": 1,
+      "utility_score": 215,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "emergency",
+        "branches": [
+          "emergency",
+          "actions"
+        ],
+        "stage_access": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    "go": {
+      "id": "concept:v5_25_w_0090_go",
+      "source_id": "v5_25_w_0090_go",
+      "label": "go",
+      "normalized_label": "go",
+      "entry_type": "word",
+      "primary_category": "actions",
+      "secondary_categories": [
+        "action"
+      ],
+      "bucket_paths": [
+        "activity",
+        "place",
+        "safety"
+      ],
+      "intents": [
+        "action",
+        "request",
+        "comment",
+        "choice"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "core",
+      "sentence_frames": [
+        "I want to ___",
+        "Can I ___?",
+        "Help me ___"
+      ],
+      "relations": {
+        "actions": [
+          "go",
+          "come",
+          "leave",
+          "return",
+          "stop",
+          "help",
+          "try"
+        ],
+        "descriptors": [
+          "now",
+          "later",
+          "away",
+          "back",
+          "fast",
+          "slow",
+          "again"
+        ],
+        "people": [
+          "you",
+          "mom",
+          "dad",
+          "friend",
+          "me"
+        ],
+        "places": [
+          "home",
+          "school",
+          "bathroom",
+          "outside",
+          "car",
+          "store",
+          "doctor",
+          "playground",
+          "therapy",
+          "room"
+        ],
+        "emotions": [
+          "ready",
+          "scared",
+          "excited",
+          "happy",
+          "frustrated"
+        ],
+        "related_concepts": []
+      },
+      "prediction_weight": 1,
+      "utility_score": 178,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "actions",
+        "branches": [
+          "actions"
+        ],
+        "stage_access": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    "sticky": {
+      "id": "concept:v5_25_w_0425_sticky",
+      "source_id": "v5_25_w_0425_sticky",
+      "label": "sticky",
+      "normalized_label": "sticky",
+      "entry_type": "word",
+      "primary_category": "descriptors",
+      "secondary_categories": [
+        "texture",
+        "sensory",
+        "descriptor"
+      ],
+      "bucket_paths": [
+        "texture_sensory",
+        "color_size"
+      ],
+      "intents": [
+        "describe",
+        "choice",
+        "comment"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "common",
+      "sentence_frames": [
+        "It is ___",
+        "I feel ___",
+        "I want the ___ one"
+      ],
+      "relations": {
+        "actions": [
+          "look",
+          "feel",
+          "choose",
+          "compare"
+        ],
+        "descriptors": [
+          "same",
+          "different",
+          "more",
+          "less"
+        ],
+        "people": [
+          "me",
+          "you"
+        ],
+        "places": [
+          "here",
+          "there"
+        ],
+        "emotions": [
+          "like",
+          "don't like"
+        ],
+        "related_concepts": [
+          "too loud",
+          "too bright",
+          "quiet",
+          "space",
+          "overwhelmed"
+        ]
+      },
+      "prediction_weight": 1,
+      "utility_score": 125,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "sensory",
+        "branches": [
+          "sensory"
+        ],
+        "stage_access": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    "overwhelmed": {
+      "id": "concept:v5_25_w_0269_overwhelmed",
+      "source_id": "v5_25_w_0269_overwhelmed",
+      "label": "overwhelmed",
+      "normalized_label": "overwhelmed",
+      "entry_type": "word",
+      "primary_category": "feelings_states",
+      "secondary_categories": [
+        "regulation",
+        "mental_care",
+        "emotion",
+        "mood"
+      ],
+      "bucket_paths": [
+        "break_regulation",
+        "mental_care",
+        "emotion"
+      ],
+      "intents": [
+        "emotion",
+        "self_advocacy",
+        "comment",
+        "narrative"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "common",
+      "sentence_frames": [
+        "I feel ___",
+        "I am ___",
+        "I need help because I feel ___"
+      ],
+      "relations": {
+        "actions": [
+          "feel",
+          "help",
+          "stop",
+          "rest"
+        ],
+        "descriptors": [
+          "more",
+          "less",
+          "very"
+        ],
+        "people": [
+          "me",
+          "you",
+          "helper"
+        ],
+        "places": [
+          "quiet",
+          "home"
+        ],
+        "emotions": [
+          "happy",
+          "sad",
+          "mad",
+          "scared",
+          "calm"
+        ],
+        "related_concepts": [
+          "happy",
+          "sad",
+          "mad",
+          "scared",
+          "calm",
+          "worried"
+        ]
+      },
+      "prediction_weight": 1,
+      "utility_score": 133,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "regulation",
+        "branches": [
+          "regulation",
+          "feelings"
+        ],
+        "stage_access": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    "wrong word": {
+      "id": "concept:v5_27_w_03907_wrong_word",
+      "source_id": "v5_27_w_03907_wrong_word",
+      "label": "wrong word",
+      "normalized_label": "wrong word",
+      "entry_type": "word",
+      "primary_category": "communication_repair",
+      "secondary_categories": [
+        "repair",
+        "clarification",
+        "word_finding",
+        "recovery"
+      ],
+      "bucket_paths": [
+        "communication_repair",
+        "recovery_support"
+      ],
+      "intents": [
+        "communication_repair",
+        "recovery_support",
+        "self_advocacy"
+      ],
+      "stage_access": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "core",
+      "sentence_frames": [
+        "___",
+        "Please ___",
+        "I mean ___"
+      ],
+      "relations": {
+        "actions": [
+          "repeat",
+          "show",
+          "write",
+          "wait"
+        ],
+        "descriptors": [
+          "again",
+          "slower",
+          "different"
+        ],
+        "people": [
+          "you",
+          "helper"
+        ],
+        "places": [
+          "here"
+        ],
+        "emotions": [
+          "frustrated",
+          "confused",
+          "calm"
+        ],
+        "related_concepts": []
+      },
+      "prediction_weight": 0.82,
+      "utility_score": 102,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "communication_repair",
+        "branches": [
+          "communication_repair"
+        ],
+        "stage_access": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    "give me time": {
+      "id": "concept:v5_27_w_03919_give_me_time",
+      "source_id": "v5_27_w_03919_give_me_time",
+      "label": "give me time",
+      "normalized_label": "give me time",
+      "entry_type": "word",
+      "primary_category": "communication_repair",
+      "secondary_categories": [
+        "repair",
+        "clarification",
+        "word_finding",
+        "recovery"
+      ],
+      "bucket_paths": [
+        "communication_repair",
+        "recovery_support",
+        "break_regulation"
+      ],
+      "intents": [
+        "communication_repair",
+        "recovery_support",
+        "self_advocacy"
+      ],
+      "stage_access": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "age_bands": [
+        "child",
+        "teen",
+        "adult",
+        "aphasia_recovery"
+      ],
+      "recovery_appropriate": true,
+      "priority": "core",
+      "sentence_frames": [
+        "___",
+        "Please ___",
+        "I mean ___"
+      ],
+      "relations": {
+        "actions": [
+          "repeat",
+          "show",
+          "write",
+          "wait"
+        ],
+        "descriptors": [
+          "again",
+          "slower",
+          "different"
+        ],
+        "people": [
+          "you",
+          "helper"
+        ],
+        "places": [
+          "here"
+        ],
+        "emotions": [
+          "frustrated",
+          "confused",
+          "calm"
+        ],
+        "related_concepts": []
+      },
+      "prediction_weight": 0.82,
+      "utility_score": 102,
+      "safety_level": "standard",
+      "gating": {
+        "parent": false,
+        "sensitive": false,
+        "school": false,
+        "emergency": false
+      },
+      "original_metadata": {
+        "primary_branch": "communication_repair",
+        "branches": [
+          "communication_repair"
+        ],
+        "stage_access": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    "i know but can't say it": null
+  }
+}

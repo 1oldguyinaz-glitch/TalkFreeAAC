@@ -51,10 +51,10 @@ function includesError(status = "") {
 
 function helperForMode({ mode, activeLabel, activeBranchMode }) {
   if (mode === "semanticBucket") return `Choose a ${activeLabel.toLowerCase()} word.`;
-  if (mode === "semanticBuckets") return "Choose what kind of meaning.";
+  if (mode === "semanticBuckets") return "Choose a direct word or meaning bucket.";
   if (mode === "topic") return `Choose from ${activeLabel}.`;
   if (mode === "prediction") return "Choose the next word.";
-  if (activeBranchMode === "semanticBucketChoices") return "Choose a meaning bucket.";
+  if (["semanticBucketChoices", "semanticMixed"].includes(activeBranchMode)) return "Choose a direct word or meaning bucket.";
   return "Say something.";
 }
 
@@ -80,7 +80,7 @@ export function buildBoardStateV5_35({
     mode = "semanticBucket";
     activeLabel = bucketLabel;
     bucketPath = [titleCase(bucketLabel)];
-  } else if (activeBranchMode === "semanticBucketChoices") {
+  } else if (["semanticBucketChoices", "semanticMixed"].includes(activeBranchMode)) {
     mode = "semanticBuckets";
     activeLabel = phrasePath.length ? phrasePath[phrasePath.length - 1] : "Meaning";
   } else if (topicPath.length) {

@@ -248,6 +248,16 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const sentenceHasWords = Boolean(actualPhrase);
   const semanticBucket = semanticBucketId ? getSemanticBucketByIdV5_32(semanticBucketId) : null;
   const semanticBucketLabels = semanticBuckets.map(bucket => bucket.label);
+  const semanticBucketReserve = Math.min(
+    semanticBucketLabels.length,
+    stageSettings.communicationStage === 1 ? 4 : stageSettings.communicationStage === 2 ? 5 : 6
+  );
+  const semanticDirectReserve = Math.max(4, boardLimits.activeLimit - semanticBucketReserve);
+  const semanticDirectWords = removeCoreDuplicates(nextWords, fixedCoreLanguage);
+  const semanticMixedBranch = uniqueWords([
+    ...semanticDirectWords.slice(0, semanticDirectReserve),
+    ...semanticBucketLabels.slice(0, semanticBucketReserve)
+  ]);
   const semanticBucketWords = semanticBucketId
     ? getStaticSemanticBucketWordsV5_32(semanticBucketId, profile, {
       phrase: actualPhrase,
@@ -273,8 +283,10 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
     activeBranchSource = board.contextWords;
     activeBranchMode = "topicWords";
   } else if (sentenceHasWords && semanticBucketLabels.length) {
-    activeBranchSource = semanticBucketLabels;
-    activeBranchMode = "semanticBucketChoices";
+    // V7.1 shows high-confidence direct words and meaning buckets together.
+    // This preserves multi-path access while reducing the extra tap required by bucket-only routing.
+    activeBranchSource = semanticMixedBranch;
+    activeBranchMode = "semanticMixed";
   } else if (sentenceHasWords && predictedSentenceBranch.length) {
     activeBranchSource = predictedSentenceBranch;
     activeBranchMode = "predictionWords";
@@ -295,7 +307,7 @@ export default function ChildAAC({ profile, onTap, onPhrase, onSpeak, onBack, on
   const boardVisualKey = `${boardState.mode}:${activeTopic}:${semanticBucketId}:${activeBranchMode}:${activeBranch.join("|")}`;
 
   const isSemanticBucketNavigationWord = (word) => {
-    return activeBranchMode === "semanticBucketChoices" && Boolean(getSemanticBucketByLabelV5_32(word));
+    return ["semanticBucketChoices", "semanticMixed"].includes(activeBranchMode) && Boolean(getSemanticBucketByLabelV5_32(word));
   };
 
   const isTopicBucketNavigationWord = (word) => {
