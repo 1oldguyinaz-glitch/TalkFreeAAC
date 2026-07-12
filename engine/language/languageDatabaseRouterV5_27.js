@@ -3,7 +3,9 @@
 
 import { DEEP_BUCKET_MAP_V5_27 } from "./deepBucketMapV5_27.js";
 
-export const V5_27_ROUTER_VERSION = "5.27-safe-bucketed";
+export const V5_27_ROUTER_VERSION = "8.1-fitzgerald-routed";
+export const FITZGERALD_ROUTING_VERSION_V8_1 = "8.1.0";
+export const FITZGERALD_PAGE_SIZE_V8_1 = 10;
 export const MIN_ACTIVE_OPTIONS = 12;
 export const DEFAULT_ACTIVE_OPTIONS = 24;
 export const MAX_ACTIVE_OPTIONS = 40;
@@ -516,6 +518,109 @@ export async function searchLanguageDatabaseV5_27Async(query = "", profile = {},
   return searchLanguageDatabaseV5_27(query, profile, options, database);
 }
 
+
+function clampGrammarStateV8_1(value) {
+  const state = Number(value || 1);
+  return Math.max(1, Math.min(6, Number.isFinite(state) ? Math.round(state) : 1));
+}
+
+function clampFitzgeraldPageV8_1(value) {
+  const page = Number(value || 1);
+  return Math.max(1, Number.isFinite(page) ? Math.round(page) : 1);
+}
+
+export function getFitzgeraldRouteV8_1(entry = {}) {
+  return {
+    schemaVersion: entry.fitzgerald_schema_version || "",
+    role: entry.fitzgerald_role || "",
+    gridColumn: Number(entry.grid_column || 0),
+    activeInState: Array.isArray(entry.active_in_state) ? [...entry.active_in_state] : [],
+    alwaysActive: entry.always_active === true,
+    routeBucket: entry.route_bucket || "",
+    displayPage: Number(entry.display_page || 0),
+    gridSlot: Number(entry.grid_slot || 0),
+    routePath: entry.route_path || "",
+    onTapAction: entry.on_tap_action || "",
+    nextState: Number(entry.route_next_state || 1),
+    grammarProfileId: entry.grammar_profile_id || "",
+    classificationSource: entry.classification_source || "",
+    classificationConfidence: entry.classification_confidence || ""
+  };
+}
+
+export function isEntryActiveInGrammarStateV8_1(entry, state) {
+  if (!entry) return false;
+  if (entry.always_active === true) return true;
+  const activeState = clampGrammarStateV8_1(state);
+  return Array.isArray(entry.active_in_state) && entry.active_in_state.includes(activeState);
+}
+
+export function getFitzgeraldBucketDirectoryV8_1(state = 1, database = cachedLanguageDatabase()) {
+  const activeState = clampGrammarStateV8_1(state);
+  const buckets = new Map();
+
+  for (const entry of database.entries || []) {
+    if (entry.always_active === true) continue;
+    if (!isEntryActiveInGrammarStateV8_1(entry, activeState)) continue;
+    const routeBucket = entry.route_bucket || "unassigned";
+    const current = buckets.get(routeBucket) || { bucket: routeBucket, count: 0, totalPages: 0 };
+    current.count += 1;
+    current.totalPages = Math.max(current.totalPages, Number(entry.display_page || 1));
+    buckets.set(routeBucket, current);
+  }
+
+  return [...buckets.values()].sort((a, b) => b.count - a.count || a.bucket.localeCompare(b.bucket));
+}
+
+export function getFitzgeraldColumnSliceV8_1(profile = {}, options = {}, database = cachedLanguageDatabase()) {
+  const state = clampGrammarStateV8_1(options.state || options.activeState || 1);
+  const page = clampFitzgeraldPageV8_1(options.page || options.displayPage || 1);
+  const bucket = String(options.routeBucket || options.bucket || "").trim();
+  const stage = Math.max(1, Math.min(5, Number(options.stage || profile.stage || 1)));
+  const includeAlwaysActive = options.includeAlwaysActive === true;
+
+  if (!Array.isArray(database.entries) || database.entries.length === 0) {
+    return {
+      version: V5_27_ROUTER_VERSION,
+      routingVersion: FITZGERALD_ROUTING_VERSION_V8_1,
+      state,
+      page,
+      bucket,
+      visible: [],
+      status: "database_not_loaded"
+    };
+  }
+
+  let entries = database.entries
+    .filter(entry => includeAlwaysActive || entry.always_active !== true)
+    .filter(entry => isEntryActiveInGrammarStateV8_1(entry, state))
+    .filter(entry => hasStage(entry, stage) || options.allowStageExpansion === true)
+    .filter(entry => filterEntriesBySafetyV5_27([entry], profile, bucket).length === 1);
+
+  if (bucket) entries = entries.filter(entry => entry.route_bucket === bucket);
+  entries = entries.filter(entry => Number(entry.display_page || 1) === page);
+  entries.sort((a, b) => Number(a.grid_slot || 0) - Number(b.grid_slot || 0));
+
+  return {
+    version: V5_27_ROUTER_VERSION,
+    routingVersion: FITZGERALD_ROUTING_VERSION_V8_1,
+    state,
+    activeColumn: state,
+    page,
+    bucket,
+    visible: entries,
+    totalVisible: entries.length,
+    availableBuckets: getFitzgeraldBucketDirectoryV8_1(state, database),
+    status: "fitzgerald_route_ready",
+    source: "languageDatabaseV5_27_10000_fitzgerald_v8_1"
+  };
+}
+
+export async function getFitzgeraldColumnSliceV8_1Async(profile = {}, options = {}) {
+  const database = await loadLanguageDatabaseV5_27();
+  return getFitzgeraldColumnSliceV8_1(profile, options, database);
+}
+
 export default {
   V5_27_ROUTER_VERSION,
   LANGUAGE_DATABASE_PUBLIC_PATH,
@@ -523,6 +628,8 @@ export default {
   MIN_ACTIVE_OPTIONS,
   DEFAULT_ACTIVE_OPTIONS,
   MAX_ACTIVE_OPTIONS,
+  FITZGERALD_ROUTING_VERSION_V8_1,
+  FITZGERALD_PAGE_SIZE_V8_1,
   isLanguageDatabaseLoadedV5_27,
   loadLanguageDatabaseV5_27,
   getLanguageDatabaseV5_27,
@@ -536,5 +643,10 @@ export default {
   getActiveLanguageSliceAsync,
   searchLanguageDatabaseV5_27,
   searchLanguageDatabaseV5_27Async,
-  filterEntriesBySafetyV5_27
+  filterEntriesBySafetyV5_27,
+  getFitzgeraldRouteV8_1,
+  isEntryActiveInGrammarStateV8_1,
+  getFitzgeraldBucketDirectoryV8_1,
+  getFitzgeraldColumnSliceV8_1,
+  getFitzgeraldColumnSliceV8_1Async
 };
